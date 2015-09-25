@@ -1,0 +1,202 @@
+.card {
+    margin-top: 20px;
+    padding: 30px;
+    background-color: rgba(214, 224, 226, 0.2);
+    -webkit-border-top-left-radius:5px;
+    -moz-border-top-left-radius:5px;
+    border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-top-right-radius:5px;
+    border-top-right-radius:5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 1);
+}
+.card.hovercard .card-background {
+    height: 130px;
+}
+.card-background img {
+    -webkit-filter: blur(25px);
+    -moz-filter: blur(25px);
+    -o-filter: blur(25px);
+    -ms-filter: blur(25px);
+    filter: blur(25px);
+    margin-left: -100px;
+    margin-top: -200px;
+    min-width: 130%;
+}
+.card.hovercard .useravatar {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+}
+.card.hovercard .useravatar img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -moz-border-radius: 50%;
+    border: 5px solid rgba(0, 0, 0, 0.2);
+}
+.card.hovercard .card-info {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+}
+.card.hovercard .card-info .card-title {
+    padding:0 5px;
+    font-size: 20px;
+    line-height: 1;
+    color: #262626;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.card.hovercard .card-info {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+.btn-pref .btn {
+    -webkit-border-radius:0 !important;
+}
+
+.panel-group, 
+.panel-group .panel, 
+.panel-group .panel-heading,
+.panel-group .panel-heading a,  
+.panel-group .panel-title,  
+.panel-group .panel-title a,  
+.panel-group .panel-body,
+.panel-group .panel-group .panel-heading + .panel-collapse > .panel-body  {
+    border-radius:2px;
+    border:0;
+}
+.panel-group .panel-heading + .panel-collapse > .panel-body {
+    border-top: 0;
+}
+
+
+.panel-group .panel-heading {
+    padding: 0;
+}
+.panel-group .panel-heading a {
+    display: block;
+    background: #668bb1;
+    color:#fff;
+    padding:15px;
+    text-decoration:none;
+    position: relative;
+}
+.panel-group .panel-heading a.collapsed {
+    background: #c4ced5; 
+    color:inherit;
+}
+
+.panel-group .panel-heading a:after {
+    content: "\e114";
+    position: absolute;
+    right: 20px;
+    font-family: 'Glyphicons Halflings';
+
+}
+.panel-group .panel-heading a.collapsed:after {
+    content: "\e080";
+}
+.panel-group .panel-collapse {
+    margin-top:5px!important;
+}
+.panel-group .panel-body  {
+    background: #f7f7f7;
+    padding:15px;
+}
+.panel-group .panel {
+    background-color: transparent;
+}
+
+.panel-group .panel-body p:last-child,
+.panel-group .panel-body  ul:last-child,
+.panel-group .panel-body  ol:last-child {
+    margin-bottom: 0;
+}
+
+.table-bordered {
+    border: 1px solid #dddddd;
+    border-collapse: separate;
+    border-left: 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+}
+
+.panel-body:hover {
+    background-color: #D2D2D2;
+}
+
+.preco {
+    color: #3e8f3e;
+    text-align: right;
+}
+
+.panel-car {
+    padding: 3px;
+}
+
+.panel-car-head {
+    padding: 3px;
+    background-color: #D6D6D6;
+    font-size: 18px;
+}
+
+.panel-car-total {
+    padding: 3px;
+    border-top: solid 1px #969696;
+    background-color: #EAEAEA;
+}
+
+.panel-car-footer {
+    margin-top: 10px;
+    padding: 10px 10px 16px;
+}
+
+.subTotal {
+    color: #3e8f3e;
+    font-size: 18px;
+    float: right;
+}
+
+.btn-breadcrumb {
+    /* With less: .text-overflow(); */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+
+}
+
