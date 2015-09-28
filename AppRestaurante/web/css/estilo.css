@@ -230,3 +230,8 @@
     font-family: roboto;
 }
 
+.img-circle {
+    margin-top:18px;
+    height:60px;
+    width:60px;
+}
