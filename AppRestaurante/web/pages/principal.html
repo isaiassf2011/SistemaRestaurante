@@ -11,8 +11,8 @@
         <script src="../bootstrap/js/bootstrap.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $(".btn-pref .btn").click(function () {
+            $(document).ready(function() {
+                $(".btn-pref .btn").click(function() {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
@@ -41,7 +41,7 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: Lanchonete do Zé">
                                 <img alt="" src="http://www.manentti.com.br/slir/w300-h226/img/servicosLogoFiora.png" style="width: 25px;"> Perfil    
-                            <span class="caret"></span></a>
+                                <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Ver Perfil</a></li>
                             </ul>
@@ -93,6 +93,8 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-xs-12 text-right">
+                                                <img src="http://www.bragaburgerq.com.br/wp-content/uploads/2015/01/x-salada1.jpg" class="img-circle pull-left" style="
+                                                     margin-top: 0px;" alt="">
                                                 <span class="preco">R$ 10,00</span>
                                                 <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Editar produto">
                                                     <i class="glyphicon glyphicon-pencil"></i>										
@@ -110,6 +112,8 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-xs-12 text-right">
+                                                <img src="http://www.bigxpicanha.com.br/Content/Produto/Imagem/Big-X-Calabresa-Acebolada-27.png" class="img-circle pull-left" style="
+                                                     margin-top: 0px;" alt="">
                                                 <span class="preco">R$ 10,00</span>
                                                 <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Editar produto">
                                                     <i class="glyphicon glyphicon-pencil"></i>										
@@ -274,7 +278,9 @@
             <div class="modal-dialog">
                 <div class="loginmodal-container">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
                         <h1> Cadastre seus produtos!</h1>
                     </div>
                     <div class="modal-body">
