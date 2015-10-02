@@ -51,12 +51,13 @@ public class MeuServlet extends HttpServlet {
                 for (FileItem item : multiparts) {
                     File file = new File(caminho, item.getName());
                     item.write(file);
-                    if (!item.isFormField()) {
+                    /*if (!item.isFormField()) {
                         String name = new File(item.getName()).getName();
                         item.write(new File(name));
-                    }
+                    }*/
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 System.out.println("File upload failed");
             }
         }
