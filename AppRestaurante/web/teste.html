@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>www.rafaelwendel.com - Upload de arquivos com barra de progresso</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="bootstrap/js/jquery.js" type="text/javascript"></script>
+        <script src="jquery.form.js" type="text/javascript"></script>
+        <script src="upload.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <form action="MeuServlet" method="post" id="form">
+            <div id="file">
+                <input type="file" name="file">
+                <br ><br >
+                <progress value="0" max="100"></progress><span id="porcentagem">0%</span>
+
+            </div>
+            <br />
+            <input type="submit">
+        </form> 
+        <div id="resposta">
+
+        </div>
+    </body>
+</html>
