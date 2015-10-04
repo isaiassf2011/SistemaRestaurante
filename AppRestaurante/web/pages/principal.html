@@ -10,6 +10,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/bootstrap-filestyle.min.js"></script>
+        <script src="../jquery.form.js" type="text/javascript"></script>
+        <script src="../upload.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -19,7 +21,16 @@
                     $(this).removeClass("btn-default").addClass("btn-primary");
                 });
 
-                $(":file").filestyle({badge: false});
+                $('#arquivo').change(function () {
+                    $('#arquivo').closest("form").submit();
+                });
+
+                $(":file").filestyle({
+                    input: false,
+                    buttonText: 'Adicionar Imagem',
+                    badge: false,
+                    size: "sm"
+                });
 
             });
         </script>
@@ -288,14 +299,22 @@
                         <h1> Cadastre seus produtos!</h1>
                     </div>
                     <div class="modal-body">
-                        <form role="form" action="#" method="POST">
+                        <form role="form" action="../MeuServlet" method="POST" id="form">
                             <fieldset>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                         <div class="form-group">
-                                            <img src="http://www.bragaburgerq.com.br/wp-content/uploads/2015/01/x-salada1.jpg" class="img-circle pull-left" style="
-                                                 margin-top: 0px;margin-left: 90px;" alt="">
-                                            <input type="file" class="filestyle" data-badge="false">
+                                            <img src="http://localhost:8080/AppRestaurante/imgs/x-salada1.jpg" class="img-circle pull-left" style="
+                                                 margin-top: 0px;margin-left: 35%;" alt="" id="imgProduto">
+                                            <a href="javascript:;" style="padding: 1px 4px" title="Remover Imagem">
+                                                <i class="glyphicon glyphicon-trash" style="margin-top: 40px;"></i>
+                                            </a>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="file" class="form-control" id="arquivo" name="file" >
+                                        </div>
+                                        <div class="form-group" id="barraDeProgresso">
+                                            <progress value="0" max="100" style="width: 110px;"></progress><span id="porcentagem">0%</span>
                                         </div>
                                         <div class="form-group">
                                             <input class="form-control" placeholder="Nome do Produto" name="nomeProduto" type="text" autofocus>

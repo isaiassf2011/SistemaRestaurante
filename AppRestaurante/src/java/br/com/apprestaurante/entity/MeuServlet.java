@@ -5,8 +5,11 @@
  */
 package br.com.apprestaurante.entity;
 
+import com.google.gson.JsonObject;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -37,6 +40,10 @@ public class MeuServlet extends HttpServlet {
             throws ServletException, IOException {
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
+        JsonObject json = new JsonObject();
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
         if (isMultipart) {
 
             FileItemFactory factory = new DiskFileItemFactory();
@@ -46,16 +53,23 @@ public class MeuServlet extends HttpServlet {
 
                 List<FileItem> multiparts = upload.parseRequest(request);
 
-                String caminho = getServletContext().getRealPath("imgs");
+                String caminho = request.getRequestURL().toString().replace(request.getRequestURI().toString(), "") + request.getContextPath() + "/imgs/";
                 System.out.println(caminho);
                 for (FileItem item : multiparts) {
-                    File file = new File(caminho, item.getName());
-                    item.write(file);
+                    if (item.getFieldName().equals("file")) {
+                        String nomeArquivo = new Date().getTime()+"_"+item.getName();
+                        File file = new File(getServletConfig().getServletContext().getRealPath("/imgs/").replace("build", ""), nomeArquivo);
+                        item.write(file);
+                        json.addProperty("caminho", caminho+file.getName());
+                    }
                     /*if (!item.isFormField()) {
-                        String name = new File(item.getName()).getName();
-                        item.write(new File(name));
-                    }*/
+                     String name = new File(item.getName()).getName();
+                     item.write(new File(name));
+                     }*/
                 }
+
+                out.print(json);
+                out.flush();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("File upload failed");

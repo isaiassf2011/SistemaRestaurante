@@ -1,12 +1,15 @@
+
+$('#barraDeProgresso').show();
 $('#form').ajaxForm({
-    uploadProgress: function(event, position, total, percentComplete) {
+    uploadProgress: function (event, position, total, percentComplete) {
         $('progress').attr('value', percentComplete);
         $('#porcentagem').html(percentComplete + '%');
     },
-    success: function(data) {
+    success: function (json) {
         $('progress').attr('value', '100');
         $('#porcentagem').html('100%');
-        $('pre').html(data);
+        $('#barraDeProgresso').hide();
+        $('#imgProduto').attr('src', json.caminho);
     }
 
 });
