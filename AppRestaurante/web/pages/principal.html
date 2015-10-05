@@ -22,6 +22,11 @@
                 });
 
                 $('#arquivo').change(function () {
+                    var reader = new FileReader();
+                    $(reader).load(function (event) {
+                        $("#imgProduto").attr("src", event.target.result);
+                    });
+                    reader.readAsDataURL(event.target.files[0]);
                     $('#arquivo').closest("form").submit();
                 });
 
@@ -33,6 +38,7 @@
                 });
 
             });
+
         </script>
 
     </head>

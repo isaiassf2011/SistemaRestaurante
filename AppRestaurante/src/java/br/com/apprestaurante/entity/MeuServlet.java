@@ -57,10 +57,11 @@ public class MeuServlet extends HttpServlet {
                 System.out.println(caminho);
                 for (FileItem item : multiparts) {
                     if (item.getFieldName().equals("file")) {
-                        String nomeArquivo = new Date().getTime()+"_"+item.getName();
+                        String nomeArquivo = new Date().getTime() + item.getName();
                         File file = new File(getServletConfig().getServletContext().getRealPath("/imgs/").replace("build", ""), nomeArquivo);
                         item.write(file);
-                        json.addProperty("caminho", caminho+file.getName());
+
+                        json.addProperty("caminho", caminho + file.getName());
                     }
                     /*if (!item.isFormField()) {
                      String name = new File(item.getName()).getName();
