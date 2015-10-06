@@ -14,16 +14,16 @@
         <script src="../js/upload.js" type="text/javascript"></script>
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                $(".btn-pref .btn").click(function() {
+            $(document).ready(function () {
+                $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
                 });
 
-                $('#arquivo').change(function() {
+                $('#arquivo').change(function () {
                     var reader = new FileReader();
-                    $(reader).load(function(event) {
+                    $(reader).load(function (event) {
                         $("#imgProduto").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
@@ -306,10 +306,19 @@
                                     </h4>
                                 </div><!--/.panel-heading -->
                                 <div id="collapseOne" class="panel-collapse collapse in" >
+                                    <div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+                                        <div class="controls">
+                                            <ul class="nav">
+                                                <li data-target="#custom_carousel" data-slide-to="0" class="active"><a href="#"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><small>Pendentes</small></a></li>
+                                                <li data-target="#custom_carousel" data-slide-to="1"><a href="#"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span><small>Aceitos - Aguardando Preparo</small></a></li>
+                                                <li data-target="#custom_carousel" data-slide-to="2"><a href="#"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><small>Pronto para Entregar</small></a></li>
+                                                <li data-target="#custom_carousel" data-slide-to="3"><a href="#"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><small>Cancelados</small></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-xs-12 text-right">
-                                                <span class="preco">R$ 10,00</span>
                                                 <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Editar produto">
                                                     <i class="glyphicon glyphicon-pencil"></i>										
                                                 </a>
@@ -318,18 +327,14 @@
                                                 </a>
                                             </div>
                                             <div class="col-xs-12">
-                                                
-                                                <h4><span class="badge" style="background-color: rgb(4, 115, 18); color: white; float: right; top: -15px;"
-                              title="Número de produtos que você pediu">10</span> X-Salada</h4>
+                                                <h4><span class="badge" style="background-color: rgb(4, 115, 18); color: white;  top: -15px;"
+                                                          title="Número de produtos">10</span> X-Salada</h4>
                                             </div>
                                         </div>
                                     </div><!--/.panel-body -->
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-xs-12 text-right">
-                                                <img src="http://www.bigxpicanha.com.br/Content/Produto/Imagem/Big-X-Calabresa-Acebolada-27.png" class="img-circle pull-left" style="
-                                                     margin-top: 0px;" alt="">
-                                                <span class="preco">R$ 10,00</span>
                                                 <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Editar produto">
                                                     <i class="glyphicon glyphicon-pencil"></i>										
                                                 </a>
@@ -339,7 +344,6 @@
                                             </div>
                                             <div class="col-xs-12">
                                                 <h4>X-Calabresa</h4>
-                                                <p>Pão, amburguer, presunto, queijo e calabresa</p>
                                             </div>
                                         </div>
                                     </div><!--/.panel-body -->
@@ -375,34 +379,6 @@
                                 </div><!--/.panel-collapse -->
                             </div><!-- /.panel -->
 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" href="#collapseThree">
-                                            Lanches
-                                        </a>
-                                    </h4>
-                                </div><!--/.panel-heading -->
-                                <div id="collapseThree" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 text-right">
-                                                <span class="preco">R$ 10,00</span>
-                                                <a href="javascript:;" style="padding: 1px 4px">
-                                                    <i class="glyphicon glyphicon-pencil"></i>										
-                                                </a>
-                                                <a href="javascript:;" style="padding: 1px 4px">
-                                                    <i class="glyphicon glyphicon-trash"></i>										
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-12">
-                                                <h4>6ª Feira</h4>
-                                                <p>Arroz, Feijão, Macarrão, Fritas e Salada. Escolha a carne.</p>
-                                            </div>
-                                        </div>
-                                    </div><!--/.panel-body -->
-                                </div><!--/.panel-collapse -->
-                            </div><!-- /.panel -->
                         </div><!-- /.panel-group -->
                     </div>
                 </div>
@@ -463,5 +439,6 @@
                     </div>
                 </div>
             </div>
+        </div>
     </body>
 </html>
