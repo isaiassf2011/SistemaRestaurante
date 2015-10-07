@@ -327,6 +327,14 @@
 }
 
 /*nav pedido restaurante*/
+
+#custom_carousel .item {
+
+    color:#000;
+    background-color:#eee;
+    padding:20px 0;
+}
+
 #custom_carousel .controls{
     overflow-x: auto;
     overflow-y: hidden;
@@ -352,4 +360,19 @@
     font-size:10px;
     margin-top:5px;
     font-weight:bold
+}
+
+.panel-pedido-head {
+    background: gainsboro;
+    padding: 1px;
+    margin-top: 2px;
+    text-align: center;
+}
+
+.select-quantidade {
+    float: left;
+    font-size: 12px;
+    width: initial;
+    height: inherit;
+    padding: 2px 2px;
 }

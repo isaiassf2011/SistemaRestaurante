@@ -37,6 +37,30 @@
                     size: "sm"
                 });
 
+                $('#pendenteMenu').click(function (evt) {
+                    $('#custom_carousel .controls li.active').removeClass('active');
+                    $('#pendenteMenu').addClass('active');
+                    $('#pronto').hide();
+                    $('#cancelado').hide();
+                    $('#pendente').show();
+                });
+
+                $('#prontoMenu').click(function (evt) {
+                    $('#custom_carousel .controls li.active').removeClass('active');
+                    $('#prontoMenu').addClass('active');
+                    $('#pendente').hide();
+                    $('#cancelado').hide();
+                    $('#pronto').show();
+                });
+
+                $('#canceladoMenu').click(function (evt) {
+                    $('#custom_carousel .controls li.active').removeClass('active');
+                    $('#canceladoMenu').addClass('active');
+                    $('#pendente').hide();
+                    $('#pronto').hide();
+                    $('#cancelado').show();
+                });
+
             });
 
         </script>
@@ -101,7 +125,7 @@
                         <div style="padding: 5px 0px;">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
                         </div>
-                        <div class="panel-group" id="accordion">
+                        <div class="panel-group" id="accordionCardapio">
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -294,71 +318,133 @@
                         </table>
                     </div>
 
-                    <div class="tab-pane fade in active" id="tab3">
-                        <div class="panel-group" id="accordion">
+                    <div class="tab-pane fade in" id="tab3">
+                        <div class="panel-group" id="accordionPedido">
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" href="#collapseOne">
-                                            Pedido #2015 - Mesa - 05
+                                        <a data-toggle="collapse" href="#collapseOnePedido">
+                                            #2015 - Mesa - 05
                                         </a>
                                     </h4>
                                 </div><!--/.panel-heading -->
-                                <div id="collapseOne" class="panel-collapse collapse in" >
-                                    <div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+                                <div id="collapseOnePedido" class="panel-collapse collapse in" >
+                                    <div id="custom_carousel" class="carousel" data-ride="carousel">
                                         <div class="controls">
                                             <ul class="nav">
-                                                <li data-target="#custom_carousel" data-slide-to="0" class="active"><a href="#"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><small>Pendentes</small></a></li>
-                                                <li data-target="#custom_carousel" data-slide-to="1"><a href="#"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span><small>Aceitos - Aguardando Preparo</small></a></li>
-                                                <li data-target="#custom_carousel" data-slide-to="2"><a href="#"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><small>Pronto para Entregar</small></a></li>
-                                                <li data-target="#custom_carousel" data-slide-to="3"><a href="#"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><small>Cancelados</small></a></li>
+                                                <li id="pendenteMenu" data-target="#custom_carousel" data-slide-to="0" class="active"><a href="#"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><small>Pendentes</small></a></li>
+                                                <li id="prontoMenu"  data-target="#custom_carousel" data-slide-to="1"><a href="#" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><small>Entregar</small></a></li>
+                                                <li id="canceladoMenu"  data-target="#custom_carousel" data-slide-to="2"><a href="#"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><small>Cancelados</small></a></li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 text-right">
-                                                <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Editar produto">
-                                                    <i class="glyphicon glyphicon-pencil"></i>										
-                                                </a>
-                                                <a href="javascript:;" style="padding: 1px 4px" title="Excluir produto">
-                                                    <i class="glyphicon glyphicon-trash"></i>										
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-12">
-                                                <h4><span class="badge" style="background-color: rgb(4, 115, 18); color: white;  top: -15px;"
-                                                          title="Número de produtos">10</span> X-Salada</h4>
-                                            </div>
+                                    <div id="pendente">
+                                        <div class="panel-pedido-head">
+                                            <h4>Aguardando Preparo</h4>
                                         </div>
-                                    </div><!--/.panel-body -->
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 text-right">
-                                                <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Editar produto">
-                                                    <i class="glyphicon glyphicon-pencil"></i>										
-                                                </a>
-                                                <a href="javascript:;" style="padding: 1px 4px" title="Excluir produto">
-                                                    <i class="glyphicon glyphicon-trash"></i>										
-                                                </a>
+                                        <div class="panel-body" style="padding: 6px;">
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+
+                                                    <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Preparar 1 X-Salada">
+                                                        <img src="../imgs/preparar.png" alt="" >										
+                                                    </a>
+                                                    <a href="javascript:;" style="padding: 1px 4px" title="Recusar produto">
+                                                        <i class="glyphicon glyphicon-remove-circle"></i>										
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <select class="form-control select-quantidade" title="Quantidade de Itens">
+                                                        <option value="none">1</option>
+                                                        <option value="1">2</option>
+                                                        <option value="2">3</option>
+                                                        <option value="3">4</option>
+                                                        <option value="3">5</option>
+                                                    </select> 
+                                                    <span style="margin-left: 5px;">X-Salada</span>
+                                                </div>
                                             </div>
-                                            <div class="col-xs-12">
-                                                <h4>X-Calabresa</h4>
-                                            </div>
+                                        </div><!--/.panel-body -->
+                                        <div class="panel-pedido-head">
+                                            <h4>Sendo Preparado</h4>
                                         </div>
-                                    </div><!--/.panel-body -->
+                                        <div class="panel-body" style="padding: 6px;">
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Finalizar Preparo">
+                                                        <i class="glyphicon glyphicon-ok"></i>										
+                                                    </a>
+                                                    <a href="javascript:;" style="padding: 1px 4px" title="Excluir produto">
+                                                        <i class="glyphicon glyphicon-trash"></i>										
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    
+                                                    <h4><span class="badge" style="background-color: rgb(4, 115, 18); color: white;  top: -15px;"
+                                                              title="Número de produtos">3</span> X-Calabresa</h4>
+                                                </div>
+                                            </div>
+                                        </div><!--/.panel-body -->
+                                    </div>
+
+                                    <div id="pronto" style="display: none;">
+                                        <div class="panel-pedido-head">
+                                            <h4>Aguardando Entrega</h4>
+                                        </div>
+                                        <div class="panel-body" style="padding: 6px;">
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Entregar">
+                                                        <img src="../imgs/entregar.png" alt="" >										
+                                                    </a>
+                                                    <a href="javascript:;" style="padding: 1px 4px" title="Recusar produto">
+                                                        <i class="glyphicon glyphicon-remove-circle"></i>										
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <h4><span class="badge" style="background-color: rgb(4, 115, 18); color: white;  top: -15px;"
+                                                              title="Número de produtos">3</span> X-Salada</h4>
+                                                </div>
+                                            </div>
+                                        </div><!--/.panel-body -->
+                                        <div class="panel-pedido-head">
+                                            <h4>Entregue</h4>
+                                        </div>
+                                        <div class="panel-body" style="padding: 6px;">
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <span class="preco">R$ 10,00</span>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <h4><span class="badge" style="background-color: rgb(4, 115, 18); color: white;  top: -15px;"
+                                                              title="Número de produtos">2</span> X-Calabreza</h4>
+                                                </div>
+                                            </div>
+                                        </div><!--/.panel-body -->
+                                        <div class="panel-car-total">
+                                            <span>Total à pagar:</span>
+                                            <strong class="subTotal">R$ 25,00</strong>
+                                        </div>
+                                        <div class="panel-car-footer">
+                                            <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Finalizar Pedido</button> 
+                                        </div>
+                                    </div>
+                                    <div id="cancelado" style="display: none;">
+
+                                    </div>
                                 </div><!--/.panel-collapse -->
                             </div><!-- /.panel -->
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" href="#collapseTwo">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapseTwoPedido">
                                             Porções
                                         </a>
                                     </h4>
                                 </div><!--/.panel-heading -->
-                                <div id="collapseTwo" class="panel-collapse collapse" >
+                                <div id="collapseTwoPedido" class="panel-collapse collapse" >
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-xs-12 text-right">
@@ -439,6 +525,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </body>
 </html>
