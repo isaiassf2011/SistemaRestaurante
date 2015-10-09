@@ -14,16 +14,16 @@
         <script src="../js/upload.js" type="text/javascript"></script>
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                $(".btn-pref .btn").click(function() {
+            $(document).ready(function () {
+                $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
                 });
 
-                $('#arquivo').change(function() {
+                $('#arquivo').change(function () {
                     var reader = new FileReader();
-                    $(reader).load(function(event) {
+                    $(reader).load(function (event) {
                         $("#imgProduto").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
@@ -37,7 +37,7 @@
                     size: "sm"
                 });
 
-                $('#pendenteMenu').click(function(evt) {
+                $('#pendenteMenu').click(function (evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#pendenteMenu').addClass('active');
                     $('#pronto').hide();
@@ -45,7 +45,7 @@
                     $('#pendente').show();
                 });
 
-                $('#prontoMenu').click(function(evt) {
+                $('#prontoMenu').click(function (evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#prontoMenu').addClass('active');
                     $('#pendente').hide();
@@ -53,12 +53,76 @@
                     $('#pronto').show();
                 });
 
-                $('#canceladoMenu').click(function(evt) {
+                $('#canceladoMenu').click(function (evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#canceladoMenu').addClass('active');
                     $('#pendente').hide();
                     $('#pronto').hide();
                     $('#cancelado').show();
+                });
+
+                $('.button-checkbox').each(function () {
+
+                    // Settings
+                    var $widget = $(this),
+                            $button = $widget.find('button'),
+                            $checkbox = $widget.find('input:checkbox'),
+                            color = $button.data('color'),
+                            settings = {
+                                on: {
+                                    icon: 'glyphicon glyphicon-check'
+                                },
+                                off: {
+                                    icon: 'glyphicon glyphicon-unchecked'
+                                }
+                            };
+
+                    // Event Handlers
+                    $button.on('click', function () {
+                        $checkbox.prop('checked', !$checkbox.is(':checked'));
+                        $checkbox.triggerHandler('change');
+                        updateDisplay();
+                    });
+                    $checkbox.on('change', function () {
+                        updateDisplay();
+                    });
+
+                    // Actions
+                    function updateDisplay() {
+                        var isChecked = $checkbox.is(':checked');
+
+                        // Set the button's state
+                        $button.data('state', (isChecked) ? "on" : "off");
+
+                        // Set the button's icon
+                        $button.find('.state-icon')
+                                .removeClass()
+                                .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+                        // Update the button's color
+                        if (isChecked) {
+                            $button
+                                    .removeClass('btn-default')
+                                    .addClass('btn-' + color + ' active');
+                        }
+                        else {
+                            $button
+                                    .removeClass('btn-' + color + ' active')
+                                    .addClass('btn-default');
+                        }
+                    }
+
+                    // Initialization
+                    function init() {
+
+                        updateDisplay();
+
+                        // Inject the icon if applicable
+                        if ($button.find('.state-icon').length == 0) {
+                            $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+                        }
+                    }
+                    init();
                 });
 
             });
@@ -333,81 +397,101 @@
                                     <div id="custom_carousel" class="carousel" data-ride="carousel">
                                         <div class="controls">
                                             <ul class="nav">
-                                                <li id="pendenteMenu" data-target="#custom_carousel" data-slide-to="0" class="active"><a href="#"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><small>Pendentes</small></a></li>
-                                                <li id="prontoMenu"  data-target="#custom_carousel" data-slide-to="1"><a href="#" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><small>Entregar</small></a></li>
-                                                <li id="canceladoMenu"  data-target="#custom_carousel" data-slide-to="2"><a href="#"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><small>Cancelados</small></a></li>
+                                                <li id="pendenteMenu" data-target="#custom_carousel" data-slide-to="0" class="active"><a href="#"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><small>Cozinha</small></a></li>
+                                                <li id="prontoMenu"  data-target="#custom_carousel" data-slide-to="1"><a href="#" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><small>Garçon</small></a></li>
+                                                <li id="canceladoMenu"  data-target="#custom_carousel" data-slide-to="2"><a href="#"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><small>Caixa</small></a></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div id="pendente">
-                                        <div class="panel-pedido-head">
-                                            <h4>Aguardando Preparo</h4>
-                                        </div>
                                         <div class="panel-body" style="padding: 6px;">
                                             <div class="row">
                                                 <div class="col-xs-12 text-right">
-
-                                                    <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" title="Preparar 1 X-Salada" class="btn btn-success">
-                                                        <img src="../imgs/preparar.png" alt="" >
-                                                        <span>Preparar</span>
-                                                    </a>
-                                                    <a href="javascript:;" style="padding: 4px 4px" title="Recusar produto" class="btn btn-primary">
-                                                        <i class="glyphicon glyphicon-remove-circle"></i>										
-                                                    </a>
+                                                    <span class="button-checkbox">
+                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <input type="checkbox" class="hidden" />
+                                                    </span>
                                                 </div>
                                                 <div class="col-xs-12">
-                                                    <select class="form-control select-quantidade" title="Quantidade de Itens">
-                                                        <option value="none">1</option>
-                                                        <option value="1">2</option>
-                                                        <option value="2">3</option>
-                                                        <option value="3">4</option>
-                                                        <option value="3">5</option>
-                                                    </select> 
                                                     <span style="margin-left: 5px;">X-Salada</span>
                                                 </div>
                                             </div>
-                                        </div><!--/.panel-body -->
-                                        <div class="panel-pedido-head">
-                                            <h4>Sendo Preparado</h4>
-                                        </div>
-                                        <div class="panel-body" style="padding: 6px;">
                                             <div class="row">
                                                 <div class="col-xs-12 text-right">
-                                                    <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" class="btn btn-success">
-                                                        <img src="../imgs/prato_pronto.png" alt="" >
-                                                        <span>Finalizar preparo</span>										
-                                                    </a>
-                                                    <a href="javascript:;" style="padding: 1px 4px" title="Excluir produto">
-                                                        <i class="glyphicon glyphicon-trash"></i>										
-                                                    </a>
+                                                    <span class="button-checkbox">
+                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <input type="checkbox" class="hidden" />
+                                                    </span>
                                                 </div>
                                                 <div class="col-xs-12">
-
-                                                    <h4><span class="badge" style="background-color: rgb(4, 115, 18); color: white;  top: -15px;"
-                                                              title="Número de produtos">3</span> X-Calabresa</h4>
+                                                    <span style="margin-left: 5px;">X-Salada</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <span class="button-checkbox">
+                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <input type="checkbox" class="hidden" />
+                                                    </span>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <span style="margin-left: 5px;">X-Salada</span>
                                                 </div>
                                             </div>
                                         </div><!--/.panel-body -->
                                     </div>
 
                                     <div id="pronto" style="display: none;">
-                                        <div class="panel-pedido-head">
-                                            <h4>Aguardando Entrega</h4>
+                                        <div class="panel-pedido-head" style="text-align: right;">
+                                            <h5 style="margin-right: 5px;">Mesa</h5>
                                         </div>
                                         <div class="panel-body" style="padding: 6px;">
                                             <div class="row">
                                                 <div class="col-xs-12 text-right">
-                                                    <a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#login-modal" >
-                                                        <img src="../imgs/entregar.png" alt="" >
-                                                        <span>Entregar</span>
-                                                    </a>
-                                                    <a href="javascript:;" style="padding: 1px 4px" title="Recusar produto">
-                                                        <i class="glyphicon glyphicon-remove-circle"></i>										
-                                                    </a>
+                                                    <span class="button-checkbox">
+                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <input type="checkbox" class="hidden" />
+                                                    </span>
+                                                    <span style="margin-right: 15px; margin-left: 15px;">1</span>
                                                 </div>
                                                 <div class="col-xs-12">
-                                                    <h4><span class="badge" style="background-color: rgb(4, 115, 18); color: white;  top: -15px;"
-                                                              title="Número de produtos">3</span> X-Salada</h4>
+                                                    <span style="margin-left: 5px;">X-Salada</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <span class="button-checkbox">
+                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <input type="checkbox" class="hidden" />
+                                                    </span>
+                                                    <span style="margin-right: 15px; margin-left: 15px;">1</span>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <span style="margin-left: 5px;">X-Burguer</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <span class="button-checkbox">
+                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <input type="checkbox" class="hidden" />
+                                                    </span>
+                                                    <span style="margin-right: 15px; margin-left: 15px;">3</span>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <span style="margin-left: 5px;">Coca-Lata</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <span class="button-checkbox">
+                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <input type="checkbox" class="hidden" />
+                                                    </span>
+                                                    <span style="margin-right: 15px; margin-left: 15px;">5</span>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <span style="margin-left: 5px;">X-Salada</span>
                                                 </div>
                                             </div>
                                         </div><!--/.panel-body -->
