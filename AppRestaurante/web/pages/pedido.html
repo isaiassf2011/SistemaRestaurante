@@ -12,14 +12,14 @@
         <script type="text/javascript" src="../js/bootstrap-filestyle.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                $(".btn-pref .btn").click(function() {
+            $(document).ready(function () {
+                $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
                 });
 
-                $('#pendenteMenu').click(function(evt) {
+                $('#pendenteMenu').click(function (evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#pendenteMenu').addClass('active');
                     $('#pronto').hide();
@@ -27,7 +27,7 @@
                     $('#pendente').show();
                 });
 
-                $('#prontoMenu').click(function(evt) {
+                $('#prontoMenu').click(function (evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#prontoMenu').addClass('active');
                     $('#pendente').hide();
@@ -35,7 +35,7 @@
                     $('#pronto').show();
                 });
 
-                $('#canceladoMenu').click(function(evt) {
+                $('#canceladoMenu').click(function (evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#canceladoMenu').addClass('active');
                     $('#pendente').hide();
@@ -43,7 +43,7 @@
                     $('#cancelado').show();
                 });
 
-                $('.button-checkbox').each(function() {
+                $('.button-checkbox').each(function () {
 
                     // Settings
                     var $widget = $(this),
@@ -60,12 +60,12 @@
                             };
 
                     // Event Handlers
-                    $button.on('click', function() {
+                    $button.on('click', function () {
                         $checkbox.prop('checked', !$checkbox.is(':checked'));
                         $checkbox.triggerHandler('change');
                         updateDisplay();
                     });
-                    $checkbox.on('change', function() {
+                    $checkbox.on('change', function () {
                         updateDisplay();
                     });
 
@@ -302,7 +302,17 @@
                                         </div>
                                     </div>
                                     <div id="cancelado" style="display: none;">
-                                        <div class="panel-group" id="accordionCardapio" style="padding: 3px;">
+                                        <div class="panel-group" id="accordionCardapio">
+                                            <div id="custom-search-input">
+                                                <div class="input-group col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Buscar mesa" />
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-info" type="button">
+                                                            <i class="glyphicon glyphicon-search"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">

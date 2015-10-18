@@ -13,16 +13,14 @@
     box-sizing: border-box;
 }
 .card.hovercard {
+    height: 130px;
     position: relative;
     padding-top: 0;
     overflow: hidden;
-    text-align: center;
-    background-color: #fff;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: #f2f3f3;
 }
-.card.hovercard .card-background {
-    height: 130px;
-}
+
+/*
 .card-background img {
     -webkit-filter: blur(25px);
     -moz-filter: blur(25px);
@@ -32,7 +30,8 @@
     margin-left: -100px;
     margin-top: -200px;
     min-width: 130%;
-}
+}*/
+
 .card.hovercard .useravatar {
     position: absolute;
     top: 15px;
@@ -40,8 +39,9 @@
     right: 0;
 }
 .card.hovercard .useravatar img {
-    width: 100px;
-    height: 100px;
+    float: left;
+    width: 80px;
+    height: 80px;
     max-width: 100px;
     max-height: 100px;
     -moz-border-radius: 50%;
@@ -74,6 +74,11 @@
     padding: 0 20px;
     margin-bottom: 17px;
 }
+
+.card-title{
+    margin-left: 90px;
+}
+
 .btn-pref .btn {
     -webkit-border-radius:0 !important;
 }
@@ -375,4 +380,34 @@
     width: initial;
     height: inherit;
     padding: 2px 2px;
+}
+
+//campo de pesquisa
+
+#custom-search-input{
+    padding: 3px;
+    border: solid 1px #E4E4E4;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
 }
