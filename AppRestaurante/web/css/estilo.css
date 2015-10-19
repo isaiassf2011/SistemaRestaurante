@@ -1,5 +1,5 @@
 .card {
-    margin-top: 20px;
+    margin-top: 5px;
     padding: 30px;
     background-color: rgba(214, 224, 226, 0.2);
     -webkit-border-top-left-radius:5px;
@@ -13,7 +13,7 @@
     box-sizing: border-box;
 }
 .card.hovercard {
-    height: 130px;
+    height: 85px;
     position: relative;
     padding-top: 0;
     overflow: hidden;
@@ -40,12 +40,12 @@
 }
 .card.hovercard .useravatar img {
     float: left;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     max-width: 100px;
     max-height: 100px;
     -moz-border-radius: 50%;
-    border: 5px solid rgba(0, 0, 0, 0.2);
+    margin-left: 5px;
 }
 .card.hovercard .card-info {
     position: absolute;
@@ -76,7 +76,7 @@
 }
 
 .card-title{
-    margin-left: 90px;
+    margin-left: 75px;
 }
 
 .btn-pref .btn {

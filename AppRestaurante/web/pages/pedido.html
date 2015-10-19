@@ -12,14 +12,14 @@
         <script type="text/javascript" src="../js/bootstrap-filestyle.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $(".btn-pref .btn").click(function () {
+            $(document).ready(function() {
+                $(".btn-pref .btn").click(function() {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
                 });
 
-                $('#pendenteMenu').click(function (evt) {
+                $('#pendenteMenu').click(function(evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#pendenteMenu').addClass('active');
                     $('#pronto').hide();
@@ -27,7 +27,7 @@
                     $('#pendente').show();
                 });
 
-                $('#prontoMenu').click(function (evt) {
+                $('#prontoMenu').click(function(evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#prontoMenu').addClass('active');
                     $('#pendente').hide();
@@ -35,7 +35,7 @@
                     $('#pronto').show();
                 });
 
-                $('#canceladoMenu').click(function (evt) {
+                $('#canceladoMenu').click(function(evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#canceladoMenu').addClass('active');
                     $('#pendente').hide();
@@ -43,7 +43,7 @@
                     $('#cancelado').show();
                 });
 
-                $('.button-checkbox').each(function () {
+                $('.button-checkbox').each(function() {
 
                     // Settings
                     var $widget = $(this),
@@ -60,12 +60,12 @@
                             };
 
                     // Event Handlers
-                    $button.on('click', function () {
+                    $button.on('click', function() {
                         $checkbox.prop('checked', !$checkbox.is(':checked'));
                         $checkbox.triggerHandler('change');
                         updateDisplay();
                     });
-                    $checkbox.on('change', function () {
+                    $checkbox.on('change', function() {
                         updateDisplay();
                     });
 
@@ -190,17 +190,16 @@
                                             <div class="row">
                                                 <div class="col-xs-12 text-right">
                                                     <span class="button-checkbox">
-                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <button type="button" class="btn" data-color="success" style="padding: 4px 12px">Feito</button>
                                                         <input type="checkbox" class="hidden" />
                                                     </span>
-                                                    <a href="javascript:;" style="padding: 1px 4px" title="Excluir">
+                                                    <a href="javascript:;" style="padding: 6px 6px" title="Excluir" class="btn btn-danger">
                                                         <i class="glyphicon glyphicon-trash"></i>										
                                                     </a>
-                                                    <span style="margin-right: 15px; margin-left: 15px;">1</span>
+                                                    <span style="margin-right: 15px; margin-left: 15px;">3</span>
                                                 </div>
                                                 <div class="col-xs-12">
-                                                    <span style="margin-left: 5px;">X-Salada</span>
-                                                    <p>Arroz, Feijão, Macarrão, Fritas e Salada. Escolha a carne.</p>
+                                                    <span style="margin-left: 5px;">Coca-Lata</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -208,16 +207,16 @@
                                             <div class="row">
                                                 <div class="col-xs-12 text-right">
                                                     <span class="button-checkbox">
-                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <button type="button" class="btn" data-color="success" style="padding: 4px 12px">Feito</button>
                                                         <input type="checkbox" class="hidden" />
                                                     </span>
-                                                    <a href="javascript:;" style="padding: 1px 4px" title="Excluir">
+                                                    <a href="javascript:;" style="padding: 6px 6px" title="Excluir" class="btn btn-danger">
                                                         <i class="glyphicon glyphicon-trash"></i>										
                                                     </a>
-                                                    <span style="margin-right: 15px; margin-left: 15px;">1</span>
+                                                    <span style="margin-right: 15px; margin-left: 15px;">3</span>
                                                 </div>
                                                 <div class="col-xs-12">
-                                                    <span style="margin-left: 5px;">X-Burguer</span>
+                                                    <span style="margin-left: 5px;">Coca-Lata</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -225,10 +224,10 @@
                                             <div class="row">
                                                 <div class="col-xs-12 text-right">
                                                     <span class="button-checkbox">
-                                                        <button type="button" class="btn" data-color="success">Feito</button>
+                                                        <button type="button" class="btn" data-color="success" style="padding: 4px 12px">Feito</button>
                                                         <input type="checkbox" class="hidden" />
                                                     </span>
-                                                    <a href="javascript:;" style="padding: 1px 4px" title="Excluir">
+                                                    <a href="javascript:;" style="padding: 6px 6px" title="Excluir" class="btn btn-danger">
                                                         <i class="glyphicon glyphicon-trash"></i>										
                                                     </a>
                                                     <span style="margin-right: 15px; margin-left: 15px;">3</span>
