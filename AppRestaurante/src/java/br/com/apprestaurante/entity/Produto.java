@@ -6,9 +6,18 @@ package br.com.apprestaurante.entity;
  */
 public class Produto {
 
+    private Integer codigo;
     private String nome;
     private String descricao;
     private Double preco;
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
 
     public String getNome() {
         return nome;
