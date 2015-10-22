@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 public class Mesa implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "mesa_codigo", nullable = false, unique = true)
     private Integer codigo;
 
@@ -25,7 +28,7 @@ public class Mesa implements Serializable {
     private Integer numero;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tb_restaurante_res_codigo", referencedColumnName = "res_codigo", nullable = false)
+    @JoinColumn(name = "restaurante_codigo", referencedColumnName = "res_codigo", nullable = false)
     private Restaurante restaurante;
 
     public Integer getCodigo() {

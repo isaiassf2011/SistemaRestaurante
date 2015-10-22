@@ -1,15 +1,44 @@
 package br.com.apprestaurante.entity;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  *
  * @author isaias_sergio
  */
-public class Produto {
+@Entity
+@Table(name = "tb_produto")
+public class Produto implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "produto_codigo", nullable = false, unique = true)
     private Integer codigo;
+
+    @Column(name = "produto_nome", nullable = false, length = 200)
     private String nome;
+
+    @Column(name = "produto_descricao", nullable = false, length = 200)
     private String descricao;
+
+    @Column(name = "produto_preco", nullable = false)
     private Double preco;
+
+    @Column(name = "produto_imagem", nullable = false, length = 250)
+    private String imagem;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurante_codigo", referencedColumnName = "res_codigo", nullable = false)
+    private Restaurante restaurante;
 
     public Integer getCodigo() {
         return codigo;
@@ -41,6 +70,22 @@ public class Produto {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
     }
 
 }
