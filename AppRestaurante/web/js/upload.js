@@ -12,6 +12,7 @@ $('#form').ajaxForm({
         $('#porcentagem').html('100%');
         //$('#btnExcluir').show();
         $('#barraDeProgresso').hide();
+        $('#caminho').val(json.caminho);
         //$('#imgProduto').attr('src', json.caminho+"?"+ new Date().getTime());
     }
 

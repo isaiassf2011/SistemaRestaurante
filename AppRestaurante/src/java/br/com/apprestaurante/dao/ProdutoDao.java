@@ -1,10 +1,13 @@
 package br.com.apprestaurante.dao;
 
 import br.com.apprestaurante.entity.Produto;
+import br.com.apprestaurante.entity.Restaurante;
 import br.com.apprestaurante.util.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -13,58 +16,108 @@ import org.hibernate.Session;
 public class ProdutoDao {
 
     public List<Produto> getAll() {
-        List<Produto> lista = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
+        Transaction transacao = null;
+        List<Produto> lista = null;
 
-        Query query = session.createQuery("from entity.Produto");
-        lista = query.list();
-
-        session.getTransaction().commit();
-        session.close();
-
-        return lista;
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("from entity.Produto");
+            lista = query.list();
+            transacao.commit();
+            return lista;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
     }
 
     public List<Produto> getAllByNome(String nome) {
-        List<Produto> lista = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
+        Transaction transacao = null;
+        List<Produto> lista = null;
 
-        Query query = session.createQuery("from entity.Produto as p where p.nome like :nome");
-        query.setParameter("nome", "%" + nome + "%");
-        lista = query.list();
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("from entity.Produto as r where r.nome like :nome");
+            query.setParameter("nome", "%" + nome + "%");
+            lista = query.list();
+            transacao.commit();
+            return lista;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
 
-        session.getTransaction().commit();
-        session.close();
-
-        return lista;
     }
 
     public void excluir(Produto produto) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        session.delete(produto);
-        session.getTransaction().commit();
-        session.close();
+        Transaction transacao = null;
+
+        try {
+            transacao = session.beginTransaction();
+            session.delete(produto);
+            transacao.commit();
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
     }
 
     public Produto getById(Integer id) {
-        Produto p = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        p = (Produto) session.get(Produto.class, id);
-        session.getTransaction().commit();
-        session.close();
-        return p;
+        Transaction transacao = null;
+        Produto p = null;
+
+        try {
+            transacao = session.beginTransaction();
+            p = (Produto) session.get(Produto.class, id);
+            transacao.commit();
+            return p;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
     }
 
     public void salvar(Produto produto) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        session.saveOrUpdate(produto);
-        session.getTransaction().commit();
-        session.close();
+        Transaction transacao = null;
+
+        try {
+            transacao = session.beginTransaction();
+            session.saveOrUpdate(produto);
+            transacao.commit();
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
     }
 
 }

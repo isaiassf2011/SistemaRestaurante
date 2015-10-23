@@ -1,6 +1,7 @@
 package br.com.apprestaurante.helper;
 
 import br.com.apprestaurante.command.CommandInterface;
+import br.com.apprestaurante.command.SalvarProduto;
 import br.com.apprestaurante.command.SalvarRestaurante;
 import br.com.apprestaurante.constante.AcaoConstante;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class ControllerHelper {
 
         comandos = new HashMap<String, CommandInterface>();
         comandos.put(AcaoConstante.SALVAR_RESTAURANTE, new SalvarRestaurante());
+        comandos.put(AcaoConstante.SALVAR_PRODUTO, new SalvarProduto());
 
     }
 

@@ -18,12 +18,11 @@ public class SalvarRestaurante implements CommandInterface {
 
             RestauranteDao dao = new RestauranteDao();
             Restaurante restaurante = new Restaurante();
-            restaurante.setCodigo(1);
             restaurante.setNome(request.getParameter("nomeRestaurante"));
             restaurante.setCep(request.getParameter("cep"));
             restaurante.setEmail(request.getParameter("email"));
             restaurante.setTelefone(request.getParameter("telefone"));
-            restaurante.setLogo("Teste");
+            restaurante.setLogo(request.getParameter("logo"));
             dao.salvar(restaurante);
 
         } catch (Exception e) {

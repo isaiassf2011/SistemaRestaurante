@@ -1,6 +1,7 @@
 package br.com.apprestaurante.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,11 +28,11 @@ public class Produto implements Serializable {
     @Column(name = "produto_nome", nullable = false, length = 200)
     private String nome;
 
-    @Column(name = "produto_descricao", nullable = false, length = 200)
+    @Column(name = "produto_descricao", nullable = false, length = 300)
     private String descricao;
 
-    @Column(name = "produto_preco", nullable = false)
-    private Double preco;
+    @Column(name = "produto_preco", nullable = false, precision = 7, scale = 2)
+    private BigDecimal preco;
 
     @Column(name = "produto_imagem", nullable = false, length = 250)
     private String imagem;
@@ -64,14 +65,6 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
-    public Double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    }
-
     public String getImagem() {
         return imagem;
     }
@@ -86,6 +79,14 @@ public class Produto implements Serializable {
 
     public void setRestaurante(Restaurante restaurante) {
         this.restaurante = restaurante;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
     }
 
 }
