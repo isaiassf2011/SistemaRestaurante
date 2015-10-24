@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contexto" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -59,7 +59,7 @@
                     //definimos a url
                     url: '../ControllerServlet?acao=salvarProduto',
                     //definimos o tipo de requisição
-                    type: 'post',
+                    type: 'POST',
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
@@ -73,9 +73,20 @@
                 });
             }
 
-            function buscarProdutos() {
+            function buscarProdutos(codigoCategoria) {
+                
+                $.ajax({
+                    url: 'ControllerServlet?acao=listarCardapio',
+                    type: 'POST',
+                    data: '&codigoCategoria='+codigoCategoria,
+                    beforeSend: function () {
 
-
+                    },
+                    success: function (pre) {
+			var href = $(this).attr('href');
+			$("#categoria"+codigoCategoria).load( href +" #categoria"+codigoCategoria);
+                    }
+                });
 
             }
 
@@ -153,19 +164,19 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" href="#collapseOne" onclick="buscarProdutos();">
+                                            <a class="collapsed" data-toggle="collapse" href="#categoria${c.codigo}" onclick="buscarProdutos(${c.codigo});">
                                                 ${c.descricao}
                                             </a>
                                         </h4>
                                     </div><!--/.panel-heading -->
-                                    <div id="collapseOne" class="panel-collapse collapse in" >
+                                    <div id="categoria${c.codigo}" class="panel-collapse collapse" >
                                         <c:forEach var="p" items="${produtos}" varStatus="j">
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-xs-12 text-right">
-                                                        <img src="http://www.bragaburgerq.com.br/wp-content/uploads/2015/01/x-salada1.jpg" class="img-circle pull-left" style="
+                                                        <img src="${p.imagem}" class="img-circle pull-left" style="
                                                              margin-top: 0px;" alt="">
-                                                        <span class="preco">R$ 10,00</span>
+                                                        <span class="preco">R$ ${p.preco}</span>
                                                         <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
                                                             <i class="glyphicon glyphicon-pencil"></i>										
                                                         </a>
@@ -174,8 +185,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-xs-12">
-                                                        <h5><b>X-Salada</b></h5>
-                                                        <p style="font-size: 12px;">Pão, amburguer, presunto, queijo, alface e tomate</p>
+                                                        <h5><b>${p.nome}</b></h5>
+                                                        <p style="font-size: 12px;">${p.descricao}</p>
                                                     </div>
                                                 </div>
                                             </div><!--/.panel-body -->
@@ -203,63 +214,6 @@
                                 </div><!-- /.panel -->
                             </c:forEach>
 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" href="#collapseTwo">
-                                            Porções
-                                        </a>
-                                    </h4>
-                                </div><!--/.panel-heading -->
-                                <div id="collapseTwo" class="panel-collapse collapse" >
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 text-right">
-                                                <span class="preco">R$ 10,00</span>
-                                                <a href="javascript:;" style="padding: 1px 4px">
-                                                    <i class="glyphicon glyphicon-pencil"></i>										
-                                                </a>
-                                                <a href="javascript:;" style="padding: 1px 4px">
-                                                    <i class="glyphicon glyphicon-trash"></i>										
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-12">
-                                                <h4>6ª Feira</h4>
-                                                <p>Arroz, Feijão, Macarrão, Fritas e Salada. Escolha a carne.</p>
-                                            </div>
-                                        </div>
-                                    </div><!--/.panel-body -->
-                                </div><!--/.panel-collapse -->
-                            </div><!-- /.panel -->
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" href="#collapseThree">
-                                            Lanches
-                                        </a>
-                                    </h4>
-                                </div><!--/.panel-heading -->
-                                <div id="collapseThree" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 text-right">
-                                                <span class="preco">R$ 10,00</span>
-                                                <a href="javascript:;" style="padding: 1px 4px">
-                                                    <i class="glyphicon glyphicon-pencil"></i>										
-                                                </a>
-                                                <a href="javascript:;" style="padding: 1px 4px">
-                                                    <i class="glyphicon glyphicon-trash"></i>										
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-12">
-                                                <h4>6ª Feira</h4>
-                                                <p>Arroz, Feijão, Macarrão, Fritas e Salada. Escolha a carne.</p>
-                                            </div>
-                                        </div>
-                                    </div><!--/.panel-body -->
-                                </div><!--/.panel-collapse -->
-                            </div><!-- /.panel -->
                         </div><!-- /.panel-group -->
                     </div>
 

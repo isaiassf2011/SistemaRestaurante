@@ -21,11 +21,11 @@ public class ListarCardapio implements CommandInterface {
         List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
         List<Produto> produtos = new ArrayList<Produto>();
 
-        //produtos = new ProdutoDao().buscarPorRestaurante(1);
+        produtos = new ProdutoDao().buscarPorCategoria(Integer.parseInt(request.getParameter("codigoCategoria")),1);
         categorias = new CategoriaProdutoDao().buscarPorRestaurante(1);
 
         request.setAttribute("categorias", categorias);
-        //request.setAttribute("produtos", produtos);
+        request.setAttribute("produtos", produtos);
 
         return "pages/principal.jsp";
 
