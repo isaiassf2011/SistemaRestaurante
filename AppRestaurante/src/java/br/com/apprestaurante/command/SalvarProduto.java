@@ -7,6 +7,7 @@ package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.ProdutoDao;
 import br.com.apprestaurante.dao.RestauranteDao;
+import br.com.apprestaurante.entity.CategoriaProduto;
 import br.com.apprestaurante.entity.Produto;
 import br.com.apprestaurante.entity.Restaurante;
 import java.math.BigDecimal;
@@ -33,7 +34,10 @@ public class SalvarProduto implements CommandInterface {
             produto.setPreco(new BigDecimal(request.getParameter("preco")));
             Restaurante restaurante = new RestauranteDao().getById(1);
             produto.setRestaurante(restaurante);
-            
+            CategoriaProduto categoriaProduto = new CategoriaProduto();
+            categoriaProduto.setCodigo(Integer.parseInt(request.getParameter("cmbCategoria")));
+            produto.setCategoriaProduto(categoriaProduto);
+
             dao.salvar(produto);
 
         } catch (Exception e) {

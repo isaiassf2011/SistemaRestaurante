@@ -1,3 +1,13 @@
+<%-- 
+    Document   : principal
+    Created on : 23/10/2015, 22:30:57
+    Author     : isaias
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html>
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -60,6 +70,12 @@
                         alert("Cadastrado");
                     }
                 });
+            }
+
+            function buscarProdutos() {
+
+
+
             }
 
         </script>
@@ -132,55 +148,59 @@
                         </div>
                         <div class="panel-group" id="accordionCardapio">
 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" href="#collapseOne">
-                                            Bebidas
-                                        </a>
-                                    </h4>
-                                </div><!--/.panel-heading -->
-                                <div id="collapseOne" class="panel-collapse collapse in" >
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 text-right">
-                                                <img src="http://www.bragaburgerq.com.br/wp-content/uploads/2015/01/x-salada1.jpg" class="img-circle pull-left" style="
-                                                     margin-top: 0px;" alt="">
-                                                <span class="preco">R$ 10,00</span>
-                                                <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
-                                                    <i class="glyphicon glyphicon-pencil"></i>										
-                                                </a>
-                                                <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
-                                                    <i class="glyphicon glyphicon-trash"></i>										
-                                                </a>
+                            <c:forEach var="c" items="${categorias}" varStatus="i">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#collapseOne" onclick="buscarProdutos();">
+                                                Bebidas
+                                            </a>
+                                        </h4>
+                                    </div><!--/.panel-heading -->
+                                    <div id="collapseOne" class="panel-collapse collapse in" >
+                                        <c:forEach var="p" items="${produtos}" varStatus="j">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-xs-12 text-right">
+                                                        <img src="http://www.bragaburgerq.com.br/wp-content/uploads/2015/01/x-salada1.jpg" class="img-circle pull-left" style="
+                                                             margin-top: 0px;" alt="">
+                                                        <span class="preco">R$ 10,00</span>
+                                                        <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
+                                                            <i class="glyphicon glyphicon-pencil"></i>										
+                                                        </a>
+                                                        <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
+                                                            <i class="glyphicon glyphicon-trash"></i>										
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <h5><b>X-Salada</b></h5>
+                                                        <p style="font-size: 12px;">Pão, amburguer, presunto, queijo, alface e tomate</p>
+                                                    </div>
+                                                </div>
+                                            </div><!--/.panel-body -->
+                                        </c:forEach>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <img src="http://www.bigxpicanha.com.br/Content/Produto/Imagem/Big-X-Calabresa-Acebolada-27.png" class="img-circle pull-left" style="
+                                                         margin-top: 0px;" alt="">
+                                                    <span class="preco">R$ 10,00</span>
+                                                    <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
+                                                        <i class="glyphicon glyphicon-pencil"></i>										
+                                                    </a>
+                                                    <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
+                                                        <i class="glyphicon glyphicon-trash"></i>										
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <h4>X-Calabresa</h4>
+                                                    <p>Pão, amburguer, presunto, queijo e calabresa</p>
+                                                </div>
                                             </div>
-                                            <div class="col-xs-12">
-                                                <h5><b>X-Salada</b></h5>
-                                                <p style="font-size: 12px;">Pão, amburguer, presunto, queijo, alface e tomate</p>
-                                            </div>
-                                        </div>
-                                    </div><!--/.panel-body -->
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 text-right">
-                                                <img src="http://www.bigxpicanha.com.br/Content/Produto/Imagem/Big-X-Calabresa-Acebolada-27.png" class="img-circle pull-left" style="
-                                                     margin-top: 0px;" alt="">
-                                                <span class="preco">R$ 10,00</span>
-                                                <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
-                                                    <i class="glyphicon glyphicon-pencil"></i>										
-                                                </a>
-                                                <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
-                                                    <i class="glyphicon glyphicon-trash"></i>										
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-12">
-                                                <h4>X-Calabresa</h4>
-                                                <p>Pão, amburguer, presunto, queijo e calabresa</p>
-                                            </div>
-                                        </div>
-                                    </div><!--/.panel-body -->
-                                </div><!--/.panel-collapse -->
-                            </div><!-- /.panel -->
+                                        </div><!--/.panel-body -->
+                                    </div><!--/.panel-collapse -->
+                                </div><!-- /.panel -->
+                            </c:forEach>
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -390,3 +410,4 @@
         </div>
     </body>
 </html>
+

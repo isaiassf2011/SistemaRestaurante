@@ -1,7 +1,6 @@
 package br.com.apprestaurante.dao;
 
 import br.com.apprestaurante.entity.Produto;
-import br.com.apprestaurante.entity.Restaurante;
 import br.com.apprestaurante.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -23,6 +22,29 @@ public class ProdutoDao {
         try {
             transacao = session.beginTransaction();
             Query query = session.createQuery("from entity.Produto");
+            lista = query.list();
+            transacao.commit();
+            return lista;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
+    }
+    
+    public List<Produto> buscarPorCategoria(Integer codigo) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
+        List<Produto> lista = null;
+
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("from entity.Produto as p where p.categoriaProduto.codigo = :categoria ");
+            query.setParameter("categoria", codigo);
             lista = query.list();
             transacao.commit();
             return lista;

@@ -41,6 +41,10 @@ public class Produto implements Serializable {
     @JoinColumn(name = "restaurante_codigo", referencedColumnName = "res_codigo", nullable = false)
     private Restaurante restaurante;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoria_pro_codigo", referencedColumnName = "categoria_pro_codigo", nullable = false)
+    private CategoriaProduto categoriaProduto;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -87,6 +91,14 @@ public class Produto implements Serializable {
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+
+    public CategoriaProduto getCategoriaProduto() {
+        return categoriaProduto;
+    }
+
+    public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
+        this.categoriaProduto = categoriaProduto;
     }
 
 }
