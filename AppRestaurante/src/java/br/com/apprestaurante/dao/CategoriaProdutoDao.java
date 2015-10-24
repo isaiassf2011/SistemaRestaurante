@@ -1,5 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.apprestaurante.dao;
 
+import br.com.apprestaurante.entity.CategoriaProduto;
 import br.com.apprestaurante.entity.Produto;
 import br.com.apprestaurante.util.HibernateUtil;
 import java.util.List;
@@ -12,16 +18,16 @@ import org.hibernate.Transaction;
  *
  * @author isaias
  */
-public class ProdutoDao {
+public class CategoriaProdutoDao {
 
-    public List<Produto> getAll() {
+    public List<CategoriaProduto> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
-        List<Produto> lista = null;
+        List<CategoriaProduto> lista = null;
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("from Produto");
+            Query query = session.createQuery("from CategoriaProduto");
             lista = query.list();
             transacao.commit();
             return lista;
@@ -35,39 +41,15 @@ public class ProdutoDao {
             session.close();
         }
     }
-    
-    public List<Produto> buscarPorCategoria(Integer codigo, Integer codigoRestaurante) {
+
+    public List<CategoriaProduto> buscarPorRestaurante(Integer codigoRestaurante) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
-        List<Produto> lista = null;
+        List<CategoriaProduto> lista = null;
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("from Produto as p where p.categoriaProduto.codigo = :categoria and p.restaurante.codigo = :codigoRestaurante ");
-            query.setParameter("categoria", codigo);
-            query.setParameter("codigoRestaurante", codigoRestaurante);
-            lista = query.list();
-            transacao.commit();
-            return lista;
-        } catch (HibernateException e) {
-            if (transacao != null) {
-                transacao.rollback();
-            }
-            e.printStackTrace();
-            throw new HibernateException(e.getMessage());
-        } finally {
-            session.close();
-        }
-    }
-    
-    public List<Produto> buscarPorRestaurante(Integer codigoRestaurante) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transacao = null;
-        List<Produto> lista = null;
-
-        try {
-            transacao = session.beginTransaction();
-            Query query = session.createQuery("from Produto as p where p.restaurante.codigo = :codigoRestaurante ");
+            Query query = session.createQuery("Select distinct p.categoriaProduto from Produto as p where p.restaurante.codigo = :codigoRestaurante ");
             query.setParameter("codigoRestaurante", codigoRestaurante);
             lista = query.list();
             transacao.commit();
@@ -90,7 +72,7 @@ public class ProdutoDao {
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("from entity.Produto as r where r.nome like :nome");
+            Query query = session.createQuery("from Produto as r where r.nome like :nome");
             query.setParameter("nome", "%" + nome + "%");
             lista = query.list();
             transacao.commit();
@@ -107,13 +89,13 @@ public class ProdutoDao {
 
     }
 
-    public void excluir(Produto produto) {
+    public void excluir(CategoriaProduto categoriaProduto) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
 
         try {
             transacao = session.beginTransaction();
-            session.delete(produto);
+            session.delete(categoriaProduto);
             transacao.commit();
         } catch (HibernateException e) {
             if (transacao != null) {
@@ -126,16 +108,16 @@ public class ProdutoDao {
         }
     }
 
-    public Produto getById(Integer id) {
+    public CategoriaProduto getById(Integer id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
-        Produto p = null;
+        CategoriaProduto cp = null;
 
         try {
             transacao = session.beginTransaction();
-            p = (Produto) session.get(Produto.class, id);
+            cp = (CategoriaProduto) session.get(CategoriaProduto.class, id);
             transacao.commit();
-            return p;
+            return cp;
         } catch (HibernateException e) {
             if (transacao != null) {
                 transacao.rollback();
@@ -147,13 +129,13 @@ public class ProdutoDao {
         }
     }
 
-    public void salvar(Produto produto) {
+    public void salvar(CategoriaProduto categoriaProduto) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
 
         try {
             transacao = session.beginTransaction();
-            session.saveOrUpdate(produto);
+            session.saveOrUpdate(categoriaProduto);
             transacao.commit();
         } catch (HibernateException e) {
             if (transacao != null) {

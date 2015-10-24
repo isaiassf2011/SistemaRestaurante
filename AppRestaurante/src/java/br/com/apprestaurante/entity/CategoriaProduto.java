@@ -20,7 +20,7 @@ public class CategoriaProduto implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "categoria_pro_codigo", nullable = false, unique = true)
     private Integer codigo;
-    
+
     @Column(name = "categoria_pro_descricao", nullable = false, length = 200)
     private String descricao;
 
@@ -38,6 +38,11 @@ public class CategoriaProduto implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoriaProduto{" + "codigo=" + codigo + ", descricao=" + descricao + '}';
     }
 
 }

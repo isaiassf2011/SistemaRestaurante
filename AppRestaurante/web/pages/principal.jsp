@@ -7,21 +7,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="contexto" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
     <head>
         <title>TODO supply a title</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css"/>
-        <link href="../css/estiloLogin.css" rel="stylesheet">
-        <link href="../css/estilo.css" rel="stylesheet">
+        <link rel="stylesheet" href="${contexto}/bootstrap/css/bootstrap.min.css" type="text/css"/>
+        <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
+        <link href="${contexto}/css/estilo.css" rel="stylesheet">
 
-        <script src="../js/jquery-1.11.3.min.js"></script>
-        <script src="../bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../js/bootstrap-filestyle.min.js"></script>
-        <script src="../js/jquery.form.js" type="text/javascript"></script>
-        <script src="../js/upload.js" type="text/javascript"></script>
+        <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
+        <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${contexto}/js/bootstrap-filestyle.min.js"></script>
+        <script src="${contexto}/js/jquery.form.js" type="text/javascript"></script>
+        <script src="${contexto}/js/upload.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -153,7 +154,7 @@
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" href="#collapseOne" onclick="buscarProdutos();">
-                                                Bebidas
+                                                ${c.descricao}
                                             </a>
                                         </h4>
                                     </div><!--/.panel-heading -->
