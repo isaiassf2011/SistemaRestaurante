@@ -74,19 +74,22 @@
             }
 
             function buscarProdutos(codigoCategoria) {
-                
-                $.ajax({
-                    url: 'ControllerServlet?acao=listarCardapio',
-                    type: 'POST',
-                    data: '&codigoCategoria='+codigoCategoria,
-                    beforeSend: function () {
+                var classe = $("#categoria" + codigoCategoria).attr("class");
 
-                    },
-                    success: function (pre) {
-			var href = $(this).attr('href');
-			$("#categoria"+codigoCategoria).load( href +" #categoria"+codigoCategoria);
-                    }
-                });
+                if (classe === "panel-collapse collapse") {
+                    $.ajax({
+                        url: 'ControllerServlet?acao=listarProdutos',
+                        type: 'POST',
+                        data: '&codigoCategoria=' + codigoCategoria,
+                        beforeSend: function () {
+                            $("#processing-modal").modal('show');
+                        },
+                        success: function (data) {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#categoria" + codigoCategoria).html(data);
+                        }
+                    });
+                }
 
             }
 
@@ -159,61 +162,7 @@
                             <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
                         </div>
                         <div class="panel-group" id="accordionCardapio">
-
-                            <c:forEach var="c" items="${categorias}" varStatus="i">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" data-toggle="collapse" href="#categoria${c.codigo}" onclick="buscarProdutos(${c.codigo});">
-                                                ${c.descricao}
-                                            </a>
-                                        </h4>
-                                    </div><!--/.panel-heading -->
-                                    <div id="categoria${c.codigo}" class="panel-collapse collapse" >
-                                        <c:forEach var="p" items="${produtos}" varStatus="j">
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-xs-12 text-right">
-                                                        <img src="${p.imagem}" class="img-circle pull-left" style="
-                                                             margin-top: 0px;" alt="">
-                                                        <span class="preco">R$ ${p.preco}</span>
-                                                        <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
-                                                            <i class="glyphicon glyphicon-pencil"></i>										
-                                                        </a>
-                                                        <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
-                                                            <i class="glyphicon glyphicon-trash"></i>										
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-xs-12">
-                                                        <h5><b>${p.nome}</b></h5>
-                                                        <p style="font-size: 12px;">${p.descricao}</p>
-                                                    </div>
-                                                </div>
-                                            </div><!--/.panel-body -->
-                                        </c:forEach>
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-xs-12 text-right">
-                                                    <img src="http://www.bigxpicanha.com.br/Content/Produto/Imagem/Big-X-Calabresa-Acebolada-27.png" class="img-circle pull-left" style="
-                                                         margin-top: 0px;" alt="">
-                                                    <span class="preco">R$ 10,00</span>
-                                                    <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
-                                                        <i class="glyphicon glyphicon-pencil"></i>										
-                                                    </a>
-                                                    <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
-                                                        <i class="glyphicon glyphicon-trash"></i>										
-                                                    </a>
-                                                </div>
-                                                <div class="col-xs-12">
-                                                    <h4>X-Calabresa</h4>
-                                                    <p>Pão, amburguer, presunto, queijo e calabresa</p>
-                                                </div>
-                                            </div>
-                                        </div><!--/.panel-body -->
-                                    </div><!--/.panel-collapse -->
-                                </div><!-- /.panel -->
-                            </c:forEach>
-
+                            <jsp:include page="/pages/categoria.jsp"></jsp:include>
                         </div><!-- /.panel-group -->
                     </div>
 
@@ -357,6 +306,22 @@
                                     </div>
                                 </fieldset>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
+                 left: 50% !important; margin-top: -100px;  
+                 margin-left: -100px; 
+                 overflow: visible !important;" id="processing-modal" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
+                                <h4>Carregando...</h4>
+                            </div>
                         </div>
                     </div>
                 </div>

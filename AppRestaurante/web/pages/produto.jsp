@@ -1,0 +1,31 @@
+<%-- 
+    Document   : produto
+    Created on : 25/10/2015, 16:32:35
+    Author     : isaias
+--%>
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<c:forEach var="p" items="${produtos}" varStatus="j">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <img src="${p.imagem}" class="img-circle pull-left" style="
+                     margin-top: 0px;" alt="">
+                <span class="preco">R$ ${p.preco}</span>
+                <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-pencil"></i>										
+                </a>
+                <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-trash"></i>										
+                </a>
+            </div>
+            <div class="col-xs-12">
+                <h5><b>${p.nome}</b></h5>
+                <p style="font-size: 12px;">${p.descricao}</p>
+            </div>
+        </div>
+    </div><!--/.panel-body -->
+</c:forEach>
+
