@@ -57,17 +57,20 @@
                 //iniciamos o ajax
                 $.ajax({
                     //definimos a url
-                    url: '../ControllerServlet?acao=salvarProduto',
+                    url: 'ControllerServlet?acao=salvarProduto',
                     //definimos o tipo de requisição
                     type: 'POST',
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
                     beforeSend: function () {
-
+                        $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
                     success: function (pre) {
+                        $("#processing-modal").modal('hide');
+                        $('.panel-collapse').removeClass("in");
+                        $('.panel-group .panel-heading a').addClass("collapsed");
                         alert("Cadastrado");
                     }
                 });
@@ -163,7 +166,7 @@
                         </div>
                         <div class="panel-group" id="accordionCardapio">
                             <jsp:include page="/pages/categoria.jsp"></jsp:include>
-                        </div><!-- /.panel-group -->
+                        </div>
                     </div>
 
                     <div class="tab-pane fade in" id="tab2">
@@ -233,7 +236,7 @@
                             <h1> Cadastre seus produtos!</h1>
                         </div>
                         <div class="modal-body">
-                            <form role="form" action="../MeuServlet" method="POST" id="form">
+                            <form role="form" action="MeuServlet" method="POST" id="form">
                                 <input type="hidden" id="caminho" name="imagem" value=""/>
                                 <fieldset>
                                     <div class="row">

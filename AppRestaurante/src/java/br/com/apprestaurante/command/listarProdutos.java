@@ -1,8 +1,6 @@
 package br.com.apprestaurante.command;
 
-import br.com.apprestaurante.dao.CategoriaProdutoDao;
 import br.com.apprestaurante.dao.ProdutoDao;
-import br.com.apprestaurante.entity.CategoriaProduto;
 import br.com.apprestaurante.entity.Produto;
 import java.util.ArrayList;
 import java.util.List;
