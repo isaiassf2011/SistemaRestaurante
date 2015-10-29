@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.apprestaurante.entity;
+package br.com.apprestaurante.servlet;
 
 import br.com.apprestaurante.dao.RestauranteDao;
 import com.google.gson.JsonObject;

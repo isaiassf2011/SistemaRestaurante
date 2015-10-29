@@ -14,7 +14,7 @@
                 <img src="${p.imagem}" class="img-circle pull-left" style="
                      margin-top: 0px;" alt="">
                 <span class="preco">R$ ${p.preco}</span>
-                <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#login-modal" title="Editar produto" class="btn btn-primary">
+                <a href="javascript:;" style="padding: 5px 5px" title="Editar produto" class="btn btn-primary" onclick="buscarProduto(${p.codigo});">
                     <i class="glyphicon glyphicon-pencil"></i>										
                 </a>
                 <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
@@ -26,6 +26,6 @@
                 <p style="font-size: 12px;">${p.descricao}</p>
             </div>
         </div>
-    </div><!--/.panel-body -->
+    </div>
 </c:forEach>
 

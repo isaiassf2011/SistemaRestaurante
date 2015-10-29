@@ -68,10 +68,11 @@
                     },
                     //colocamos o retorno na tela
                     success: function (pre) {
+                        $("#form")[0].reset();
                         $("#processing-modal").modal('hide');
                         $('.panel-collapse').removeClass("in");
                         $('.panel-group .panel-heading a').addClass("collapsed");
-                        alert("Cadastrado");
+                        //alert("Cadastrado");
                     }
                 });
             }
@@ -93,6 +94,29 @@
                         }
                     });
                 }
+
+            }
+            
+            function buscarProduto(codigoProduto) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=buscarProduto',
+                    type: 'POST',
+                    data: '&codigoProduto=' + codigoProduto,
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (json) {
+                        $("#nomePreduto").val(json.nome);
+                        $('#caminho').val(json.imagem);
+                        $("#imgProduto").attr("src", json.imagem);
+                        $("#descricao").val(json.descricao);
+                        $("#preco").val(json.preco);
+                        $("#cmbCategoria").val(json.categoria);
+                        $("#processing-modal").modal('hide');
+                        $("#login-modal").modal('show');
+                    }
+                });
 
             }
 
@@ -255,16 +279,16 @@
                                                 <progress value="0" max="100" style="width: 110px;"></progress><span id="porcentagem">0%</span>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Nome do Produto" name="nomeProduto" type="text" autofocus>
+                                                <input class="form-control" placeholder="Nome do Produto" name="nomeProduto" id="nomePreduto" type="text" autofocus>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Descrição" name="descricao" type="text" value="">
+                                                <input class="form-control" placeholder="Descrição" name="descricao" id="descricao" type="text" value="">
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Preço" name="preco" type="text" value="">
+                                                <input class="form-control" placeholder="Preço" name="preco" id="preco" type="text" value="">
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" name="cmbCategoria">
+                                                <select class="form-control" name="cmbCategoria" id="cmbCategoria">
                                                     <option value="none">Selecione a Categoria</option>
                                                     <option value="1">Bebida</option>
                                                     <option value="2">Porção</option>

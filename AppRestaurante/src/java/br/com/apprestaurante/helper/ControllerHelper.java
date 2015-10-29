@@ -1,5 +1,6 @@
 package br.com.apprestaurante.helper;
 
+import br.com.apprestaurante.command.BuscarProduto;
 import br.com.apprestaurante.command.CommandInterface;
 import br.com.apprestaurante.command.SalvarProduto;
 import br.com.apprestaurante.command.SalvarRestaurante;
@@ -22,6 +23,7 @@ public class ControllerHelper {
         comandos.put(AcaoConstante.SALVAR_PRODUTO, new SalvarProduto());
         comandos.put(AcaoConstante.LISTAR_CARDAPIO, new ListarCardapio());
         comandos.put(AcaoConstante.LISTAR_PRODUTOS, new listarProdutos());
+        comandos.put(AcaoConstante.BUSCAR_PRODUTO, new BuscarProduto());
         
     }
 
