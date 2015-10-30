@@ -76,6 +76,32 @@
                     }
                 });
             }
+            
+            function salvarMesa() {
+                var valores = $('#formMesa').serialize();
+                console.log(valores);
+                //iniciamos o ajax
+                $.ajax({
+                    //definimos a url
+                    url: 'ControllerServlet?acao=salvarProduto',
+                    //definimos o tipo de requisição
+                    type: 'POST',
+                    //colocamos os valores a serem enviados
+                    data: valores,
+                    //antes de enviar ele alerta para esperar
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    //colocamos o retorno na tela
+                    success: function (pre) {
+                        $("#form")[0].reset();
+                        $("#processing-modal").modal('hide');
+                        $('.panel-collapse').removeClass("in");
+                        $('.panel-group .panel-heading a').addClass("collapsed");
+                        //alert("Cadastrado");
+                    }
+                });
+            }
 
             function buscarProdutos(codigoCategoria) {
                 var classe = $("#categoria" + codigoCategoria).attr("class");
@@ -104,7 +130,7 @@
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
                     beforeSend: function () {
-                        $("#processing-modal").modal('show');
+                        //$("#processing-modal").modal('show');
                     },
                     success: function (json) {
                         $("#nomePreduto").val(json.nome);
@@ -113,8 +139,25 @@
                         $("#descricao").val(json.descricao);
                         $("#preco").val(json.preco);
                         $("#cmbCategoria").val(json.categoria);
-                        $("#processing-modal").modal('hide');
-                        $("#login-modal").modal('show');
+                        $('#codigoProduto').val(codigoProduto);
+                        //$("#processing-modal").modal('hide');
+                    }
+                });
+
+            }
+
+            function excluirProduto(codigoProduto) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=excluirProduto',
+                    type: 'POST',
+                    data: '&codigoProduto=' + codigoProduto,
+                    beforeSend: function () {
+                        //$("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        alert("Produto Excluido com sucesso!");
+                        //$("#processing-modal").modal('hide');
                     }
                 });
 
@@ -147,8 +190,8 @@
                                 Configurações
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="principal.html">Cardapio</a></li>
-                                <li><a href="principal.html">Mesas</a></li>
+                                <li><a href="ControllerServlet?acao=listarCardapio">Cardapio</a></li>
+                                <li><a href="ControllerServlet?acao=listarCardapio">Mesas</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -197,56 +240,9 @@
                         <div style="padding: 5px 0px;">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#mesa-modal"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Mesa</button> 
                         </div>
-                        <table class="table table-hover" id="dev-table">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Nº</th>
-                                    <th class="text-center">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="text-center">
-                                    <td>1</td>
-                                    <td>
-                                        <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#mesa-modal" title="Editar" class="btn btn-primary">
-                                            <i class="glyphicon glyphicon-pencil"></i>										
-                                        </a>
-                                        <a href="javascript:;" style="padding: 5px 5px" title="Excluir" class="btn btn-danger">
-                                            <i class="glyphicon glyphicon-trash"></i>										
-                                        </a>
-                                        <a href="javascript:;" style="padding: 5px 5px" title="Imprimir QR Code" class="btn btn-default">
-                                            <i class="glyphicon glyphicon-qrcode"></i>										
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>2</td>
-                                    <td><a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#mesa-modal" title="Editar">
-                                            <i class="glyphicon glyphicon-pencil"></i>										
-                                        </a>
-                                        <a href="javascript:;" style="padding: 1px 4px" title="Excluir">
-                                            <i class="glyphicon glyphicon-trash"></i>										
-                                        </a>
-                                        <a href="javascript:;" style="padding: 1px 4px" title="Imprimir QR Code">
-                                            <i class="glyphicon glyphicon-qrcode"></i>										
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>3</td>
-                                    <td><a href="javascript:;" style="padding: 1px 4px" data-toggle="modal" data-target="#mesa-modal" title="Editar">
-                                            <i class="glyphicon glyphicon-pencil"></i>										
-                                        </a>
-                                        <a href="javascript:;" style="padding: 1px 4px" title="Excluir">
-                                            <i class="glyphicon glyphicon-trash"></i>										
-                                        </a>
-                                        <a href="javascript:;" style="padding: 1px 4px" title="Imprimir QR Code">
-                                            <i class="glyphicon glyphicon-qrcode"></i>										
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div id="divMesas">
+                            <jsp:include page="/pages/mesa.jsp"></jsp:include>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -262,6 +258,7 @@
                         <div class="modal-body">
                             <form role="form" action="MeuServlet" method="POST" id="form">
                                 <input type="hidden" id="caminho" name="imagem" value=""/>
+                                <input type="hidden" id="codigoProduto" name="codigoProduto" value=""/>
                                 <fieldset>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
@@ -319,7 +316,7 @@
                             <h1> Adicione suas mesas!</h1>
                         </div>
                         <div class="modal-body">
-                            <form role="form" action="#" method="POST">
+                            <form role="form" action="#" method="POST" id="formMesa">
                                 <fieldset>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">

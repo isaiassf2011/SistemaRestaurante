@@ -14,10 +14,10 @@
                 <img src="${p.imagem}" class="img-circle pull-left" style="
                      margin-top: 0px;" alt="">
                 <span class="preco">R$ ${p.preco}</span>
-                <a href="javascript:;" style="padding: 5px 5px" title="Editar produto" class="btn btn-primary" onclick="buscarProduto(${p.codigo});">
+                <button style="padding: 5px 5px" title="Editar produto" class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="buscarProduto(${p.codigo});">
                     <i class="glyphicon glyphicon-pencil"></i>										
-                </a>
-                <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger">
+                </button>
+                <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger" onclick="excluirProduto(${p.codigo});">
                     <i class="glyphicon glyphicon-trash"></i>										
                 </a>
             </div>

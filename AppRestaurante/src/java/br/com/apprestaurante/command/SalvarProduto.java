@@ -26,8 +26,13 @@ public class SalvarProduto implements CommandInterface {
 
         try {
 
+            Produto produto;
             ProdutoDao dao = new ProdutoDao();
-            Produto produto = new Produto();
+            if(!request.getParameter("codigoProduto").equals("") && request.getParameter("codigoProduto") != null){
+                produto = dao.getById(Integer.parseInt(request.getParameter("codigoProduto")));
+            }else{
+                produto = new Produto();
+            }
             produto.setNome(request.getParameter("nomeProduto"));
             produto.setDescricao(request.getParameter("descricao"));
             produto.setImagem(request.getParameter("imagem"));

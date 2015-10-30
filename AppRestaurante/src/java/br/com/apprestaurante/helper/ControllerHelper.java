@@ -2,6 +2,7 @@ package br.com.apprestaurante.helper;
 
 import br.com.apprestaurante.command.BuscarProduto;
 import br.com.apprestaurante.command.CommandInterface;
+import br.com.apprestaurante.command.ExcluirProduto;
 import br.com.apprestaurante.command.SalvarProduto;
 import br.com.apprestaurante.command.SalvarRestaurante;
 import br.com.apprestaurante.command.ListarCardapio;
@@ -24,6 +25,7 @@ public class ControllerHelper {
         comandos.put(AcaoConstante.LISTAR_CARDAPIO, new ListarCardapio());
         comandos.put(AcaoConstante.LISTAR_PRODUTOS, new listarProdutos());
         comandos.put(AcaoConstante.BUSCAR_PRODUTO, new BuscarProduto());
+        comandos.put(AcaoConstante.EXCLUIR_PRODUTO, new ExcluirProduto());
         
     }
 
