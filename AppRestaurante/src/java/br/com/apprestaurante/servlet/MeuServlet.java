@@ -65,7 +65,7 @@ public class MeuServlet extends HttpServlet {
 
                         System.out.println(nomeArquivo);
                         System.out.println(caminho + file.getName());
-                        json.addProperty("caminho", caminho + file.getName());
+                        json.addProperty("caminho", file.getName());
                     }
                     /*if (!item.isFormField()) {
                      String name = new File(item.getName()).getName();

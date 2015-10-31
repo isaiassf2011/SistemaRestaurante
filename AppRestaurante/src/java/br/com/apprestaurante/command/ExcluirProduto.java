@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.ProdutoDao;
 import br.com.apprestaurante.entity.Produto;
-import com.google.gson.JsonObject;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,9 +16,17 @@ public class ExcluirProduto implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        Produto p = new Produto();
-        p.setCodigo(Integer.parseInt(request.getParameter("codigoProduto")));
-        new ProdutoDao().excluir(p);
+        Integer codigoCategoria;
+        Integer codigoRestaurante;
+        ProdutoDao dao = new ProdutoDao();
+        Produto p = dao.getById(Integer.parseInt(request.getParameter("codigoProduto")));
+        codigoCategoria = p.getCategoriaProduto().getCodigo();
+        codigoRestaurante = p.getRestaurante().getCodigo();
+        dao.excluir(p);
+
+        List<Produto> produtos = new ArrayList<Produto>();
+        produtos = new ProdutoDao().buscarPorCategoria(codigoCategoria, codigoRestaurante);
+        request.setAttribute("produtos", produtos);
 
         return "pages/produto.jsp";
 

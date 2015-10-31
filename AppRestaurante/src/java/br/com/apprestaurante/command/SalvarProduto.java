@@ -10,7 +10,10 @@ import br.com.apprestaurante.dao.RestauranteDao;
 import br.com.apprestaurante.entity.CategoriaProduto;
 import br.com.apprestaurante.entity.Produto;
 import br.com.apprestaurante.entity.Restaurante;
+import java.io.File;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,9 +31,9 @@ public class SalvarProduto implements CommandInterface {
 
             Produto produto;
             ProdutoDao dao = new ProdutoDao();
-            if(!request.getParameter("codigoProduto").equals("") && request.getParameter("codigoProduto") != null){
+            if (!request.getParameter("codigoProduto").equals("") && request.getParameter("codigoProduto") != null) {
                 produto = dao.getById(Integer.parseInt(request.getParameter("codigoProduto")));
-            }else{
+            } else {
                 produto = new Produto();
             }
             produto.setNome(request.getParameter("nomeProduto"));
@@ -45,11 +48,15 @@ public class SalvarProduto implements CommandInterface {
 
             dao.salvar(produto);
 
+            List<Produto> produtos = new ArrayList<Produto>();
+            produtos = new ProdutoDao().buscarPorCategoria(Integer.parseInt(request.getParameter("cmbCategoria")), 1);
+            request.setAttribute("produtos", produtos);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        return "pages/produto.jsp";
 
     }
 

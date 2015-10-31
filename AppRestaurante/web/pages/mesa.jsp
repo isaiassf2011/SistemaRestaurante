@@ -19,10 +19,11 @@
             <tr class="text-center">
                 <td>${m.numero}</td>
                 <td>
-                    <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#mesa-modal" title="Editar" class="btn btn-primary">
+                    <a href="javascript:;" style="padding: 5px 5px" data-toggle="modal" data-target="#mesa-modal" 
+                       title="Editar" class="btn btn-primary" onclick="buscarMesa(${m.codigo});">
                         <i class="glyphicon glyphicon-pencil"></i>										
                     </a>
-                    <a href="javascript:;" style="padding: 5px 5px" title="Excluir" class="btn btn-danger">
+                    <a href="javascript:;" style="padding: 5px 5px" title="Excluir" class="btn btn-danger" onclick="excluirMesa(${m.codigo});">
                         <i class="glyphicon glyphicon-trash"></i>										
                     </a>
                     <a href="javascript:;" style="padding: 5px 5px" title="Imprimir QR Code" class="btn btn-default">

@@ -51,9 +51,27 @@
 
             });
 
+            function addMesa() {
+                $("#formMesa")[0].reset();
+                $('#codigoMesa').val("");
+            }
+
+            function addProduto() {
+                $("#form")[0].reset();
+                $('#codigoProduto').val("");
+                $('#caminho').val("");
+                $('#imgProduto').attr('src', "${contexto}/imgs/produto-sem-imagem.gif");
+            }
+
+            function removerImagem() {
+                $('#caminho').val("");
+                $('#imgProduto').attr('src', "${contexto}/imgs/produto-sem-imagem.gif");
+            }
+
             function salvar() {
                 var valores = $('#form').serialize();
                 console.log(valores);
+                var codigoCategoria = $('#cmbCategoria').val();
                 //iniciamos o ajax
                 $.ajax({
                     //definimos a url
@@ -67,40 +85,67 @@
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function (pre) {
+                    success: function (data) {
                         $("#form")[0].reset();
+                        $('#codigoProduto').val("");
                         $("#processing-modal").modal('hide');
-                        $('.panel-collapse').removeClass("in");
-                        $('.panel-group .panel-heading a').addClass("collapsed");
+                        jQuery("#categoria" + codigoCategoria).html(data);
                         //alert("Cadastrado");
                     }
                 });
             }
-            
+
             function salvarMesa() {
                 var valores = $('#formMesa').serialize();
                 console.log(valores);
-                //iniciamos o ajax
+
                 $.ajax({
-                    //definimos a url
-                    url: 'ControllerServlet?acao=salvarProduto',
-                    //definimos o tipo de requisição
+                    url: 'ControllerServlet?acao=salvarMesa',
                     type: 'POST',
-                    //colocamos os valores a serem enviados
                     data: valores,
-                    //antes de enviar ele alerta para esperar
                     beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    //colocamos o retorno na tela
-                    success: function (pre) {
-                        $("#form")[0].reset();
+                    success: function (data) {
+                        $("#formMesa")[0].reset();
+                        $('#codigoMesa').val("");
                         $("#processing-modal").modal('hide');
-                        $('.panel-collapse').removeClass("in");
-                        $('.panel-group .panel-heading a').addClass("collapsed");
+                        jQuery("#divMesas").html(data);
                         //alert("Cadastrado");
                     }
                 });
+            }
+
+            function buscarMesa(codigoMesa) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=buscarMesa',
+                    type: 'POST',
+                    data: '&codigoMesa=' + codigoMesa,
+                    beforeSend: function () {
+                        //$("#processing-modal").modal('show');
+                    },
+                    success: function (json) {
+                        $("#numeroMesa").val(json.numero);
+                        $('#codigoMesa').val(codigoMesa);
+                        //$("#processing-modal").modal('hide');
+                    }
+                });
+
+            }
+
+            function deletarImg() {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=removerImagem',
+                    type: 'POST',
+                    data: '&imagem=' + $('#caminho').val(),
+                    beforeSend: function () {
+                    },
+                    success: function (data) {
+                    }
+                });
+
             }
 
             function buscarProdutos(codigoCategoria) {
@@ -122,7 +167,7 @@
                 }
 
             }
-            
+
             function buscarProduto(codigoProduto) {
 
                 $.ajax({
@@ -133,31 +178,49 @@
                         //$("#processing-modal").modal('show');
                     },
                     success: function (json) {
+                        //$("#processing-modal").modal('hide');
                         $("#nomePreduto").val(json.nome);
                         $('#caminho').val(json.imagem);
-                        $("#imgProduto").attr("src", json.imagem);
+                        $("#imgProduto").attr("src", "${contexto}/imgs/"+json.imagem);
                         $("#descricao").val(json.descricao);
                         $("#preco").val(json.preco);
                         $("#cmbCategoria").val(json.categoria);
                         $('#codigoProduto').val(codigoProduto);
-                        //$("#processing-modal").modal('hide');
                     }
                 });
 
             }
 
-            function excluirProduto(codigoProduto) {
+            function excluirProduto(codigoProduto, codigoCategoria) {
 
                 $.ajax({
                     url: 'ControllerServlet?acao=excluirProduto',
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
                     beforeSend: function () {
-                        //$("#processing-modal").modal('show');
+                        $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        alert("Produto Excluido com sucesso!");
-                        //$("#processing-modal").modal('hide');
+                        $("#processing-modal").modal('hide');
+                        jQuery("#categoria" + codigoCategoria).html(data);
+                        //alert("Produto Excluido com sucesso!");
+                    }
+                });
+
+            }
+
+            function excluirMesa(codigoMesa) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=excluirMesa',
+                    type: 'POST',
+                    data: '&codigoMesa=' + codigoMesa,
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#divMesas").html(data);
                     }
                 });
 
@@ -226,46 +289,44 @@
 
             <div class="well" style="padding: 5px;">
                 <div class="tab-content">
-
                     <div class="tab-pane fade in active" id="tab1">
                         <div style="padding: 5px 0px;">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="addProduto();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
                         </div>
                         <div class="panel-group" id="accordionCardapio">
                             <jsp:include page="/pages/categoria.jsp"></jsp:include>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="tab-pane fade in" id="tab2">
-                        <div style="padding: 5px 0px;">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#mesa-modal"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Mesa</button> 
-                        </div>
-                        <div id="divMesas">
+                        <div class="tab-pane fade in" id="tab2">
+                            <div style="padding: 5px 0px;">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#mesa-modal" onclick="addMesa();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Mesa</button> 
+                            </div>
+                            <div id="divMesas">
                             <jsp:include page="/pages/mesa.jsp"></jsp:include>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog">
-                    <div class="loginmodal-container">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </button>
-                            <h1> Cadastre seus produtos!</h1>
-                        </div>
-                        <div class="modal-body">
-                            <form role="form" action="MeuServlet" method="POST" id="form">
-                                <input type="hidden" id="caminho" name="imagem" value=""/>
-                                <input type="hidden" id="codigoProduto" name="codigoProduto" value=""/>
-                                <fieldset>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-10  col-md-offset-1 ">
-                                            <div class="form-group">
-                                                <img src="http://localhost:8080/AppRestaurante/imgs/x-salada1.jpg" class="img-circle pull-left" style="
+                <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="loginmodal-container">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                                <h1> Cadastre seus produtos!</h1>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" action="MeuServlet" method="POST" id="form">
+                                    <input type="hidden" id="caminho" name="imagem" value=""/>
+                                    <input type="hidden" id="codigoProduto" name="codigoProduto" value=""/>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                                <div class="form-group">
+                                                    <img src="${contexto}/imgs/produto-sem-imagem.gif" class="img-circle pull-left" style="
                                                      margin-top: 0px;margin-left: 35%;" alt="" id="imgProduto">
-                                                <a href="javascript:;" style="padding: 1px 4px" title="Remover Imagem">
+                                                <a href="javascript:;" style="padding: 1px 4px" onclick="removerImagem();" title="Remover Imagem">
                                                     <i class="glyphicon glyphicon-trash" style="margin-top: 40px;"></i>
                                                 </a>
                                             </div>
@@ -318,13 +379,14 @@
                         <div class="modal-body">
                             <form role="form" action="#" method="POST" id="formMesa">
                                 <fieldset>
+                                    <input type="hidden" id="codigoMesa" name="codigoMesa" value=""/>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Número" name="numero" type="text" value="">
+                                                <input class="form-control" placeholder="Número" name="numeroMesa" id="numeroMesa" type="text" value="">
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Adicionar">
+                                                <input type="button" class="btn btn-lg btn-primary btn-block" onclick="salvarMesa();" value="Adicionar">
                                             </div>
                                         </div>
                                     </div>
