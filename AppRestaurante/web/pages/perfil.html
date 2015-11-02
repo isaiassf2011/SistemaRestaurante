@@ -34,6 +34,20 @@
 
             });
 
+            function deletarImg() {
+
+                $.ajax({
+                    url: '../ControllerServlet?acao=removerImagem',
+                    type: 'POST',
+                    data: '&imagem=' + $('#caminho').val(),
+                    beforeSend: function () {
+                    },
+                    success: function (data) {
+                    }
+                });
+
+            }
+
             function salvar() {
                 var valores = $('#form').serialize();
                 console.log(valores);
@@ -131,6 +145,9 @@
                                             </div>
                                             <div class="form-group">
                                                 <input class="form-control" placeholder="Nome do Restaurante" name="nomeRestaurante" type="text" autofocus>
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="cnpj" class="form-control" placeholder="CNPJ do Restaurante" name="cnpjRestaurante" type="text" autofocus>
                                             </div>
                                             <div class="form-group">
                                                 <input class="form-control" placeholder="Telefone" name="telefone" type="tel" value="">

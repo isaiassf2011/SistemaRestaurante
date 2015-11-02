@@ -24,6 +24,9 @@ public class Restaurante implements Serializable {
     @Column(name = "res_nome", nullable = false, length = 200)
     private String nome;
 
+    @Column(name = "res_cnpj", nullable = false, length = 20)
+    private String cnpj;
+
     @Column(name = "res_logo", nullable = false, length = 250)
     private String logo;
 
@@ -82,6 +85,14 @@ public class Restaurante implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
 }

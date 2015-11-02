@@ -50,12 +50,12 @@
 
             });
 
-            function addMesa() {
+            function limparMesa() {
                 $("#formMesa")[0].reset();
                 $('#codigoMesa').val("");
             }
 
-            function addProduto() {
+            function limparProduto() {
                 $("#form")[0].reset();
                 $('#codigoProduto').val("");
                 $('#caminho').val("");
@@ -314,7 +314,7 @@
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="tab1">
                         <div style="padding: 5px 0px;">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="addProduto();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="limparProduto();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
                         </div>
                         <div class="panel-group" id="accordionCardapio">
                             <jsp:include page="/pages/categoria.jsp"></jsp:include>
@@ -322,7 +322,7 @@
                         </div>
                         <div class="tab-pane fade in" id="tab2">
                             <div style="padding: 5px 0px;">
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#mesa-modal" onclick="addMesa();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Mesa</button> 
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#mesa-modal" onclick="limparMesa();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Mesa</button> 
                             </div>
                             <div id="divMesas">
                             <jsp:include page="/pages/mesa.jsp"></jsp:include>
