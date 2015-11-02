@@ -10,6 +10,7 @@ import br.com.apprestaurante.command.SalvarRestaurante;
 import br.com.apprestaurante.command.ListarCardapio;
 import br.com.apprestaurante.command.RemoverImagem;
 import br.com.apprestaurante.command.SalvarMesa;
+import br.com.apprestaurante.command.listarCategorias;
 import br.com.apprestaurante.command.listarProdutos;
 import br.com.apprestaurante.constante.AcaoConstante;
 import java.util.HashMap;
@@ -29,12 +30,13 @@ public class ControllerHelper {
         comandos.put(AcaoConstante.SALVAR_PRODUTO, new SalvarProduto());
         comandos.put(AcaoConstante.LISTAR_CARDAPIO, new ListarCardapio());
         comandos.put(AcaoConstante.LISTAR_PRODUTOS, new listarProdutos());
+        comandos.put(AcaoConstante.LISTAR_CATEGORIAS, new listarCategorias());
         comandos.put(AcaoConstante.BUSCAR_PRODUTO, new BuscarProduto());
         comandos.put(AcaoConstante.BUSCAR_MESA, new BuscarMesa());
         comandos.put(AcaoConstante.EXCLUIR_PRODUTO, new ExcluirProduto());
         comandos.put(AcaoConstante.EXCLUIR_MESA, new ExcluirMesa());
         comandos.put(AcaoConstante.REMOVER_IMAGEM, new RemoverImagem());
-        
+
     }
 
     public CommandInterface getComando() {

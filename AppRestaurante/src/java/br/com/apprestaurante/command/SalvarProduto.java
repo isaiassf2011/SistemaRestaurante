@@ -5,6 +5,7 @@
  */
 package br.com.apprestaurante.command;
 
+import br.com.apprestaurante.dao.CategoriaProdutoDao;
 import br.com.apprestaurante.dao.ProdutoDao;
 import br.com.apprestaurante.dao.RestauranteDao;
 import br.com.apprestaurante.entity.CategoriaProduto;
@@ -48,15 +49,15 @@ public class SalvarProduto implements CommandInterface {
 
             dao.salvar(produto);
 
-            List<Produto> produtos = new ArrayList<Produto>();
-            produtos = new ProdutoDao().buscarPorCategoria(Integer.parseInt(request.getParameter("cmbCategoria")), 1);
-            request.setAttribute("produtos", produtos);
+            List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
+            categorias = new CategoriaProdutoDao().buscarPorRestaurante(1);
+            request.setAttribute("categorias", categorias);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return "pages/produto.jsp";
+        return "pages/categoria.jsp";
 
     }
 

@@ -48,7 +48,6 @@
                     size: "sm"
                 });
 
-
             });
 
             function addMesa() {
@@ -71,7 +70,6 @@
             function salvar() {
                 var valores = $('#form').serialize();
                 console.log(valores);
-                var codigoCategoria = $('#cmbCategoria').val();
                 //iniciamos o ajax
                 $.ajax({
                     //definimos a url
@@ -88,8 +86,9 @@
                     success: function (data) {
                         $("#form")[0].reset();
                         $('#codigoProduto').val("");
+                        removerImagem();
                         $("#processing-modal").modal('hide');
-                        jQuery("#categoria" + codigoCategoria).html(data);
+                        jQuery("#accordionCardapio").html(data);
                         //alert("Cadastrado");
                     }
                 });
@@ -168,6 +167,22 @@
 
             }
 
+            function buscarCategorias(codigoRestaurante) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=listarCategorias',
+                    type: 'POST',
+                    data: '&codigoRestaurante=' + codigoRestaurante,
+                    beforeSend: function () {
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#accordionCardapio").html(data);
+                    }
+                });
+
+            }
+
             function buscarProduto(codigoProduto) {
 
                 $.ajax({
@@ -181,7 +196,11 @@
                         //$("#processing-modal").modal('hide');
                         $("#nomePreduto").val(json.nome);
                         $('#caminho').val(json.imagem);
-                        $("#imgProduto").attr("src", "${contexto}/imgs/"+json.imagem);
+                        if (json.imagem === "") {
+                            $("#imgProduto").attr("src", "${contexto}/imgs/produto-sem-imagem.gif");
+                        } else {
+                            $("#imgProduto").attr("src", "${contexto}/imgs/" + json.imagem);
+                        }
                         $("#descricao").val(json.descricao);
                         $("#preco").val(json.preco);
                         $("#cmbCategoria").val(json.categoria);
@@ -201,8 +220,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#categoria" + codigoCategoria).html(data);
+                        if (data === "") {
+                            buscarCategorias(1);
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#categoria" + codigoCategoria).html(data);
+                        }
                         //alert("Produto Excluido com sucesso!");
                     }
                 });

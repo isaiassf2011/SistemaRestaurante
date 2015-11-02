@@ -28,13 +28,13 @@ public class Produto implements Serializable {
     @Column(name = "produto_nome", nullable = false, length = 200)
     private String nome;
 
-    @Column(name = "produto_descricao", nullable = false, length = 300)
+    @Column(name = "produto_descricao", length = 300)
     private String descricao;
 
     @Column(name = "produto_preco", nullable = false, precision = 7, scale = 2)
     private BigDecimal preco;
 
-    @Column(name = "produto_imagem", nullable = false, length = 250)
+    @Column(name = "produto_imagem", length = 250)
     private String imagem;
 
     @ManyToOne(fetch = FetchType.EAGER)

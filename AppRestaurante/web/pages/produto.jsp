@@ -12,8 +12,10 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-xs-12 text-right">
-                <img src="${contexto}/imgs/${p.imagem}" class="img-circle pull-left" style="
-                     margin-top: 0px;" alt="">
+                <c:if test="${p.imagem != ''}">
+                    <img src="${contexto}/imgs/${p.imagem}" class="img-circle pull-left" style="
+                         margin-top: 0px;" alt="">
+                </c:if>
                 <span class="preco">R$ ${p.preco}</span>
                 <button style="padding: 5px 5px" title="Editar produto" class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="buscarProduto(${p.codigo});">
                     <i class="glyphicon glyphicon-pencil"></i>										

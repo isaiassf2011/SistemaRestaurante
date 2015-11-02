@@ -28,6 +28,10 @@ public class ExcluirProduto implements CommandInterface {
         produtos = new ProdutoDao().buscarPorCategoria(codigoCategoria, codigoRestaurante);
         request.setAttribute("produtos", produtos);
 
+        if (produtos.isEmpty()) {
+            return null;
+        }
+
         return "pages/produto.jsp";
 
     }
