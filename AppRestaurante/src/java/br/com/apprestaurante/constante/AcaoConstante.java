@@ -11,6 +11,7 @@ public final class AcaoConstante {
     public static final String LISTAR_PRODUTOS_USUARIO = "listarProdutosUsuario";
     public static final String LISTAR_CATEGORIAS = "listarCategorias";
     public static final String BUSCAR_PRODUTO = "buscarProduto";
+    public static final String BUSCAR_RESTAURANTE = "buscarRestaurante";
     public static final String BUSCAR_MESA = "buscarMesa";
     public static final String EXCLUIR_PRODUTO = "excluirProduto";
     public static final String EXCLUIR_MESA = "excluirMesa";

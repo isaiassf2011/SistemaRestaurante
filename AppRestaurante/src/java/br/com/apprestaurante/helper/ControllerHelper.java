@@ -2,6 +2,7 @@ package br.com.apprestaurante.helper;
 
 import br.com.apprestaurante.command.BuscarMesa;
 import br.com.apprestaurante.command.BuscarProduto;
+import br.com.apprestaurante.command.BuscarRestaurante;
 import br.com.apprestaurante.command.CommandInterface;
 import br.com.apprestaurante.command.ExcluirMesa;
 import br.com.apprestaurante.command.ExcluirProduto;
@@ -37,6 +38,7 @@ public class ControllerHelper {
         comandos.put(AcaoConstante.LISTAR_CATEGORIAS, new listarCategorias());
         comandos.put(AcaoConstante.BUSCAR_PRODUTO, new BuscarProduto());
         comandos.put(AcaoConstante.BUSCAR_MESA, new BuscarMesa());
+        comandos.put(AcaoConstante.BUSCAR_RESTAURANTE, new BuscarRestaurante());
         comandos.put(AcaoConstante.EXCLUIR_PRODUTO, new ExcluirProduto());
         comandos.put(AcaoConstante.EXCLUIR_MESA, new ExcluirMesa());
         comandos.put(AcaoConstante.REMOVER_IMAGEM, new RemoverImagem());
