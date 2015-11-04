@@ -1,7 +1,6 @@
 
 $('#form').ajaxForm({
     beforeSerialize: function ($form, options) {
-        deletarImg();
         $('#barraDeProgresso').show();
     },
     uploadProgress: function (event, position, total, percentComplete) {

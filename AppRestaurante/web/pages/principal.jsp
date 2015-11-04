@@ -133,6 +133,7 @@
 
             }
 
+            /*
             function deletarImg() {
 
                 $.ajax({
@@ -145,7 +146,7 @@
                     }
                 });
 
-            }
+            }*/
 
             function buscarProdutos(codigoCategoria) {
                 var classe = $("#categoria" + codigoCategoria).attr("class");

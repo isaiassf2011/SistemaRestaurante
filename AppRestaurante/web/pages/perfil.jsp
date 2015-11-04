@@ -45,6 +45,7 @@
 
             });
 
+            /*
             function deletarImg() {
 
                 $.ajax({
@@ -57,7 +58,7 @@
                     }
                 });
 
-            }
+            }*/
 
             function salvar() {
                 var valores = $('#form').serialize();

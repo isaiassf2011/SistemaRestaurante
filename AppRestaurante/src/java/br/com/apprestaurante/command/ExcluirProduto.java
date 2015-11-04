@@ -2,6 +2,7 @@ package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.ProdutoDao;
 import br.com.apprestaurante.entity.Produto;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,10 @@ public class ExcluirProduto implements CommandInterface {
         Produto p = dao.getById(Integer.parseInt(request.getParameter("codigoProduto")));
         codigoCategoria = p.getCategoriaProduto().getCodigo();
         codigoRestaurante = p.getRestaurante().getCodigo();
+        if (!p.getImagem().equals("")) {
+            File f = new File(request.getSession().getServletContext().getRealPath("/imgs/" + p.getImagem()).replace("build", ""));
+            f.delete();
+        }
         dao.excluir(p);
 
         List<Produto> produtos = new ArrayList<Produto>();

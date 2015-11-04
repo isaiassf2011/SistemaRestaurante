@@ -56,11 +56,12 @@ public class MeuServlet extends HttpServlet {
                 List<FileItem> multiparts = upload.parseRequest(request);
 
                 String caminho = request.getRequestURL().toString().replace(request.getRequestURI().toString(), "") + request.getContextPath() + "/imgs/";
-                System.out.println(caminho);
+                System.out.println(System.getProperty("java.io.tmpdir"));
                 for (FileItem item : multiparts) {
                     if (item.getFieldName().equals("file")) {
                         String nomeArquivo = new Date().getTime() + item.getName();
-                        File file = new File(getServletConfig().getServletContext().getRealPath("/imgs/").replace("build", ""), nomeArquivo);
+                        //File file = new File(getServletConfig().getServletContext().getRealPath("/imgs/").replace("build", ""), nomeArquivo);
+                        File file = new File(System.getProperty("java.io.tmpdir"), nomeArquivo);
                         item.write(file);
 
                         System.out.println(nomeArquivo);

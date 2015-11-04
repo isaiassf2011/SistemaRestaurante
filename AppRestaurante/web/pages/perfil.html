@@ -34,20 +34,6 @@
 
             });
 
-            function deletarImg() {
-
-                $.ajax({
-                    url: '../ControllerServlet?acao=removerImagem',
-                    type: 'POST',
-                    data: '&imagem=' + $('#caminho').val(),
-                    beforeSend: function () {
-                    },
-                    success: function (data) {
-                    }
-                });
-
-            }
-
             function salvar() {
                 var valores = $('#form').serialize();
                 console.log(valores);
