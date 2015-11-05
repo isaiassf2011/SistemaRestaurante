@@ -1,4 +1,4 @@
-package br.com.brdti.mtr.controller;
+package br.com.apprestaurante.servlet;
 
 import br.com.apprestaurante.command.CommandInterface;
 import java.io.IOException;
