@@ -43,11 +43,36 @@ public class RestauranteDao {
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("from entity.Restaurante as r where r.nome like :nome");
+            Query query = session.createQuery("from Restaurante as r where r.nome like :nome");
             query.setParameter("nome", "%" + nome + "%");
             lista = query.list();
             transacao.commit();
             return lista;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
+
+    }
+
+    public Restaurante buscaPorCnpjSenha(String cnpj, String senha) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
+        Restaurante r = null;
+
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("from Restaurante as r where r.cnpj = :cnpj and r.senha = :senha ");
+            query.setParameter("cnpj", cnpj);
+            query.setParameter("senha", senha);
+            r = (Restaurante) query.uniqueResult();
+            transacao.commit();
+            return r;
         } catch (HibernateException e) {
             if (transacao != null) {
                 transacao.rollback();

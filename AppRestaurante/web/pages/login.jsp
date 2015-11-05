@@ -19,6 +19,35 @@
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+            });
+
+            function efetuarLogin() {
+                var valores = $('#form').serialize();
+                console.log(valores);
+                //iniciamos o ajax
+                $.ajax({
+                    //definimos a url
+                    url: 'ControllerServlet?acao=autenticaRestaurante',
+                    //definimos o tipo de requisição
+                    type: 'post',
+                    //colocamos os valores a serem enviados
+                    data: valores,
+                    //antes de enviar ele alerta para esperar
+                    beforeSend: function () {
+
+                    },
+                    //colocamos o retorno na tela
+                    success: function (pre) {
+                        alert("Cadastrado");
+                    }
+                });
+            }
+
+        </script>
+
     </head>
     <body>
         <div class="container" style="margin-top:40px">
@@ -29,7 +58,7 @@
                             <strong> Já sou cadastrado!</strong>
                         </div>
                         <div class="panel-body">
-                            <form role="form" action="#" method="POST">
+                            <form role="form" action="#" method="POST" id="form">
                                 <fieldset>
                                     <div class="row">
                                         <div class="center-block">
@@ -44,7 +73,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="glyphicon glyphicon-user"></i>
                                                     </span> 
-                                                    <input class="form-control" placeholder="Username" name="loginname" type="text" autofocus>
+                                                    <input class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -52,11 +81,11 @@
                                                     <span class="input-group-addon">
                                                         <i class="glyphicon glyphicon-lock"></i>
                                                     </span>
-                                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                                    <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar">
+                                                <input type="button" class="btn btn-lg btn-primary btn-block" value="Entrar" onclick="efetuarLogin();">
                                                 <button id="login_lost_btn" type="button" class="btn btn-link" style="margin-left: -10px;">Esqueceu sua senha?</button>
                                             </div>
                                         </div>
