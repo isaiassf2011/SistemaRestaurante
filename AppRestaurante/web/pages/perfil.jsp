@@ -23,14 +23,16 @@
         <script type="text/javascript" src="${contexto}/js/bootstrap-filestyle.min.js"></script>
         <script src="${contexto}/js/jquery.form.js" type="text/javascript"></script>
         <script src="${contexto}/js/upload.js" type="text/javascript"></script>
+        <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <script type="text/javascript">
-            $(document).ready(function () {
+            $(document).ready(function() {
 
-                $('#arquivo').change(function () {
+                $('#arquivo').change(function() {
                     var reader = new FileReader();
-                    $(reader).load(function (event) {
-                        $("#imgProduto").attr("src", event.target.result);
+                    $(reader).load(function(event) {
+                        $("#imgRestaurante").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
                     $('#arquivo').closest("form").submit();
@@ -46,19 +48,24 @@
             });
 
             /*
-            function deletarImg() {
+             function deletarImg() {
+             
+             $.ajax({
+             url: 'ControllerServlet?acao=removerImagem',
+             type: 'POST',
+             data: '&imagem=' + $('#caminho').val(),
+             beforeSend: function () {
+             },
+             success: function (data) {
+             }
+             });
+             
+             }*/
 
-                $.ajax({
-                    url: 'ControllerServlet?acao=removerImagem',
-                    type: 'POST',
-                    data: '&imagem=' + $('#caminho').val(),
-                    beforeSend: function () {
-                    },
-                    success: function (data) {
-                    }
-                });
-
-            }*/
+            function removerImagem() {
+                $('#caminho').val("");
+                $('#imgRestaurante').attr('src', "${contexto}/imgs/sem_imagem.jpg");
+            }
 
             function salvar() {
                 var valores = $('#form').serialize();
@@ -72,11 +79,11 @@
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
+                    beforeSend: function() {
 
                     },
                     //colocamos o retorno na tela
-                    success: function (pre) {
+                    success: function(pre) {
                         alert("Cadastrado");
                     }
                 });
@@ -86,65 +93,35 @@
 
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>                        
-                    </button>
-                    <a class="navbar-brand" href="#">ChegouPediu</a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="pedido.html">Pedidos</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: Lanchonete do Zé">
-                                <span class="glyphicon glyphicon-cog"></span>
-                                Configurações
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="principal.html">Cardapio</a></li>
-                                <li><a href="principal.html">Mesas</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: Lanchonete do Zé">
-                                <img alt="" src="http://www.manentti.com.br/slir/w300-h226/img/servicosLogoFiora.png" style="width: 25px;"> Perfil    
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="perfil.html">Ver Perfil</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-log-in"></span> Sair</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
 
-        <div class="container" style="margin-top:65px">
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-md-offset-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading panel-heading-login">
-                            <strong> Meu Perfil!</strong>
-                        </div>
-                        <div style="padding: 15px;">
-                            <form role="form" action="../MeuServlet" method="POST" id="form">
-                                <input type="hidden" id="caminho" name="logo" value=""/>
+        <div id="divCabecalho">
+            <jsp:include page="/cabecalho.jsp"></jsp:include>
+            </div>
+
+            <div class="container" style="margin-top:65px">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-md-offset-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading panel-heading-login">
+                                <strong> Meu Perfil!</strong>
+                            </div>
+                            <div style="padding: 15px;">
+                                <form role="form" action="../MeuServlet" method="POST" id="form">
+                                    <input type="hidden" id="caminho" name="logo" value="${restaurante.logo}"/>
+                                <input type="hidden" id="codigoRestaurante" name="codigoRestaurante" value="1"/>
                                 <fieldset>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                             <div class="form-group">
-                                                <img src="" class="img-circle pull-left" style="
-                                                     margin-top: 0px;margin-left: 35%;" alt="" id="imgProduto">
-                                                <a href="javascript:;" style="padding: 1px 4px" title="Remover Imagem">
+                                                <c:if test="${restaurante.logo != ''}">
+                                                    <img src="${contexto}/imgs/${restaurante.logo}" class="img-circle pull-left" style="
+                                                         margin-top: 0px;margin-left: 35%;" alt="" id="imgRestaurante">
+                                                </c:if>
+                                                <c:if test="${restaurante.logo == ''}">
+                                                    <img src="${contexto}/imgs/sem_imagem.jpg" class="img-circle pull-left" style="
+                                                         margin-top: 0px;margin-left: 35%;" alt="" id="imgRestaurante">
+                                                </c:if>
+                                                <a href="javascript:;" style="padding: 1px 4px" onclick="removerImagem();" title="Remover Imagem">
                                                     <i class="glyphicon glyphicon-trash" style="margin-top: 40px;"></i>
                                                 </a>
                                             </div>
@@ -202,5 +179,10 @@
                 </div>
             </div>
         </div>
+
+        <div id="divCabecalho">
+            <jsp:include page="/rodape.jsp"></jsp:include>
+        </div>
+
     </body>
 </html>

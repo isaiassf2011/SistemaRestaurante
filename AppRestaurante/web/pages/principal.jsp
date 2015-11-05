@@ -23,18 +23,20 @@
         <script type="text/javascript" src="${contexto}/js/bootstrap-filestyle.min.js"></script>
         <script src="${contexto}/js/jquery.form.js" type="text/javascript"></script>
         <script src="${contexto}/js/upload.js" type="text/javascript"></script>
+        <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $(".btn-pref .btn").click(function () {
+            $(document).ready(function() {
+                $(".btn-pref .btn").click(function() {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
                 });
 
-                $('#arquivo').change(function () {
+                $('#arquivo').change(function() {
                     var reader = new FileReader();
-                    $(reader).load(function (event) {
+                    $(reader).load(function(event) {
                         $("#imgProduto").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
@@ -79,11 +81,11 @@
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function (data) {
+                    success: function(data) {
                         $("#form")[0].reset();
                         $('#codigoProduto').val("");
                         removerImagem();
@@ -102,10 +104,10 @@
                     url: 'ControllerServlet?acao=salvarMesa',
                     type: 'POST',
                     data: valores,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#formMesa")[0].reset();
                         $('#codigoMesa').val("");
                         $("#processing-modal").modal('hide');
@@ -121,10 +123,10 @@
                     url: 'ControllerServlet?acao=buscarMesa',
                     type: 'POST',
                     data: '&codigoMesa=' + codigoMesa,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         //$("#processing-modal").modal('show');
                     },
-                    success: function (json) {
+                    success: function(json) {
                         $("#numeroMesa").val(json.numero);
                         $('#codigoMesa').val(codigoMesa);
                         //$("#processing-modal").modal('hide');
@@ -134,19 +136,19 @@
             }
 
             /*
-            function deletarImg() {
-
-                $.ajax({
-                    url: 'ControllerServlet?acao=removerImagem',
-                    type: 'POST',
-                    data: '&imagem=' + $('#caminho').val(),
-                    beforeSend: function () {
-                    },
-                    success: function (data) {
-                    }
-                });
-
-            }*/
+             function deletarImg() {
+             
+             $.ajax({
+             url: 'ControllerServlet?acao=removerImagem',
+             type: 'POST',
+             data: '&imagem=' + $('#caminho').val(),
+             beforeSend: function () {
+             },
+             success: function (data) {
+             }
+             });
+             
+             }*/
 
             function buscarProdutos(codigoCategoria) {
                 var classe = $("#categoria" + codigoCategoria).attr("class");
@@ -156,10 +158,10 @@
                         url: 'ControllerServlet?acao=listarProdutos',
                         type: 'POST',
                         data: '&codigoCategoria=' + codigoCategoria,
-                        beforeSend: function () {
+                        beforeSend: function() {
                             $("#processing-modal").modal('show');
                         },
-                        success: function (data) {
+                        success: function(data) {
                             $("#processing-modal").modal('hide');
                             jQuery("#categoria" + codigoCategoria).html(data);
                         }
@@ -174,9 +176,9 @@
                     url: 'ControllerServlet?acao=listarCategorias',
                     type: 'POST',
                     data: '&codigoRestaurante=' + codigoRestaurante,
-                    beforeSend: function () {
+                    beforeSend: function() {
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#accordionCardapio").html(data);
                     }
@@ -190,10 +192,10 @@
                     url: 'ControllerServlet?acao=buscarProduto',
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         //$("#processing-modal").modal('show');
                     },
-                    success: function (json) {
+                    success: function(json) {
                         //$("#processing-modal").modal('hide');
                         $("#nomePreduto").val(json.nome);
                         $('#caminho').val(json.imagem);
@@ -217,10 +219,10 @@
                     url: 'ControllerServlet?acao=excluirProduto',
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data === "") {
                             buscarCategorias(1);
                         } else {
@@ -239,10 +241,10 @@
                     url: 'ControllerServlet?acao=excluirMesa',
                     type: 'POST',
                     data: '&codigoMesa=' + codigoMesa,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divMesas").html(data);
                     }
@@ -255,69 +257,31 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>                        
-                    </button>
-                    <a class="navbar-brand" href="#">ChegouPediu</a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="pedido.html">Pedidos</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: Lanchonete do Zé">
-                                <span class="glyphicon glyphicon-cog"></span>
-                                Configurações
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="ControllerServlet?acao=listarCardapio">Cardapio</a></li>
-                                <li><a href="ControllerServlet?acao=listarCardapio">Mesas</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: Lanchonete do Zé">
-                                <img alt="" src="http://www.manentti.com.br/slir/w300-h226/img/servicosLogoFiora.png" style="width: 25px;"> Perfil    
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Ver Perfil</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-log-in"></span> Sair</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class="container"  style="margin-top:65px">
-            <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
-                <div class="btn-group" role="group">
-                    <a id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
-                        <div class="hidden-xs">Cardapio</div>
-                    </a>
-                </div>
-                <div class="btn-group" role="group">
-                    <a id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-                        <div class="hidden-xs">Mesas</div>
-                    </a>
-                </div>
+        <div id="divCabecalho">
+            <jsp:include page="/cabecalho.jsp"></jsp:include>
             </div>
 
-            <div class="well" style="padding: 5px;">
-                <div class="tab-content">
-                    <div class="tab-pane fade in active" id="tab1">
-                        <div style="padding: 5px 0px;">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="limparProduto();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
-                        </div>
-                        <div class="panel-group" id="accordionCardapio">
+            <div class="container"  style="margin-top:65px">
+                <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <a id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+                            <div class="hidden-xs">Cardapio</div>
+                        </a>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <a id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                            <div class="hidden-xs">Mesas</div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="well" style="padding: 5px;">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1">
+                            <div style="padding: 5px 0px;">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="limparProduto();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
+                            </div>
+                            <div class="panel-group" id="accordionCardapio">
                             <jsp:include page="/pages/categoria.jsp"></jsp:include>
                             </div>
                         </div>
@@ -436,8 +400,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
+        <div id="divCabecalho">
+            <jsp:include page="/rodape.jsp"></jsp:include>
+        </div>
+
     </body>
 </html>
 
