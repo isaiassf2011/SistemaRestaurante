@@ -30,18 +30,22 @@
                 //iniciamos o ajax
                 $.ajax({
                     //definimos a url
-                    url: 'ControllerServlet?acao=autenticaRestaurante',
+                    url: '../ControllerServlet?acao=autenticaRestaurante',
                     //definimos o tipo de requisição
                     type: 'post',
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
                     beforeSend: function () {
-
+                        
                     },
                     //colocamos o retorno na tela
-                    success: function (pre) {
-                        alert("Cadastrado");
+                    success: function (json) {
+                        if (json.ok === "S") {
+                            location.href = "../ControllerServlet?acao=listarCardapio";
+                        } else {
+                            alert("Usuario/Senha incorreto!");
+                        }
                     }
                 });
             }

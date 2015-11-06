@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 import java.io.File;
+import javax.servlet.http.HttpSession;
 
 public class SalvarRestaurante implements CommandInterface {
 
@@ -17,10 +18,12 @@ public class SalvarRestaurante implements CommandInterface {
 
         try {
 
+            HttpSession session = request.getSession(false);
             Restaurante restaurante;
             RestauranteDao dao = new RestauranteDao();
-            if (!request.getParameter("codigoRestaurante").equals("") && request.getParameter("codigoRestaurante") != null) {
-                restaurante = dao.getById(Integer.parseInt(request.getParameter("codigoRestaurante")));
+            if (session != null) {
+                restaurante = (Restaurante) session.getAttribute("restaurante");
+                restaurante = dao.getById(restaurante.getCodigo());
                 if (!restaurante.getLogo().equals("")) {
                     File f = new File(request.getSession().getServletContext().getRealPath("/imgs/" + restaurante.getLogo()).replace("build", ""));
                     f.delete();

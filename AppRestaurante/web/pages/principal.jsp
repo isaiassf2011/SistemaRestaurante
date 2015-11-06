@@ -258,7 +258,7 @@
     <body>
 
         <div id="divCabecalho">
-            <jsp:include page="/cabecalho.jsp"></jsp:include>
+            <jsp:include page="/cabecalho.jsp" flush="true"></jsp:include>
             </div>
 
             <div class="container"  style="margin-top:65px">

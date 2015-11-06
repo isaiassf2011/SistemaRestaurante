@@ -4,10 +4,12 @@ import br.com.apprestaurante.dao.CategoriaProdutoDao;
 import br.com.apprestaurante.dao.MesaDao;
 import br.com.apprestaurante.entity.CategoriaProduto;
 import br.com.apprestaurante.entity.Mesa;
+import br.com.apprestaurante.entity.Restaurante;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -21,8 +23,11 @@ public class ListarCardapio implements CommandInterface {
         List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
         List<Mesa> mesas = new ArrayList<Mesa>();
 
-        categorias = new CategoriaProdutoDao().buscarPorRestaurante(1);
-        mesas = new MesaDao().buscarPorRestaurante(1);
+        HttpSession session = request.getSession(false);
+        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
+        
+        categorias = new CategoriaProdutoDao().buscarPorRestaurante(restaurante.getCodigo());
+        mesas = new MesaDao().buscarPorRestaurante(restaurante.getCodigo());
 
         request.setAttribute("mesas", mesas);
         request.setAttribute("categorias", categorias);

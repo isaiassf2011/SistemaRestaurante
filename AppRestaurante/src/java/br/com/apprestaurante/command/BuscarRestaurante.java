@@ -9,6 +9,7 @@ import br.com.apprestaurante.dao.RestauranteDao;
 import br.com.apprestaurante.entity.Restaurante;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -19,9 +20,11 @@ public class BuscarRestaurante implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        Restaurante r = new RestauranteDao().getById(1);
+        HttpSession session = request.getSession(false);
+        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
+        restaurante = new RestauranteDao().getById(restaurante.getCodigo());
 
-        request.setAttribute("restaurante", r);
+        request.setAttribute("restaurante", restaurante);
 
         return "pages/perfil.jsp";
 

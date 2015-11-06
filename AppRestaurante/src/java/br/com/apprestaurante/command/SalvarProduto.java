@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,6 +29,8 @@ public class SalvarProduto implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         //String codigoPergunta = request.getParameter("perguntaCodigo");
 
+        HttpSession session = request.getSession(false);
+        
         try {
 
             Produto produto;
@@ -57,7 +60,8 @@ public class SalvarProduto implements CommandInterface {
 
             produto.setImagem(request.getParameter("imagem"));
             produto.setPreco(new BigDecimal(request.getParameter("preco")));
-            Restaurante restaurante = new RestauranteDao().getById(1);
+            
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
             produto.setRestaurante(restaurante);
             CategoriaProduto categoriaProduto = new CategoriaProduto();
             categoriaProduto.setCodigo(Integer.parseInt(request.getParameter("cmbCategoria")));
@@ -66,7 +70,7 @@ public class SalvarProduto implements CommandInterface {
             dao.salvar(produto);
 
             List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
-            categorias = new CategoriaProdutoDao().buscarPorRestaurante(1);
+            categorias = new CategoriaProdutoDao().buscarPorRestaurante(restaurante.getCodigo());
             request.setAttribute("categorias", categorias);
 
         } catch (Exception e) {

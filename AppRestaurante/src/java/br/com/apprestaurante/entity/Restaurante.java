@@ -39,6 +39,9 @@ public class Restaurante implements Serializable {
     @Column(name = "res_cep", nullable = false, length = 10)
     private String cep;
 
+    @Column(name = "res_senha", nullable = false, length = 30)
+    private String senha;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -93,6 +96,14 @@ public class Restaurante implements Serializable {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
 }

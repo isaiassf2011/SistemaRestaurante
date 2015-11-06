@@ -30,7 +30,9 @@ public class AutenticaRestaurante implements CommandInterface {
 
             if (restaurante != null) {
                 session.setAttribute("restaurante", restaurante);
+                json.addProperty("ok", "S");
             } else {
+                json.addProperty("ok", "N");
                 System.out.println("Usuario/Senha incorreto!");
             }
 

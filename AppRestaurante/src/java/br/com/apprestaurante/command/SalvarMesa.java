@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,6 +25,8 @@ public class SalvarMesa implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         //String codigoPergunta = request.getParameter("perguntaCodigo");
 
+        HttpSession session = request.getSession(false);
+        
         try {
 
             Mesa mesa;
@@ -34,13 +37,13 @@ public class SalvarMesa implements CommandInterface {
                 mesa = new Mesa();
             }
             mesa.setNumero(Integer.parseInt(request.getParameter("numeroMesa")));
-            Restaurante restaurante = new RestauranteDao().getById(1);
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
             mesa.setRestaurante(restaurante);
 
             dao.salvar(mesa);
 
             List<Mesa> mesas = new ArrayList<Mesa>();
-            mesas = new MesaDao().buscarPorRestaurante(1);
+            mesas = new MesaDao().buscarPorRestaurante(restaurante.getCodigo());
             request.setAttribute("mesas", mesas);
 
         } catch (Exception e) {

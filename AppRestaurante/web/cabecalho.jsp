@@ -4,6 +4,10 @@
     Author     : isaias_sergio
 --%>
 
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:set var="contexto" value="${pageContext.request.contextPath}"/>
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -21,7 +25,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="pedido.html">Pedidos</a></li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: Lanchonete do Zé">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
                         <span class="glyphicon glyphicon-cog"></span>
                         Configurações
                         <span class="caret"></span></a>
@@ -31,8 +35,13 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: Lanchonete do Zé">
-                        <img alt="" src="http://www.manentti.com.br/slir/w300-h226/img/servicosLogoFiora.png" style="width: 25px;"> Perfil    
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: ${sessionScope.restaurante.nome}">
+                        <c:if test="${restaurante.logo != ''}">
+                            <img alt="" src="${contexto}/imgs/${sessionScope.restaurante.logo}" style="width: 18px;"> Perfil
+                        </c:if>
+                        <c:if test="${restaurante.logo == ''}">
+                            <img alt="" src="${contexto}/imgs/sem_imagem.jpg" style="width: 18px;"> Perfil
+                        </c:if>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="ControllerServlet?acao=buscarRestaurante">Ver Perfil</a></li>

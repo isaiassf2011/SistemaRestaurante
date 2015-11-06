@@ -95,7 +95,7 @@
     <body>
 
         <div id="divCabecalho">
-            <jsp:include page="/cabecalho.jsp"></jsp:include>
+            <jsp:include page="/cabecalho.jsp" flush="true"></jsp:include>
             </div>
 
             <div class="container" style="margin-top:65px">
@@ -106,7 +106,7 @@
                                 <strong> Meu Perfil!</strong>
                             </div>
                             <div style="padding: 15px;">
-                                <form role="form" action="../MeuServlet" method="POST" id="form">
+                                <form role="form" action="MeuServlet" method="POST" id="form">
                                     <input type="hidden" id="caminho" name="logo" value="${restaurante.logo}"/>
                                 <input type="hidden" id="codigoRestaurante" name="codigoRestaurante" value="1"/>
                                 <fieldset>

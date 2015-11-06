@@ -1,5 +1,6 @@
 package br.com.apprestaurante.helper;
 
+import br.com.apprestaurante.command.AutenticaRestaurante;
 import br.com.apprestaurante.command.BuscarMesa;
 import br.com.apprestaurante.command.BuscarProduto;
 import br.com.apprestaurante.command.BuscarRestaurante;
@@ -28,6 +29,7 @@ public class ControllerHelper {
     public ControllerHelper() {
 
         comandos = new HashMap<String, CommandInterface>();
+        comandos.put(AcaoConstante.AUTENTICA_RESTAURANTE, new AutenticaRestaurante());
         comandos.put(AcaoConstante.SALVAR_RESTAURANTE, new SalvarRestaurante());
         comandos.put(AcaoConstante.SALVAR_MESA, new SalvarMesa());
         comandos.put(AcaoConstante.SALVAR_PRODUTO, new SalvarProduto());

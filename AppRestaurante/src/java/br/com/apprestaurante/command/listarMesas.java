@@ -6,13 +6,13 @@
 package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.MesaDao;
-import br.com.apprestaurante.dao.ProdutoDao;
 import br.com.apprestaurante.entity.Mesa;
-import br.com.apprestaurante.entity.Produto;
+import br.com.apprestaurante.entity.Restaurante;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,8 +24,10 @@ public class listarMesas implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         List<Mesa> mesas = new ArrayList<Mesa>();
-
-        mesas = new MesaDao().buscarPorRestaurante(1);
+        HttpSession session = request.getSession(false);
+        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
+        
+        mesas = new MesaDao().buscarPorRestaurante(restaurante.getCodigo());
 
         request.setAttribute("mesas", mesas);
 

@@ -6,9 +6,7 @@
 package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.MesaDao;
-import br.com.apprestaurante.dao.ProdutoDao;
 import br.com.apprestaurante.entity.Mesa;
-import br.com.apprestaurante.entity.Produto;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
