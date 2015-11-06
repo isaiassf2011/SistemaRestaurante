@@ -14,5 +14,7 @@
         <mapping class="br.com.apprestaurante.entity.Mesa"></mapping>
         <mapping class="br.com.apprestaurante.entity.Produto"></mapping>
         <mapping class="br.com.apprestaurante.entity.CategoriaProduto"></mapping>
+        <mapping class="br.com.apprestaurante.entity.Estado"></mapping>
+        <mapping class="br.com.apprestaurante.entity.Municipio"></mapping>
     </session-factory>
 </hibernate-configuration>

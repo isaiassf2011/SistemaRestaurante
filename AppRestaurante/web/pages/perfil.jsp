@@ -27,12 +27,13 @@
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
 
-                $('#arquivo').change(function() {
+                $('#arquivo').change(function () {
                     var reader = new FileReader();
-                    $(reader).load(function(event) {
+                    $(reader).load(function (event) {
                         $("#imgRestaurante").attr("src", event.target.result);
+                        $("#menuLogo").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
                     $('#arquivo').closest("form").submit();
@@ -63,7 +64,9 @@
              }*/
 
             function removerImagem() {
+                $(":file").filestyle('clear');
                 $('#caminho').val("");
+                $("#menuLogo").attr("src", "${contexto}/imgs/sem_imagem.jpg");
                 $('#imgRestaurante').attr('src', "${contexto}/imgs/sem_imagem.jpg");
             }
 
@@ -73,17 +76,18 @@
                 //iniciamos o ajax
                 $.ajax({
                     //definimos a url
-                    url: 'ControllerServlet?acao=salvarRestaurante',
+                    url: 'ControllerServlet?acao=alterarRestaurante',
                     //definimos o tipo de requisição
                     type: 'post',
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function() {
+                    beforeSend: function () {
 
                     },
                     //colocamos o retorno na tela
-                    success: function(pre) {
+                    success: function (pre) {
+                        //$('#divCabecalho').load("cabecalho.jsp");
                         alert("Cadastrado");
                     }
                 });
@@ -95,7 +99,7 @@
     <body>
 
         <div id="divCabecalho">
-            <jsp:include page="/cabecalho.jsp" flush="true"></jsp:include>
+            <jsp:include page="/cabecalho.jsp"></jsp:include>
             </div>
 
             <div class="container" style="margin-top:65px">
@@ -144,11 +148,10 @@
                                                 <input class="form-control" placeholder="CEP" name="cep" type="text" value="${restaurante.cep}">
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control">
-                                                    <option value="none" >Estado</option>
-                                                    <option value="1" selected="">SC</option>
-                                                    <option value="2">SP</option>
-                                                    <option value="3">RS</option>
+                                                <select class="form-control" id="estado" name="estado">
+                                                    <c:forEach var="e" varStatus="j" items="${estados}" >
+                                                        <option value="${e.codigo}" <c:if test="${e.codigo == restaurante.estado.codigo}">selected="selected"</c:if>>${e.descricao}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -180,7 +183,7 @@
             </div>
         </div>
 
-        <div id="divCabecalho">
+        <div id="divRodape">
             <jsp:include page="/rodape.jsp"></jsp:include>
         </div>
 

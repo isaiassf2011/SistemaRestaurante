@@ -98,7 +98,7 @@
                             </form>
                         </div>
                         <div class="panel-footer ">
-                            Ainda não está cadastrado? <a href="#" onClick=""> Cadastre-se </a>
+                            Ainda não está cadastrado? <a href="../ControllerServlet?acao=cadastrarRestaurante" > Cadastre-se </a>
                         </div>
                     </div>
                 </div>

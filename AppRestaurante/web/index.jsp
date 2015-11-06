@@ -1,7 +1,7 @@
 <%-- 
-    Document   : usuario
-    Created on : 02/11/2015, 18:36:55
-    Author     : isaias
+    Document   : index
+    Created on : 06/11/2015, 14:06:27
+    Author     : brd03-pc
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,44 +21,24 @@
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $(".btn-pref .btn").click(function () {
-                    $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-                    // $(".tab").addClass("active"); // instead of this do the below 
-                    $(this).removeClass("btn-default").addClass("btn-primary");
-                });
-            });
-
-            function buscarProdutos(codigoCategoria) {
-                var classe = $("#categoria" + codigoCategoria).attr("class");
-
-                if (classe === "panel-collapse collapse") {
-                    $.ajax({
-                        url: 'ControllerServlet?acao=listarProdutosUsuario',
-                        type: 'POST',
-                        data: '&codigoCategoria=' + codigoCategoria,
-                        beforeSend: function () {
-                            $("#processing-modal").modal('show');
-                        },
-                        success: function (data) {
-                            $("#processing-modal").modal('hide');
-                            jQuery("#categoria" + codigoCategoria).html(data);
-                        }
-                    });
-                }
-
-            }
-
-        </script>
     </head>
     <body>
 
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
                     <a class="navbar-brand" href="#">ChegouPediu</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="ControllerServlet?acao=cadastrarRestaurante">Cadastre-se</a></li>
+                        <li><a href="pages/login.jsp">Entrar</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -94,6 +74,7 @@
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="tab1">
                         <div class="panel-group" id="accordion">
+
                             <div id="custom-search-input">
                                 <div class="input-group col-md-12">
                                     <input type="text" class="form-control" placeholder="Buscar produto" />
@@ -104,10 +85,88 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="panel-group" id="accordionCardapio">
-                                <jsp:include page="/pages/categoriaUsuario.jsp"></jsp:include>
-                            </div>
-                        </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseOne">
+                                            Bebidas
+                                        </a>
+                                    </h4>
+                                </div><!--/.panel-heading -->
+                                <div id="collapseOne" class="panel-collapse collapse in" onclick="location.href = '#';" style="cursor: pointer;">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 text-right">
+                                                <img src="http://pizzarialacapanna.com.br/wp-content/uploads/2014/10/coca_cola_2l.png" class="img-circle pull-left" style="
+                                                     margin-top: 0px; border-radius: 0px;" alt="">
+                                                <span class="preco"><b>R$ 10,00</b></span>
+                                                <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px">
+                                                    <i class="glyphicon glyphicon-plus"></i>										
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <h5><b>Coca-Cola</b></h5>
+                                                <p style="font-size: 12px;">Arroz, Feijão, Macarrão, Fritas e Salada. Escolha a carne.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/.panel-body -->
+                                </div><!--/.panel-collapse -->
+                            </div><!-- /.panel -->
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapseTwo">
+                                            Porções
+                                        </a>
+                                    </h4>
+                                </div><!--/.panel-heading -->
+                                <div id="collapseTwo" class="panel-collapse collapse" onclick="location.href = '#';" style="cursor: pointer;">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 text-right">
+                                                <span class="preco">R$ 10,00</span>
+                                                <a href="javascript:;" class="btn btn-small btn-primary" style="padding: 1px 4px">
+                                                    <i class="glyphicon glyphicon-plus"></i>										
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <h4>6ª Feira</h4>
+                                                <p>Arroz, Feijão, Macarrão, Fritas e Salada. Escolha a carne.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/.panel-body -->
+                                </div><!--/.panel-collapse -->
+                            </div><!-- /.panel -->
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapseThree">
+                                            Lanches
+                                        </a>
+                                    </h4>
+                                </div><!--/.panel-heading -->
+                                <div id="collapseThree" class="panel-collapse collapse" onclick="location.href = '#';" style="cursor: pointer;">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 text-right">
+                                                <span class="preco">R$ 10,00</span>
+                                                <a href="javascript:;" class="btn btn-small btn-primary" style="padding: 1px 4px">
+                                                    <i class="glyphicon glyphicon-plus"></i>										
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <h4>6ª Feira</h4>
+                                                <p>Arroz, Feijão, Macarrão, Fritas e Salada. Escolha a carne.</p>
+                                            </div>
+                                        </div>
+                                    </div><!--/.panel-body -->
+                                </div><!--/.panel-collapse -->
+                            </div><!-- /.panel -->
+                        </div><!-- /.panel-group -->
+
                     </div>
                     <div class="tab-pane fade in" id="tab2">
                         <div class="panel-car-head">
@@ -191,22 +250,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
-                 left: 50% !important; margin-top: -100px;  
-                 margin-left: -100px; 
-                 overflow: visible !important;" id="processing-modal" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="text-center">
-                                <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
-                                <h4>Carregando...</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>                
         </div>
 
         <div id="divRodape">

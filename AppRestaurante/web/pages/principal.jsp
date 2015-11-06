@@ -65,6 +65,7 @@
             }
 
             function removerImagem() {
+                $(":file").filestyle('clear');
                 $('#caminho').val("");
                 $('#imgProduto').attr('src', "${contexto}/imgs/produto-sem-imagem.gif");
             }
@@ -402,7 +403,7 @@
             </div>
         </div>
 
-        <div id="divCabecalho">
+        <div id="divRodape">
             <jsp:include page="/rodape.jsp"></jsp:include>
         </div>
 

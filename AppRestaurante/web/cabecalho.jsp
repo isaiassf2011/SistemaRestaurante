@@ -36,11 +36,11 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: ${sessionScope.restaurante.nome}">
-                        <c:if test="${restaurante.logo != ''}">
-                            <img alt="" src="${contexto}/imgs/${sessionScope.restaurante.logo}" style="width: 18px;"> Perfil
+                        <c:if test="${sessionScope.restaurante.logo != ''}">
+                            <img alt="" src="${contexto}/imgs/${sessionScope.restaurante.logo}" id="menuLogo" style="width: 18px;"> Perfil
                         </c:if>
-                        <c:if test="${restaurante.logo == ''}">
-                            <img alt="" src="${contexto}/imgs/sem_imagem.jpg" style="width: 18px;"> Perfil
+                        <c:if test="${sessionScope.restaurante.logo == ''}">
+                            <img alt="" src="${contexto}/imgs/sem_imagem.jpg" id="menuLogo" style="width: 18px;"> Perfil
                         </c:if>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -48,7 +48,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Sair</a>
+                    <a href="LogoffServlet"><span class="glyphicon glyphicon-log-in"></span> Sair</a>
                 </li>
             </ul>
         </div>

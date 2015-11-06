@@ -3,9 +3,12 @@ package br.com.apprestaurante.entity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -42,6 +45,10 @@ public class Restaurante implements Serializable {
     @Column(name = "res_senha", nullable = false, length = 30)
     private String senha;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "estado_codigo", referencedColumnName = "estado_codigo", nullable = false)
+    private Estado estado;
+    
     public Integer getCodigo() {
         return codigo;
     }
@@ -104,6 +111,14 @@ public class Restaurante implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
 }

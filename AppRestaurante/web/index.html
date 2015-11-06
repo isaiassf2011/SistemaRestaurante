@@ -13,8 +13,8 @@
 
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                $(".btn-pref .btn").click(function() {
+            $(document).ready(function () {
+                $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
@@ -28,7 +28,18 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
                     <a class="navbar-brand" href="#">ChegouPediu</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="pages/signUp.html">Cadastre-se</a></li>
+                        <li><a href="pages/login.jsp">Entrar</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
