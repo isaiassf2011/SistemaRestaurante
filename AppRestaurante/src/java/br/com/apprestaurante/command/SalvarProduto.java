@@ -30,7 +30,7 @@ public class SalvarProduto implements CommandInterface {
         //String codigoPergunta = request.getParameter("perguntaCodigo");
 
         HttpSession session = request.getSession(false);
-        
+
         try {
 
             Produto produto;
@@ -38,7 +38,7 @@ public class SalvarProduto implements CommandInterface {
             if (!request.getParameter("codigoProduto").equals("") && request.getParameter("codigoProduto") != null) {
                 produto = dao.getById(Integer.parseInt(request.getParameter("codigoProduto")));
                 if (!produto.getImagem().equals("")) {
-                    File f = new File(request.getSession().getServletContext().getRealPath("/imgs/"+produto.getImagem()).replace("build", ""));
+                    File f = new File(request.getSession().getServletContext().getRealPath("/imgs/" + produto.getImagem()).replace("build", ""));
                     f.delete();
                 }
             } else {
@@ -60,7 +60,7 @@ public class SalvarProduto implements CommandInterface {
 
             produto.setImagem(request.getParameter("imagem"));
             produto.setPreco(new BigDecimal(request.getParameter("preco")));
-            
+
             Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
             produto.setRestaurante(restaurante);
             CategoriaProduto categoriaProduto = new CategoriaProduto();
@@ -70,13 +70,17 @@ public class SalvarProduto implements CommandInterface {
             dao.salvar(produto);
 
             List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
+            List<Produto> produtos = new ArrayList<Produto>();
             categorias = new CategoriaProdutoDao().buscarPorRestaurante(restaurante.getCodigo());
+            produtos = new ProdutoDao().buscarPorRestaurante(restaurante.getCodigo());
             request.setAttribute("categorias", categorias);
+            request.setAttribute("produtos", produtos);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        
         return "pages/categoria.jsp";
 
     }

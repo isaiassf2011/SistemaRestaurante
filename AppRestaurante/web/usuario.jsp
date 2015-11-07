@@ -51,6 +51,23 @@
 
             }
 
+            function addItemCarrinho(codigoProduto) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=addItemCarrinho',
+                    type: 'POST',
+                    data: '&codigoProduto=' + codigoProduto,
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        //jQuery("#categoria" + codigoCategoria).html(data);
+                    }
+                });
+
+            }
+
         </script>
     </head>
     <body>
@@ -106,110 +123,110 @@
                             </div>
                             <div class="panel-group" id="accordionCardapio">
                                 <jsp:include page="/pages/categoriaUsuario.jsp"></jsp:include>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade in" id="tab2">
-                        <div class="panel-car-head">
-                            <i class="glyphicon glyphicon-shopping-cart"></i>
-                            <span>Seu Pedido</span>
-                        </div>
-                        <div class="panel-car">
-                            <div class="row">
-                                <div class="col-md-8 col-xs-8 btn-breadcrumb">
-                                    <a href="javascript:;" class="btn btn-small btn-danger" style="padding: 1px 4px">
-                                        <i class="glyphicon glyphicon-minus"></i>										
-                                    </a>
-                                    <span>10</span>
-                                    <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px">
-                                        <i class="glyphicon glyphicon-plus"></i>										
-                                    </a>
-                                    <span title="6ª Feira 6ª Feira6ª Feira6ª">Lanche Especial da Casa</span>
-                                </div>
-                                <div class="col-md-4 col-xs-4 preco">
-                                    <span>R$ 10,00</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-car">
-                            <div class="row">
-                                <div class="col-md-8 col-xs-8 btn-breadcrumb">
-                                    <a href="javascript:;" class="btn btn-small btn-danger" style="padding: 1px 4px">
-                                        <i class="glyphicon glyphicon-minus"></i>										
-                                    </a>
-                                    <span>10</span>
-                                    <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px">
-                                        <i class="glyphicon glyphicon-plus"></i>										
-                                    </a>
-                                    <span title="6ª Feira 6ª Feira6ª Feira6ª">Lanche da Casa com Fritas</span>
-                                </div>
-                                <div class="col-md-4 col-xs-4 preco">
-                                    <span>R$ 15,00</span>
+                        <div class="tab-pane fade in" id="tab2">
+                            <div class="panel-car-head">
+                                <i class="glyphicon glyphicon-shopping-cart"></i>
+                                <span>Seu Pedido</span>
+                            </div>
+                            <div class="panel-car">
+                                <div class="row">
+                                    <div class="col-md-8 col-xs-8 btn-breadcrumb">
+                                        <a href="javascript:;" class="btn btn-small btn-danger" style="padding: 1px 4px">
+                                            <i class="glyphicon glyphicon-minus"></i>										
+                                        </a>
+                                        <span>10</span>
+                                        <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px">
+                                            <i class="glyphicon glyphicon-plus"></i>										
+                                        </a>
+                                        <span title="6ª Feira 6ª Feira6ª Feira6ª">Lanche Especial da Casa</span>
+                                    </div>
+                                    <div class="col-md-4 col-xs-4 preco">
+                                        <span>R$ 10,00</span>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="panel-car">
+                                <div class="row">
+                                    <div class="col-md-8 col-xs-8 btn-breadcrumb">
+                                        <a href="javascript:;" class="btn btn-small btn-danger" style="padding: 1px 4px">
+                                            <i class="glyphicon glyphicon-minus"></i>										
+                                        </a>
+                                        <span>10</span>
+                                        <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px">
+                                            <i class="glyphicon glyphicon-plus"></i>										
+                                        </a>
+                                        <span title="6ª Feira 6ª Feira6ª Feira6ª">Lanche da Casa com Fritas</span>
+                                    </div>
+                                    <div class="col-md-4 col-xs-4 preco">
+                                        <span>R$ 15,00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-car-total">
+                                <span>Sub-Total do Pedido</span>
+                                <strong class="subTotal">R$ 25,00</strong>
+                            </div>
+                            <div class="panel-car-footer">
+                                <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Realizar Pedido</button> 
+                            </div>
                         </div>
-                        <div class="panel-car-total">
-                            <span>Sub-Total do Pedido</span>
-                            <strong class="subTotal">R$ 25,00</strong>
+                        <div class="tab-pane fade in" id="tab3">
+                            <h3>Horários</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div>Segunda</div>
+                                    <span>11:00</span> - <span>16:00</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Terça</div>
+                                    <span>11:00</span> - <span>16:00</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Quarta</div>
+                                    <span>11:00</span> - <span>16:00</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Quinta</div>
+                                    <span>11:00</span> - <span>16:00</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Sexta</div>
+                                    <span>11:00</span> - <span>16:00</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Sabado</div>
+                                    <span>11:00</span> - <span>16:00</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Domingo</div>
+                                    <span>11:00</span> - <span>16:00</span>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="panel-car-footer">
-                            <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Realizar Pedido</button> 
-                        </div>
-                    </div>
-                    <div class="tab-pane fade in" id="tab3">
-                        <h3>Horários</h3>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <div>Segunda</div>
-                                <span>11:00</span> - <span>16:00</span>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Terça</div>
-                                <span>11:00</span> - <span>16:00</span>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Quarta</div>
-                                <span>11:00</span> - <span>16:00</span>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Quinta</div>
-                                <span>11:00</span> - <span>16:00</span>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Sexta</div>
-                                <span>11:00</span> - <span>16:00</span>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Sabado</div>
-                                <span>11:00</span> - <span>16:00</span>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Domingo</div>
-                                <span>11:00</span> - <span>16:00</span>
-                            </li>
-                        </ul>
                     </div>
                 </div>
+
+                <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
+                     left: 50% !important; margin-top: -100px;  
+                     margin-left: -100px; 
+                     overflow: visible !important;" id="processing-modal" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
+                                    <h4>Carregando...</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
             </div>
 
-            <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
-                 left: 50% !important; margin-top: -100px;  
-                 margin-left: -100px; 
-                 overflow: visible !important;" id="processing-modal" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="text-center">
-                                <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
-                                <h4>Carregando...</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>                
-        </div>
-
-        <div id="divRodape">
+            <div id="divRodape">
             <jsp:include page="/rodape.jsp"></jsp:include>
         </div>
 
