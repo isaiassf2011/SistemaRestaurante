@@ -68,6 +68,24 @@
                 });
 
             }
+            
+            function removeItemCarrinho(indice) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=removeItemCarrinho',
+                    type: 'POST',
+                    data: '&indice=' + indice,
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#divCarrinho").html(data);
+                        $(".badge").html($("#totalDeItens").val());
+                    }
+                });
+
+            }
 
         </script>
     </head>
@@ -97,7 +115,14 @@
                 <div class="btn-group" role="group">
                     <a id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                         <span class="badge" style="background-color: rgb(4, 115, 18); color: white; padding: 2px 4px;"
-                              title="Número de produtos que você pediu">0</span>
+                              title="Número de produtos que você pediu">
+                            <c:if test="${empty carrinho}">
+                                0
+                            </c:if>
+                            <c:if test="${!empty carrinho}">
+                                ${carrinho.totalDeItens}
+                            </c:if>
+                        </span>
                         <div class="hidden-xs" style="margin-right: 25px;">Pedido</div>
                     </a>
                 </div>

@@ -16,7 +16,7 @@
                     <img src="${contexto}/imgs/${p.imagem}" class="img-circle pull-left" style="margin-top: 0px; border-radius: 0px;" alt="">
                 </c:if>
                 <span class="preco">R$ ${p.preco}</span>
-                <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px">
+                <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px" onclick="addItemCarrinho(${p.codigo});">
                     <i class="glyphicon glyphicon-plus"></i>										
                 </a>
             </div>

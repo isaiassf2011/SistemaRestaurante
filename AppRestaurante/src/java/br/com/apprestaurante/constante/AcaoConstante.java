@@ -19,6 +19,7 @@ public final class AcaoConstante {
     public static final String EXCLUIR_PRODUTO = "excluirProduto";
     public static final String EXCLUIR_MESA = "excluirMesa";
     public static final String REMOVER_IMAGEM = "removerImagem";
+    public static final String REMOVE_ITEM_CARRINHO = "removeItemCarrinho";
     public static final String CADASTRAR_RESTAURANTE = "cadastrarRestaurante";
 
     private AcaoConstante() {

@@ -13,7 +13,7 @@
     <div class="panel-car">
         <div class="row">
             <div class="col-md-8 col-xs-8 btn-breadcrumb">
-                <a href="javascript:;" class="btn btn-small btn-danger" style="padding: 1px 4px">
+                <a href="javascript:;" class="btn btn-small btn-danger" style="padding: 1px 4px" onclick="removeItemCarrinho(${i.count - 1});">
                     <i class="glyphicon glyphicon-minus"></i>										
                 </a>
                 <span>${c.quantidade}</span>

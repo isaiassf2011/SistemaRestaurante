@@ -35,6 +35,7 @@ public class AddItemCarrinho implements CommandInterface {
             itemsCarrinho = carrinho.getItens();
         }
         itemsCarrinho.add(carrinhoItem);
+        carrinho.adiciona(carrinhoItem);
 
         carrinho.setItens(itemsCarrinho);
 
