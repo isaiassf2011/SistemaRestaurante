@@ -1,12 +1,9 @@
 package br.com.apprestaurante.command;
 
-import br.com.apprestaurante.dao.MesaDao;
 import br.com.apprestaurante.dao.ProdutoDao;
 import br.com.apprestaurante.entity.Carrinho;
 import br.com.apprestaurante.entity.CarrinhoItem;
-import br.com.apprestaurante.entity.Mesa;
 import br.com.apprestaurante.entity.Produto;
-import br.com.apprestaurante.entity.Restaurante;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +19,7 @@ public class AddItemCarrinho implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
 
         Produto produto = new ProdutoDao().getById(Integer.parseInt(request.getParameter("codigoProduto")));
 
@@ -50,7 +47,7 @@ public class AddItemCarrinho implements CommandInterface {
             System.out.println("Item: " + i.getProduto().getPreco());
         }
 
-        return null;
+        return "pages/carrinho.jsp";
 
     }
 

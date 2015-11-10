@@ -28,4 +28,8 @@ public class Carrinho {
         this.total = total;
     }
 
+    public Integer getTotalDeItens() {
+        return itens.size();
+    }
+
 }

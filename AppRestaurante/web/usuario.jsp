@@ -62,7 +62,8 @@
                     },
                     success: function (data) {
                         $("#processing-modal").modal('hide');
-                        //jQuery("#categoria" + codigoCategoria).html(data);
+                        jQuery("#divCarrinho").html(data);
+                        $(".badge").html($("#totalDeItens").val());
                     }
                 });
 
@@ -131,43 +132,8 @@
                                 <i class="glyphicon glyphicon-shopping-cart"></i>
                                 <span>Seu Pedido</span>
                             </div>
-                            <div class="panel-car">
-                                <div class="row">
-                                    <div class="col-md-8 col-xs-8 btn-breadcrumb">
-                                        <a href="javascript:;" class="btn btn-small btn-danger" style="padding: 1px 4px">
-                                            <i class="glyphicon glyphicon-minus"></i>										
-                                        </a>
-                                        <span>10</span>
-                                        <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px">
-                                            <i class="glyphicon glyphicon-plus"></i>										
-                                        </a>
-                                        <span title="6ª Feira 6ª Feira6ª Feira6ª">Lanche Especial da Casa</span>
-                                    </div>
-                                    <div class="col-md-4 col-xs-4 preco">
-                                        <span>R$ 10,00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-car">
-                                <div class="row">
-                                    <div class="col-md-8 col-xs-8 btn-breadcrumb">
-                                        <a href="javascript:;" class="btn btn-small btn-danger" style="padding: 1px 4px">
-                                            <i class="glyphicon glyphicon-minus"></i>										
-                                        </a>
-                                        <span>10</span>
-                                        <a href="javascript:;" class="btn btn-small btn-success" style="padding: 1px 4px">
-                                            <i class="glyphicon glyphicon-plus"></i>										
-                                        </a>
-                                        <span title="6ª Feira 6ª Feira6ª Feira6ª">Lanche da Casa com Fritas</span>
-                                    </div>
-                                    <div class="col-md-4 col-xs-4 preco">
-                                        <span>R$ 15,00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-car-total">
-                                <span>Sub-Total do Pedido</span>
-                                <strong class="subTotal">R$ 25,00</strong>
+                            <div id="divCarrinho">
+                                <jsp:include page="/pages/carrinho.jsp"></jsp:include>
                             </div>
                             <div class="panel-car-footer">
                                 <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Realizar Pedido</button> 
