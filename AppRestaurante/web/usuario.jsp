@@ -23,8 +23,8 @@
 
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $(".btn-pref .btn").click(function () {
+            $(document).ready(function() {
+                $(".btn-pref .btn").click(function() {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
@@ -39,10 +39,10 @@
                         url: 'ControllerServlet?acao=listarProdutosUsuario',
                         type: 'POST',
                         data: '&codigoCategoria=' + codigoCategoria,
-                        beforeSend: function () {
+                        beforeSend: function() {
                             $("#processing-modal").modal('show');
                         },
-                        success: function (data) {
+                        success: function(data) {
                             $("#processing-modal").modal('hide');
                             jQuery("#categoria" + codigoCategoria).html(data);
                         }
@@ -57,10 +57,10 @@
                     url: 'ControllerServlet?acao=addItemCarrinho',
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divCarrinho").html(data);
                         $(".badge").html($("#totalDeItens").val());
@@ -68,17 +68,17 @@
                 });
 
             }
-            
+
             function removeItemCarrinho(indice) {
 
                 $.ajax({
                     url: 'ControllerServlet?acao=removeItemCarrinho',
                     type: 'POST',
                     data: '&indice=' + indice,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divCarrinho").html(data);
                         $(".badge").html($("#totalDeItens").val());
@@ -86,19 +86,35 @@
                 });
 
             }
-            
+
             function realizarPedido() {
 
                 $.ajax({
                     url: 'ControllerServlet?acao=realizarPedido',
                     type: 'POST',
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
-                        jQuery("#divCarrinho").html(data);
+                        jQuery("#divPedido").html(data);
                         $(".badge").html($("#totalDeItens").val());
+                    }
+                });
+
+            }
+
+            function buscarPedido() {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=buscarPedido',
+                    type: 'POST',
+                    beforeSend: function() {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function(data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#divPedido").html(data);
                     }
                 });
 
@@ -140,12 +156,12 @@
                                 ${carrinho.totalDeItens}
                             </c:if>
                         </span>
-                        <div class="hidden-xs" style="margin-right: 25px;">Pedido</div>
+                        <div class="hidden-xs" style="margin-right: 25px;">Carrinho</div>
                     </a>
                 </div>
                 <div class="btn-group" role="group">
-                    <a id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <div class="hidden-xs">Sobre</div>
+                    <a id="following" class="btn btn-default" href="#tab3" data-toggle="tab" onclick="buscarPedido();"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <div class="hidden-xs">Pedido</div>
                     </a>
                 </div>
             </div>
@@ -175,41 +191,17 @@
                                 <span>Seu Carrinho</span>
                             </div>
                             <div id="divCarrinho">
-                                <jsp:include page="/pages/carrinho.jsp"></jsp:include>
+                            <jsp:include page="/pages/carrinho.jsp"></jsp:include>
                             </div>
                         </div>
                         <div class="tab-pane fade in" id="tab3">
-                            <h3>Horários</h3>
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <div>Segunda</div>
-                                    <span>11:00</span> - <span>16:00</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Terça</div>
-                                    <span>11:00</span> - <span>16:00</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Quarta</div>
-                                    <span>11:00</span> - <span>16:00</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Quinta</div>
-                                    <span>11:00</span> - <span>16:00</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Sexta</div>
-                                    <span>11:00</span> - <span>16:00</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Sabado</div>
-                                    <span>11:00</span> - <span>16:00</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Domingo</div>
-                                    <span>11:00</span> - <span>16:00</span>
-                                </li>
-                            </ul>
+                            <div class="panel-car-head">
+                                <i class="glyphicon glyphicon-shopping-cart"></i>
+                                <span>Seu Pedido</span>
+                            </div>
+                            <div id="divPedido">
+                            <jsp:include page="/pages/pedido.jsp"></jsp:include>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -25,8 +25,7 @@ public class RealizarPedido implements CommandInterface {
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
         Pedido pedido = new Pedido();
         pedido.setFinalizado(false);
-        Mesa mesa = new Mesa();
-        mesa.setCodigo(3);
+        Mesa mesa = (Mesa) session.getAttribute("mesa");
         pedido.setMesa(mesa);
         pedido.setTotal(carrinho.getTotal());
 
@@ -43,7 +42,9 @@ public class RealizarPedido implements CommandInterface {
         
         new PedidoDao().salvar(pedido);
         
-        return null;
+        request.setAttribute("pedido", pedido);
+        
+        return "pages/pedido.jsp";
 
     }
 

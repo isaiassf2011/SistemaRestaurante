@@ -60,8 +60,7 @@
             function limparProduto() {
                 $("#form")[0].reset();
                 $('#codigoProduto').val("");
-                $('#caminho').val("");
-                $('#imgProduto').attr('src', "${contexto}/imgs/produto-sem-imagem.gif");
+                removerImagem();
             }
 
             function removerImagem() {

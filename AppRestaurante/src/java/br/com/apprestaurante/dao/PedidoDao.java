@@ -72,6 +72,29 @@ public class PedidoDao {
             session.close();
         }
     }
+    
+    public Pedido buscarPedidoPorMesa(Integer codigoMesa) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
+        Pedido p = null;
+
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("from Pedido as p join fetch p.itens where p.mesa.codigo = :codigoMesa and p.finalizado = 0 ");
+            query.setParameter("codigoMesa", codigoMesa);
+            p = (Pedido) query.uniqueResult();
+            transacao.commit();
+            return p;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
+    }
 
     public void salvar(Pedido pedido) {
         Session session = HibernateUtil.getSessionFactory().openSession();
