@@ -21,6 +21,7 @@ public final class AcaoConstante {
     public static final String REMOVER_IMAGEM = "removerImagem";
     public static final String REMOVE_ITEM_CARRINHO = "removeItemCarrinho";
     public static final String CADASTRAR_RESTAURANTE = "cadastrarRestaurante";
+    public static final String REALIZAR_PEDIDO = "realizarPedido";
 
     private AcaoConstante() {
     }

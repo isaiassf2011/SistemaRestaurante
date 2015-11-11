@@ -14,6 +14,7 @@ import br.com.apprestaurante.command.SalvarProduto;
 import br.com.apprestaurante.command.SalvarRestaurante;
 import br.com.apprestaurante.command.ListarCardapio;
 import br.com.apprestaurante.command.ListarCardapioUsuario;
+import br.com.apprestaurante.command.RealizarPedido;
 import br.com.apprestaurante.command.RemoveItemCarrinho;
 import br.com.apprestaurante.command.RemoverImagem;
 import br.com.apprestaurante.command.SalvarMesa;
@@ -52,6 +53,7 @@ public class ControllerHelper {
         comandos.put(AcaoConstante.REMOVER_IMAGEM, new RemoverImagem());
         comandos.put(AcaoConstante.REMOVE_ITEM_CARRINHO, new RemoveItemCarrinho());
         comandos.put(AcaoConstante.CADASTRAR_RESTAURANTE, new CadastraRestaurante());
+        comandos.put(AcaoConstante.REALIZAR_PEDIDO, new RealizarPedido());
 
     }
 

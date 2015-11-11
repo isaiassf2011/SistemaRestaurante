@@ -435,3 +435,8 @@
 }
 .modal-static .modal-content .icon {
 }
+
+.imagem-centro{
+    display: block;
+    margin: 10px auto 0;
+}

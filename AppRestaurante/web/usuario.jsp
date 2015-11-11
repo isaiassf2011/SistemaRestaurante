@@ -86,6 +86,23 @@
                 });
 
             }
+            
+            function realizarPedido() {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=realizarPedido',
+                    type: 'POST',
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#divCarrinho").html(data);
+                        $(".badge").html($("#totalDeItens").val());
+                    }
+                });
+
+            }
 
         </script>
     </head>
@@ -155,13 +172,10 @@
                         <div class="tab-pane fade in" id="tab2">
                             <div class="panel-car-head">
                                 <i class="glyphicon glyphicon-shopping-cart"></i>
-                                <span>Seu Pedido</span>
+                                <span>Seu Carrinho</span>
                             </div>
                             <div id="divCarrinho">
                                 <jsp:include page="/pages/carrinho.jsp"></jsp:include>
-                            </div>
-                            <div class="panel-car-footer">
-                                <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Realizar Pedido</button> 
                             </div>
                         </div>
                         <div class="tab-pane fade in" id="tab3">
