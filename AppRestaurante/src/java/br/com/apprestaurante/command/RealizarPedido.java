@@ -1,14 +1,12 @@
 package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.PedidoDao;
-import br.com.apprestaurante.dao.ProdutoDao;
 import br.com.apprestaurante.entity.Carrinho;
 import br.com.apprestaurante.entity.CarrinhoItem;
-import br.com.apprestaurante.entity.CategoriaProduto;
 import br.com.apprestaurante.entity.Mesa;
 import br.com.apprestaurante.entity.Pedido;
 import br.com.apprestaurante.entity.PedidoItem;
-import br.com.apprestaurante.entity.Produto;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +21,17 @@ public class RealizarPedido implements CommandInterface {
         HttpSession session = request.getSession(false);
 
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-        Pedido pedido = new Pedido();
-        pedido.setFinalizado(false);
         Mesa mesa = (Mesa) session.getAttribute("mesa");
+        PedidoDao pedidoDao = new PedidoDao();
+        Pedido pedido = pedidoDao.buscarPedidoPorMesa(mesa.getCodigo());
+        if(pedido == null){
+            pedido = new Pedido();
+            pedido.setTotal(carrinho.getTotal());
+        }else{
+            pedido.setTotal(pedido.getTotal().add(carrinho.getTotal()));
+        }
+        pedido.setFinalizado(false);
         pedido.setMesa(mesa);
-        pedido.setTotal(carrinho.getTotal());
 
         List<PedidoItem> items = new ArrayList<PedidoItem>();
         
@@ -40,11 +44,13 @@ public class RealizarPedido implements CommandInterface {
         }
         pedido.setItens(items);
         
-        new PedidoDao().salvar(pedido);
+        pedidoDao.salvar(pedido);
         
+        carrinho = new Carrinho();
+        session.setAttribute("carrinho", carrinho);
         request.setAttribute("pedido", pedido);
         
-        return "pages/pedido.jsp";
+        return "pages/carrinho.jsp";
 
     }
 

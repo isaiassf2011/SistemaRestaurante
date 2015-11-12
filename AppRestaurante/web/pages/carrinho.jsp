@@ -9,7 +9,7 @@
 <c:set var="contexto" value="${pageContext.request.contextPath}" />
 <input type="hidden" id="totalDeItens" value="${carrinho.totalDeItens}"/>
 
-<c:if test="${carrinho.totalDeItens != 0}">
+<c:if test="${carrinho.totalDeItens != 0 && !empty carrinho}">
     <c:forEach var="c" items="${carrinho.itens}" varStatus="i">
         <div class="panel-car">
             <div class="row">
@@ -37,7 +37,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="button" onclick="realizarPedido();">Realizar Pedido</button> 
     </div>
 </c:if>
-<c:if test="${carrinho.totalDeItens == 0}">
+<c:if test="${carrinho.totalDeItens == 0 || empty carrinho}">
     <div class="text-center">
         <img alt="" src="${contexto}/imgs/prato_vazio.png" class="imagem-centro">
         <h4>Carrinho Vazio</h4>

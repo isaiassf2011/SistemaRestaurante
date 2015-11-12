@@ -23,8 +23,8 @@
 
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                $(".btn-pref .btn").click(function() {
+            $(document).ready(function () {
+                $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
@@ -39,10 +39,10 @@
                         url: 'ControllerServlet?acao=listarProdutosUsuario',
                         type: 'POST',
                         data: '&codigoCategoria=' + codigoCategoria,
-                        beforeSend: function() {
+                        beforeSend: function () {
                             $("#processing-modal").modal('show');
                         },
-                        success: function(data) {
+                        success: function (data) {
                             $("#processing-modal").modal('hide');
                             jQuery("#categoria" + codigoCategoria).html(data);
                         }
@@ -57,10 +57,10 @@
                     url: 'ControllerServlet?acao=addItemCarrinho',
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divCarrinho").html(data);
                         $(".badge").html($("#totalDeItens").val());
@@ -75,10 +75,10 @@
                     url: 'ControllerServlet?acao=removeItemCarrinho',
                     type: 'POST',
                     data: '&indice=' + indice,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divCarrinho").html(data);
                         $(".badge").html($("#totalDeItens").val());
@@ -92,13 +92,13 @@
                 $.ajax({
                     url: 'ControllerServlet?acao=realizarPedido',
                     type: 'POST',
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
-                        jQuery("#divPedido").html(data);
-                        $(".badge").html($("#totalDeItens").val());
+                        jQuery("#divCarrinho").html(data);
+                        $(".badge").html(0);
                     }
                 });
 
@@ -109,10 +109,10 @@
                 $.ajax({
                     url: 'ControllerServlet?acao=buscarPedido',
                     type: 'POST',
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divPedido").html(data);
                     }
