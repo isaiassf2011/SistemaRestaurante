@@ -31,7 +31,7 @@ public class BuscarProduto implements CommandInterface {
             json.addProperty("nome", produto.getNome());
             json.addProperty("imagem", produto.getImagem());
             json.addProperty("descricao", produto.getDescricao());
-            json.addProperty("preco", produto.getPreco());
+            json.addProperty("preco", String.format("%.2f", produto.getPreco()));
             json.addProperty("categoria", produto.getCategoriaProduto().getCodigo());
 
         } catch (IOException ex) {

@@ -23,7 +23,7 @@
         <script type="text/javascript" src="${contexto}/js/bootstrap-filestyle.min.js"></script>
         <script src="${contexto}/js/jquery.form.js" type="text/javascript"></script>
         <script src="${contexto}/js/upload.js" type="text/javascript"></script>
-        <script src="${contexto}/js/mascaraMoeda.js" type="text/javascript"></script>
+        <script src="${contexto}/js/jquery.maskMoney.js" type="text/javascript"></script>
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -49,6 +49,13 @@
                     buttonText: 'Adicionar Imagem',
                     badge: false,
                     size: "sm"
+                });
+
+                $("#preco").maskMoney({
+                    symbol: 'R$ ',
+                    showSymbol: true, 
+                    thousands: '.', 
+                    decimal: ','
                 });
 
             });
@@ -332,7 +339,7 @@
                                                 <input class="form-control" placeholder="Descrição" name="descricao" id="descricao" type="text" value="">
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Preço" name="preco" id="preco" type="text" value="" onkeypress="return(MascaraMoeda(this,'.',',',event))">
+                                                <input class="form-control" placeholder="Preço" name="preco" id="preco" type="text" value="" >
                                             </div>
                                             <div class="form-group">
                                                 <select class="form-control" name="cmbCategoria" id="cmbCategoria">

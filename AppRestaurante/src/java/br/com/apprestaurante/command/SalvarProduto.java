@@ -7,7 +7,6 @@ package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.CategoriaProdutoDao;
 import br.com.apprestaurante.dao.ProdutoDao;
-import br.com.apprestaurante.dao.RestauranteDao;
 import br.com.apprestaurante.entity.CategoriaProduto;
 import br.com.apprestaurante.entity.Produto;
 import br.com.apprestaurante.entity.Restaurante;
@@ -58,8 +57,9 @@ public class SalvarProduto implements CommandInterface {
                 System.out.println("Nao foi possivel mover o arquivo");
             }
 
+            System.out.println(request.getParameter("preco").replaceAll("\\.", "").replaceAll(",", "."));
             produto.setImagem(request.getParameter("imagem"));
-            produto.setPreco(new BigDecimal(request.getParameter("preco")));
+            produto.setPreco(new BigDecimal(request.getParameter("preco").replaceAll("\\.", "").replaceAll(",", ".")));
 
             Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
             produto.setRestaurante(restaurante);
