@@ -27,7 +27,7 @@ public class listarMesas implements CommandInterface {
         HttpSession session = request.getSession(false);
         Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
         
-        mesas = new MesaDao().buscarPorRestaurante(restaurante.getCodigo());
+        mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
 
         request.setAttribute("mesas", mesas);
 

@@ -1,6 +1,8 @@
 package br.com.apprestaurante.dao;
 
 import br.com.apprestaurante.entity.Pedido;
+import br.com.apprestaurante.entity.PedidoItem;
+import br.com.apprestaurante.entity.Restaurante;
 import br.com.apprestaurante.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -8,16 +10,16 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class PedidoDao {
+public class PedidoItemDao {
 
-    public List<Pedido> getAll() {
+    public List<PedidoItem> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
-        List<Pedido> lista = null;
+        List<PedidoItem> lista = null;
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("from Pedido");
+            Query query = session.createQuery("from PedidoItem");
             lista = query.list();
             transacao.commit();
             return lista;
@@ -32,13 +34,13 @@ public class PedidoDao {
         }
     }
 
-    public void excluir(Pedido pedido) {
+    public void excluir(PedidoItem pedidoItem) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
 
         try {
             transacao = session.beginTransaction();
-            session.delete(pedido);
+            session.delete(pedidoItem);
             transacao.commit();
         } catch (HibernateException e) {
             if (transacao != null) {
@@ -51,14 +53,14 @@ public class PedidoDao {
         }
     }
 
-    public Pedido getById(Integer id) {
+    public PedidoItem getById(Integer id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
-        Pedido p = null;
+        PedidoItem p = null;
 
         try {
             transacao = session.beginTransaction();
-            p = (Pedido) session.get(Pedido.class, id);
+            p = (PedidoItem) session.get(PedidoItem.class, id);
             transacao.commit();
             return p;
         } catch (HibernateException e) {
@@ -72,18 +74,19 @@ public class PedidoDao {
         }
     }
 
-    public Pedido buscarPedidoPorMesa(Integer codigoMesa) {
+    public List<PedidoItem> listarPedidosPendentes(Restaurante restaurante) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
-        Pedido p = null;
+        List<PedidoItem> lista = null;
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("from Pedido as p join fetch p.itens where p.mesa.codigo = :codigoMesa and p.finalizado = 0 ");
-            query.setParameter("codigoMesa", codigoMesa);
-            p = (Pedido) query.uniqueResult();
+            Query query = session.createQuery("from PedidoItem as p where p.pedido.finalizado = 0 "
+                    + "and p.produto.restaurante.codigo = :codigoRestaurante and p.feito = 0 ");
+            query.setParameter("codigoRestaurante", restaurante.getCodigo());
+            lista = query.list();
             transacao.commit();
-            return p;
+            return lista;
         } catch (HibernateException e) {
             if (transacao != null) {
                 transacao.rollback();
@@ -95,15 +98,16 @@ public class PedidoDao {
         }
     }
     
-    public List<Pedido> listarPorPedido(Integer codigoRestaurante) {
+    public List<PedidoItem> listarPedidosProntos(Restaurante restaurante) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
-        List<Pedido> lista = null;
+        List<PedidoItem> lista = null;
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("from Pedido as p where p.mesa.restaurante.codigo = :codigoRestaurante and p.finalizado = 0 ");
-            query.setParameter("codigoRestaurante", codigoRestaurante);
+            Query query = session.createQuery("from PedidoItem as p where p.pedido.finalizado = 0 "
+                    + "and p.produto.restaurante.codigo = :codigoRestaurante and p.feito = 1 ");
+            query.setParameter("codigoRestaurante", restaurante.getCodigo());
             lista = query.list();
             transacao.commit();
             return lista;
@@ -118,13 +122,13 @@ public class PedidoDao {
         }
     }
 
-    public void salvar(Pedido pedido) {
+    public void salvar(PedidoItem pedidoItem) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
 
         try {
             transacao = session.beginTransaction();
-            session.saveOrUpdate(pedido);
+            session.saveOrUpdate(pedidoItem);
             transacao.commit();
         } catch (HibernateException e) {
             if (transacao != null) {

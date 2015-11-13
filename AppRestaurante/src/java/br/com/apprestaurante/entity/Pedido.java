@@ -3,6 +3,7 @@ package br.com.apprestaurante.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_pedido")
@@ -37,6 +40,10 @@ public class Pedido implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoItem> itens = new ArrayList<PedidoItem>();
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "pedido_data", nullable = false)
+    private Date data;
 
     public Integer getCodigo() {
         return codigo;
@@ -76,6 +83,14 @@ public class Pedido implements Serializable {
 
     public void setItens(List<PedidoItem> itens) {
         this.itens = itens;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 
 }

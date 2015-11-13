@@ -31,6 +31,9 @@ public class PedidoItem implements Serializable {
     @JoinColumn(name = "pedido_codigo", referencedColumnName = "pedido_codigo", nullable = false)
     private Pedido pedido;
 
+    @Column(name = "pedido_item_feito")
+    private Boolean feito;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -61,6 +64,14 @@ public class PedidoItem implements Serializable {
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+    }
+
+    public Boolean getFeito() {
+        return feito;
+    }
+
+    public void setFeito(Boolean feito) {
+        this.feito = feito;
     }
 
 }

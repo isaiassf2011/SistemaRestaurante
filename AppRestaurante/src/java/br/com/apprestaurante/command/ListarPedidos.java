@@ -1,7 +1,6 @@
 package br.com.apprestaurante.command;
 
-import br.com.apprestaurante.dao.PedidoDao;
-import br.com.apprestaurante.entity.Pedido;
+import br.com.apprestaurante.dao.PedidoItemDao;
 import br.com.apprestaurante.entity.PedidoItem;
 import br.com.apprestaurante.entity.Restaurante;
 import java.util.ArrayList;
@@ -20,13 +19,8 @@ public class ListarPedidos implements CommandInterface {
         HttpSession session = request.getSession(false);
         Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        //criar PedidoItemDao
-        itens = new PedidoDao().listarPedidosPendentes2(restaurante);
-        
-        for (PedidoItem item : itens) {
-            System.out.println(item.getPedido().getCodigo());
-        }
-        
+        itens = new PedidoItemDao().listarPedidosPendentes(restaurante);
+
         request.setAttribute("pedidos", itens);
 
         return "pages/pedidoRestaurante.jsp";

@@ -6,8 +6,8 @@ import br.com.apprestaurante.entity.CarrinhoItem;
 import br.com.apprestaurante.entity.Mesa;
 import br.com.apprestaurante.entity.Pedido;
 import br.com.apprestaurante.entity.PedidoItem;
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +27,7 @@ public class RealizarPedido implements CommandInterface {
         if(pedido == null){
             pedido = new Pedido();
             pedido.setTotal(carrinho.getTotal());
+            pedido.setData(new Date());
         }else{
             pedido.setTotal(pedido.getTotal().add(carrinho.getTotal()));
         }
@@ -40,6 +41,7 @@ public class RealizarPedido implements CommandInterface {
             pedidoItem.setProduto(carrinhoItem.getProduto());
             pedidoItem.setQuantidade(carrinhoItem.getQuantidade());
             pedidoItem.setPedido(pedido);
+            pedidoItem.setFeito(false);
             items.add(pedidoItem);
         }
         pedido.setItens(items);

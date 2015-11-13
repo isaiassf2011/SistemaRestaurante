@@ -1,9 +1,3 @@
-<%-- 
-    Document   : pedidoPendente
-    Created on : 12/11/2015, 20:44:28
-    Author     : isaias_sergio
---%>
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contexto" value="${pageContext.request.contextPath}" />
@@ -22,14 +16,11 @@
                 <td><span style="margin-left: 5px;">${p.produto.nome}</span></td>
                 <td>
                     <span class="button-checkbox">
-                        <button type="button" class="btn btn-default" data-color="success" style="padding: 4px 12px" onclick="finalizarItem(${p.codigo});">
-                            <i class="state-icon glyphicon glyphicon-unchecked"></i>
+                        <button type="button" class="btn btn-success active" data-color="success" style="padding: 4px 12px" onclick="">
+                            <i class="state-icon glyphicon glyphicon-check"></i>
                             Feito</button>
                         <input type="checkbox" class="hidden" />
                     </span>
-                    <a href="javascript:;" style="padding: 4px 6px" title="Excluir" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-trash"></i>										
-                    </a>
                 </td>
                 <td>
                     <span style="margin-right: 15px; margin-left: 15px;">${p.pedido.mesa.codigo}</span>
@@ -38,4 +29,3 @@
         </c:forEach>
     </tbody>
 </table>
-

@@ -6,7 +6,6 @@
 package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.MesaDao;
-import br.com.apprestaurante.dao.RestauranteDao;
 import br.com.apprestaurante.entity.Mesa;
 import br.com.apprestaurante.entity.Restaurante;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class SalvarMesa implements CommandInterface {
             dao.salvar(mesa);
 
             List<Mesa> mesas = new ArrayList<Mesa>();
-            mesas = new MesaDao().buscarPorRestaurante(restaurante.getCodigo());
+            mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
             request.setAttribute("mesas", mesas);
 
         } catch (Exception e) {

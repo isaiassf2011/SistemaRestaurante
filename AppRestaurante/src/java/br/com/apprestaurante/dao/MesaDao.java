@@ -41,7 +41,7 @@ public class MesaDao {
         }
     }
     
-     public List<Mesa> buscarPorRestaurante(Integer codigoRestaurante) {
+     public List<Mesa> listarPorRestaurante(Integer codigoRestaurante) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
         List<Mesa> lista = null;
@@ -63,6 +63,29 @@ public class MesaDao {
             session.close();
         }
     }
+     
+     /*public List<Mesa> listarPorPedido(Integer codigoRestaurante) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
+        List<Mesa> lista = null;
+
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("Select p.mesa from Pedido as p where p.mesa.restaurante.codigo = :codigoRestaurante and p.finalizado = 0 ");
+            query.setParameter("codigoRestaurante", codigoRestaurante);
+            lista = query.list();
+            transacao.commit();
+            return lista;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
+    }*/
 
     public void excluir(Mesa mesa) {
         Session session = HibernateUtil.getSessionFactory().openSession();

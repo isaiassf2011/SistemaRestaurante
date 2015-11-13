@@ -30,7 +30,7 @@ public class ListarCardapio implements CommandInterface {
         Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
         categorias = new CategoriaProdutoDao().buscarPorRestaurante(restaurante.getCodigo());
-        mesas = new MesaDao().buscarPorRestaurante(restaurante.getCodigo());
+        mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
         produtos = new ProdutoDao().buscarPorRestaurante(restaurante.getCodigo());
 
         request.setAttribute("mesas", mesas);

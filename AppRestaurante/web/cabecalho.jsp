@@ -23,7 +23,7 @@
                 <li class="active"><a href="#">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="pedido.html">Pedidos</a></li>
+                <li><a href="ControllerServlet?acao=listarPedidos">Pedidos</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
                         <span class="glyphicon glyphicon-cog"></span>

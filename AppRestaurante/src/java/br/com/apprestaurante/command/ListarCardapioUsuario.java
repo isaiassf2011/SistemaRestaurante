@@ -26,9 +26,9 @@ public class ListarCardapioUsuario implements CommandInterface {
         List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
         List<Produto> produtos = new ArrayList<Produto>();
 
-        Mesa mesa = new MesaDao().getById(10);
-        categorias = new CategoriaProdutoDao().buscarPorRestaurante(1);
-        produtos = new ProdutoDao().buscarPorRestaurante(1);
+        Mesa mesa = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
+        categorias = new CategoriaProdutoDao().buscarPorRestaurante(mesa.getRestaurante().getCodigo());
+        produtos = new ProdutoDao().buscarPorRestaurante(mesa.getRestaurante().getCodigo());
 
         session.setAttribute("mesa", mesa);
         request.setAttribute("categorias", categorias);
