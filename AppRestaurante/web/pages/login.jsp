@@ -18,10 +18,12 @@
         <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
+        <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
+            $(document).ready(function() {
+                $("#cnpj").mask("99.999.999/9999-99");
             });
 
             function efetuarLogin() {
@@ -36,11 +38,11 @@
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
-                        
+                    beforeSend: function() {
+
                     },
                     //colocamos o retorno na tela
-                    success: function (json) {
+                    success: function(json) {
                         if (json.ok === "S") {
                             location.href = "../ControllerServlet?acao=listarCardapio";
                         } else {
@@ -77,7 +79,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="glyphicon glyphicon-user"></i>
                                                     </span> 
-                                                    <input class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
+                                                    <input id="cnpj" class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
                                                 </div>
                                             </div>
                                             <div class="form-group">

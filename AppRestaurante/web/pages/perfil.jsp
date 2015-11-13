@@ -23,6 +23,7 @@
         <script type="text/javascript" src="${contexto}/js/bootstrap-filestyle.min.js"></script>
         <script src="${contexto}/js/jquery.form.js" type="text/javascript"></script>
         <script src="${contexto}/js/upload.js" type="text/javascript"></script>
+        <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -45,6 +46,10 @@
                     badge: false,
                     size: "sm"
                 });
+                
+                $("#telefone").mask("(99) 9999-9999");
+                $("#cnpj").mask("99.999.999/9999-99");
+                $("#cep").mask("99.999-999");
 
             });
 
@@ -142,10 +147,10 @@
                                                 <input id="cnpj" class="form-control" placeholder="CNPJ do Restaurante" name="cnpjRestaurante" type="text" value="${restaurante.cnpj}" autofocus>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Telefone" name="telefone" type="tel" value="${restaurante.telefone}">
+                                                <input id="telefone" class="form-control" placeholder="Telefone" name="telefone" type="tel" value="${restaurante.telefone}">
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="CEP" name="cep" type="text" value="${restaurante.cep}">
+                                                <input id="cep" class="form-control" placeholder="CEP" name="cep" type="text" value="${restaurante.cep}">
                                             </div>
                                             <div class="form-group">
                                                 <select class="form-control" id="estado" name="estado">

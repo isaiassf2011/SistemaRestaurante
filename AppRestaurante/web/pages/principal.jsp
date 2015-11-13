@@ -24,6 +24,7 @@
         <script src="${contexto}/js/jquery.form.js" type="text/javascript"></script>
         <script src="${contexto}/js/upload.js" type="text/javascript"></script>
         <script src="${contexto}/js/jquery.maskMoney.js" type="text/javascript"></script>
+        <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -57,6 +58,9 @@
                     thousands: '.', 
                     decimal: ','
                 });
+                
+                $("#campoTelefone").mask("(99) 9999-9999");
+                $("#campoTelefone").mask("99.999.999/9999-99");
 
             });
 

@@ -18,9 +18,15 @@
         <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
+        <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
 
         <script type="text/javascript">
+            $(document).ready(function() {
+                $("#telefone").mask("(99) 9999-9999");
+                $("#cnpj").mask("99.999.999/9999-99");
+                $("#cep").mask("99.999-999");
+            });
 
             function salvar() {
                 var valores = $('#form').serialize();
@@ -34,11 +40,11 @@
                     //colocamos os valores a serem enviados
                     data: valores + '&lista=json',
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
+                    beforeSend: function() {
 
                     },
                     //colocamos o retorno na tela
-                    success: function (pre) {
+                    success: function(pre) {
                         alert("Cadastrado");
                     }
                 });

@@ -15,6 +15,7 @@ import br.com.apprestaurante.command.SalvarProduto;
 import br.com.apprestaurante.command.SalvarRestaurante;
 import br.com.apprestaurante.command.ListarCardapio;
 import br.com.apprestaurante.command.ListarCardapioUsuario;
+import br.com.apprestaurante.command.ListarPedidos;
 import br.com.apprestaurante.command.RealizarPedido;
 import br.com.apprestaurante.command.RemoveItemCarrinho;
 import br.com.apprestaurante.command.RemoverImagem;
@@ -46,6 +47,7 @@ public class ControllerHelper {
         comandos.put(AcaoConstante.LISTAR_PRODUTOS, new listarProdutos());
         comandos.put(AcaoConstante.LISTAR_PRODUTOS_USUARIO, new listarProdutosUsuario());
         comandos.put(AcaoConstante.LISTAR_CATEGORIAS, new listarCategorias());
+        comandos.put(AcaoConstante.LISTAR_PEDIDOS, new ListarPedidos());
         comandos.put(AcaoConstante.BUSCAR_PRODUTO, new BuscarProduto());
         comandos.put(AcaoConstante.BUSCAR_MESA, new BuscarMesa());
         comandos.put(AcaoConstante.BUSCAR_RESTAURANTE, new BuscarRestaurante());
