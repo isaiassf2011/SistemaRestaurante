@@ -1,6 +1,7 @@
 package br.com.apprestaurante.dao;
 
 import br.com.apprestaurante.entity.Pedido;
+import br.com.apprestaurante.entity.PedidoItem;
 import br.com.apprestaurante.entity.Restaurante;
 import br.com.apprestaurante.util.HibernateUtil;
 import java.util.List;
@@ -103,7 +104,30 @@ public class PedidoDao {
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("from Pedido as p join fetch p.itens as pi where p.finalizado = 0 and p.mesa.restaurante.codigo = :codigoRestaurante ");
+            Query query = session.createQuery("from Pedido as p join fetch p.itens where p.finalizado = 0 and p.mesa.restaurante.codigo = :codigoRestaurante ");
+            query.setParameter("codigoRestaurante", restaurante.getCodigo());
+            lista = query.list();
+            transacao.commit();
+            return lista;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
+    }
+    
+    public List<PedidoItem> listarPedidosPendentes2(Restaurante restaurante) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
+        List<PedidoItem> lista = null;
+
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("from PedidoItem as p where p.pedido.finalizado = 0 and p.produto.restaurante.codigo = :codigoRestaurante ");
             query.setParameter("codigoRestaurante", restaurante.getCodigo());
             lista = query.list();
             transacao.commit();
