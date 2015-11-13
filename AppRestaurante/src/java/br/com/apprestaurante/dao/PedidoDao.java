@@ -1,6 +1,5 @@
 package br.com.apprestaurante.dao;
 
-import br.com.apprestaurante.entity.Mesa;
 import br.com.apprestaurante.entity.Pedido;
 import br.com.apprestaurante.entity.Restaurante;
 import br.com.apprestaurante.util.HibernateUtil;
