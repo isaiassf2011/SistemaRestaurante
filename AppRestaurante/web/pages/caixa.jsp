@@ -12,12 +12,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" href="#mesa${p.mesa.codigo}" onclick="buscarPedido(${p.codigo});">
+                <a class="collapsed" data-toggle="collapse" href="#pedido${p.codigo}" onclick="buscarPedido(${p.codigo});" aria-expanded="false">
                     Mesa ${p.mesa.numero}
                 </a>
             </h4>
         </div>
-        <div id="mesa${p.mesa.codigo}" class="panel-collapse collapse in" >
+        <div id="pedido${p.codigo}" class="panel-collapse collapse" aria-expanded="false">
         </div>
     </div>
 </c:forEach>

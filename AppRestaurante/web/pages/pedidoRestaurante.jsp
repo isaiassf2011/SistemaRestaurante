@@ -187,6 +187,27 @@
                 });
 
             }
+
+            function buscarPedido(codigo) {
+                var classe = $("#pedido" + codigo).attr("class");
+
+                if (classe === "panel-collapse collapse") {
+                    $.ajax({
+                        url: 'ControllerServlet?acao=buscarPedidoCaixa',
+                        type: 'POST',
+                        data: '&codigoPedido=' + codigo,
+                        beforeSend: function () {
+                            $("#processing-modal").modal('show');
+                        },
+                        success: function (data) {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#pedido" + codigo).html(data);
+                        }
+                    });
+                }
+
+            }
+
         </script>
 
     </head>
