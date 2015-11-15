@@ -31,8 +31,9 @@ public class SalvarProduto implements CommandInterface {
             ProdutoDao dao = new ProdutoDao();
             if (!request.getParameter("codigoProduto").equals("") && request.getParameter("codigoProduto") != null) {
                 produto = dao.getById(Integer.parseInt(request.getParameter("codigoProduto")));
-                if (!produto.getImagem().equals("")) {
-                    File f = new File(request.getSession().getServletContext().getRealPath("/imgs/" + produto.getImagem()).replace("build", ""));
+                System.out.println("IMG PRODUTO: "+produto.getImagem());
+                if (!produto.getImagem().equals("") && !produto.getImagem().equals(request.getParameter("imagem"))) {
+                    File f = new File(request.getSession().getServletContext().getRealPath("/imgs/imgsRestaurante/" + produto.getImagem()).replace("build", ""));
                     f.delete();
                 }
             } else {
@@ -43,7 +44,7 @@ public class SalvarProduto implements CommandInterface {
             // diretorio de origem
             File arquivo = new File(System.getProperty("java.io.tmpdir") + File.separator + request.getParameter("imagem"));
             // diretorio de destino
-            File dir = new File(request.getSession().getServletContext().getRealPath("/imgs/").replace("build", ""));
+            File dir = new File(request.getSession().getServletContext().getRealPath("/imgs/imgsRestaurante/").replace("build", ""));
             // move o arquivo para o novo diretorio
             boolean ok = arquivo.renameTo(new File(dir, arquivo.getName()));
             if (ok) {

@@ -59,9 +59,6 @@
                     decimal: ','
                 });
                 
-                $("#campoTelefone").mask("(99) 9999-9999");
-                $("#campoTelefone").mask("99.999.999/9999-99");
-
             });
 
             function limparMesa() {
@@ -78,7 +75,7 @@
             function removerImagem() {
                 $(":file").filestyle('clear');
                 $('#caminho').val("");
-                $('#imgProduto').attr('src', "${contexto}/imgs/produto-sem-imagem.gif");
+                $('#imgProduto').attr('src', "${contexto}/imgs/imgsSistema/produto-sem-imagem.gif");
             }
 
             function salvar() {
@@ -212,9 +209,9 @@
                         $("#nomePreduto").val(json.nome);
                         $('#caminho').val(json.imagem);
                         if (json.imagem === "") {
-                            $("#imgProduto").attr("src", "${contexto}/imgs/produto-sem-imagem.gif");
+                            $("#imgProduto").attr("src", "${contexto}/imgs/imgsSistema/produto-sem-imagem.gif");
                         } else {
-                            $("#imgProduto").attr("src", "${contexto}/imgs/" + json.imagem);
+                            $("#imgProduto").attr("src", "${contexto}/imgs/imgsRestaurante/" + json.imagem);
                         }
                         $("#descricao").val(json.descricao);
                         $("#preco").val(json.preco);
@@ -324,7 +321,7 @@
                                         <div class="row">
                                             <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                                 <div class="form-group">
-                                                    <img src="${contexto}/imgs/produto-sem-imagem.gif" class="img-circle pull-left" style="
+                                                    <img src="${contexto}/imgs/imgsSistema/produto-sem-imagem.gif" class="img-circle pull-left" style="
                                                      margin-top: 0px;margin-left: 35%;" alt="" id="imgProduto">
                                                 <a href="javascript:;" style="padding: 1px 4px" onclick="removerImagem();" title="Remover Imagem">
                                                     <i class="glyphicon glyphicon-trash" style="margin-top: 40px;"></i>

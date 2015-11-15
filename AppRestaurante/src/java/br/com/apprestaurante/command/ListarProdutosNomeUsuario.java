@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author isaias
  */
-public class listarProdutosUsuario implements CommandInterface {
+public class ListarProdutosNomeUsuario implements CommandInterface {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -23,13 +23,16 @@ public class listarProdutosUsuario implements CommandInterface {
         HttpSession session = request.getSession(false);
 
         List<Produto> produtos = new ArrayList<Produto>();
+        List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
 
         Mesa mesa = (Mesa) session.getAttribute("mesa");
-        produtos = new ProdutoDao().buscarPorCategoria(Integer.parseInt(request.getParameter("codigoCategoria")), mesa.getRestaurante().getCodigo());
+        categorias = new CategoriaProdutoDao().buscarPorProdutoNome(request.getParameter("nome"), mesa.getRestaurante().getCodigo());
+        produtos = new ProdutoDao().buscarPorNome(request.getParameter("nome"), mesa.getRestaurante().getCodigo());
 
+        request.setAttribute("categorias", categorias);
         request.setAttribute("produtos", produtos);
 
-        return "pages/produtoUsuario.jsp";
+        return "pages/categoriaUsuario.jsp";
 
     }
 

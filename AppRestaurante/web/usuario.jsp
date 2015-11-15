@@ -120,6 +120,23 @@
 
             }
 
+            function buscarProdutosPorNome() {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=listarProdutosNomeUsuario',
+                    type: 'POST',
+                    data: '&nome=' + $("#buscaProdutoNome").val(),
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#accordionCardapio").html(data);
+                    }
+                });
+
+            }
+
         </script>
     </head>
     <body>
@@ -135,8 +152,13 @@
         <div class="container" style="margin-top:40px">
             <div class="card hovercard">
                 <div class="useravatar">
-                    <img alt="" src="http://www.manentti.com.br/slir/w300-h226/img/servicosLogoFiora.png">
-                    <p class="card-title btn-breadcrumb">Restaurante</p>
+                    <c:if test="${mesa.restaurante.logo != ''}">
+                        <img alt="" src="${contexto}/imgs/imgsRestaurante/${mesa.restaurante.logo}">
+                    </c:if>
+                    <c:if test="${mesa.restaurante.logo == ''}">
+                        <img alt="" src="${contexto}/imgs/imgsSistema/sem_imagem.jpg">
+                    </c:if>
+                    <p class="card-title btn-breadcrumb" style="margin-top: 20px;" title="${mesa.restaurante.nome}">${mesa.restaurante.nome}</p>
                 </div>
             </div>
             <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
@@ -148,7 +170,7 @@
                 <div class="btn-group" role="group">
                     <a id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                         <span class="badge" style="background-color: rgb(4, 115, 18); color: white; padding: 2px 4px;"
-                              title="Número de produtos que você pediu">
+                              title="Número de produtos no carrinho">
                             <c:if test="${empty carrinho}">
                                 0
                             </c:if>
@@ -160,7 +182,7 @@
                     </a>
                 </div>
                 <div class="btn-group" role="group">
-                    <a id="following" class="btn btn-default" href="#tab3" data-toggle="tab" onclick="buscarPedido();"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <a id="following" class="btn btn-default" href="#tab3" data-toggle="tab" onclick="buscarPedido();"><img src="${contexto}/imgs/imgsSistema/pedido.png" alt="">
                         <div class="hidden-xs">Pedido</div>
                     </a>
                 </div>
@@ -172,9 +194,9 @@
                         <div class="panel-group" id="accordion">
                             <div id="custom-search-input">
                                 <div class="input-group col-md-12">
-                                    <input type="text" class="form-control" placeholder="Buscar produto" />
+                                    <input type="text" class="form-control" placeholder="Buscar produto" id="buscaProdutoNome" />
                                     <span class="input-group-btn">
-                                        <button class="btn btn-info" type="button">
+                                        <button class="btn btn-info" type="button" onclick="buscarProdutosPorNome();">
                                             <i class="glyphicon glyphicon-search"></i>
                                         </button>
                                     </span>
@@ -196,10 +218,10 @@
                         </div>
                         <div class="tab-pane fade in" id="tab3">
                             <div class="panel-car-head">
-                                <i class="glyphicon glyphicon-shopping-cart"></i>
-                                <span>Seu Pedido</span>
-                            </div>
-                            <div id="divPedido">
+                                <img src="${contexto}/imgs/imgsSistema/pedido.png" alt="">
+                            <span>Seu Pedido</span>
+                        </div>
+                        <div id="divPedido">
                             <jsp:include page="/pages/pedido.jsp"></jsp:include>
                             </div>
                         </div>

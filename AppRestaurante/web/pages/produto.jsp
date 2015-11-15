@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-xs-12 text-right">
                 <c:if test="${p.imagem != ''}">
-                    <img src="${contexto}/imgs/${p.imagem}" class="img-circle pull-left" style="
+                    <img src="${contexto}/imgs/imgsRestaurante/${p.imagem}" class="img-circle pull-left" style="
                          margin-top: 0px;" alt="">
                 </c:if>
                 <span class="preco"><fmt:formatNumber type="currency" value="${p.preco}"/></span>

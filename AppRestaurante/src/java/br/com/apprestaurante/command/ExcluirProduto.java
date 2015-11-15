@@ -24,7 +24,7 @@ public class ExcluirProduto implements CommandInterface {
         codigoCategoria = p.getCategoriaProduto().getCodigo();
         codigoRestaurante = p.getRestaurante().getCodigo();
         if (!p.getImagem().equals("")) {
-            File f = new File(request.getSession().getServletContext().getRealPath("/imgs/" + p.getImagem()).replace("build", ""));
+            File f = new File(request.getSession().getServletContext().getRealPath("/imgs/imgsRestaurante/" + p.getImagem()).replace("build", ""));
             f.delete();
         }
         dao.excluir(p);

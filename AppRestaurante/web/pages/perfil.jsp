@@ -71,8 +71,8 @@
             function removerImagem() {
                 $(":file").filestyle('clear');
                 $('#caminho').val("");
-                $("#menuLogo").attr("src", "${contexto}/imgs/sem_imagem.jpg");
-                $('#imgRestaurante').attr('src', "${contexto}/imgs/sem_imagem.jpg");
+                $("#menuLogo").attr("src", "${contexto}/imgs/imgsSistema/sem_imagem.jpg");
+                $('#imgRestaurante').attr('src', "${contexto}/imgs/imgsSistema/sem_imagem.jpg");
             }
 
             function salvar() {
@@ -123,11 +123,11 @@
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                             <div class="form-group">
                                                 <c:if test="${restaurante.logo != ''}">
-                                                    <img src="${contexto}/imgs/${restaurante.logo}" class="img-circle pull-left" style="
+                                                    <img src="${contexto}/imgs/imgsRestaurante/${restaurante.logo}" class="img-circle pull-left" style="
                                                          margin-top: 0px;margin-left: 35%;" alt="" id="imgRestaurante">
                                                 </c:if>
                                                 <c:if test="${restaurante.logo == ''}">
-                                                    <img src="${contexto}/imgs/sem_imagem.jpg" class="img-circle pull-left" style="
+                                                    <img src="${contexto}/imgs/imgsSistema/sem_imagem.jpg" class="img-circle pull-left" style="
                                                          margin-top: 0px;margin-left: 35%;" alt="" id="imgRestaurante">
                                                 </c:if>
                                                 <a href="javascript:;" style="padding: 1px 4px" onclick="removerImagem();" title="Remover Imagem">

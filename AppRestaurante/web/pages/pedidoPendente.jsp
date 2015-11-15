@@ -32,7 +32,7 @@
                     </a>
                 </td>
                 <td>
-                    <span style="margin-right: 15px; margin-left: 15px;">${p.pedido.mesa.codigo}</span>
+                    <span style="margin-right: 15px; margin-left: 15px;">${p.pedido.mesa.numero}</span>
                 </td>
             </tr>
         </c:forEach>

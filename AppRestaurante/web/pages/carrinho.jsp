@@ -39,7 +39,7 @@
 </c:if>
 <c:if test="${carrinho.totalDeItens == 0 || empty carrinho}">
     <div class="text-center">
-        <img alt="" src="${contexto}/imgs/prato_vazio.png" class="imagem-centro">
+        <img alt="" src="${contexto}/imgs/imgsSistema/prato_vazio.png" class="imagem-centro">
         <h4>Carrinho Vazio</h4>
         <p>Escolha algo no Cardapio para comer!</p>
     </div>

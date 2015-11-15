@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.RestauranteDao;
@@ -30,7 +25,7 @@ public class AlterarRestaurante implements CommandInterface {
             RestauranteDao dao = new RestauranteDao();
             restaurante = dao.getById(restaurante.getCodigo());
             if (!restaurante.getLogo().equals("") && !restaurante.getLogo().equals(request.getParameter("logo"))) {
-                File f = new File(request.getSession().getServletContext().getRealPath("/imgs/" + restaurante.getLogo()).replace("build", ""));
+                File f = new File(request.getSession().getServletContext().getRealPath("/imgs/imgsRestaurante/" + restaurante.getLogo()).replace("build", ""));
                 f.delete();
             }
             restaurante.setNome(request.getParameter("nomeRestaurante"));
@@ -44,7 +39,7 @@ public class AlterarRestaurante implements CommandInterface {
 
             if (!restaurante.getLogo().equals(request.getParameter("logo"))) {
                 File arquivo = new File(System.getProperty("java.io.tmpdir") + File.separator + request.getParameter("logo"));
-                File dir = new File(request.getSession().getServletContext().getRealPath("/imgs/").replace("build", ""));
+                File dir = new File(request.getSession().getServletContext().getRealPath("/imgs/imgsRestaurante/").replace("build", ""));
                 boolean ok = arquivo.renameTo(new File(dir, arquivo.getName()));
                 if (ok) {
                     System.out.println("Arquivo foi movido com sucesso");

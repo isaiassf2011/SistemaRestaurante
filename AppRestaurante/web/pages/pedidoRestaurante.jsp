@@ -36,7 +36,7 @@
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#pendenteMenu').addClass('active');
                     $('#pronto').hide();
-                    $('#cancelado').hide();
+                    $('#caixa').hide();
                     $('#pendente').show();
                 });
 
@@ -44,16 +44,16 @@
                     $('#custom_carousel .controls li.active').removeClass('active');
                     $('#prontoMenu').addClass('active');
                     $('#pendente').hide();
-                    $('#cancelado').hide();
+                    $('#caixa').hide();
                     $('#pronto').show();
                 });
 
-                $('#canceladoMenu').click(function (evt) {
+                $('#caixaMenu').click(function (evt) {
                     $('#custom_carousel .controls li.active').removeClass('active');
-                    $('#canceladoMenu').addClass('active');
+                    $('#caixaMenu').addClass('active');
                     $('#pendente').hide();
                     $('#pronto').hide();
-                    $('#cancelado').show();
+                    $('#caixa').show();
                 });
 
                 $('.button-checkbox').each(function () {
@@ -207,6 +207,23 @@
                 }
 
             }
+            
+            function finalizarPedido(codigoPedido) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=finalizarPedido',
+                    type: 'POST',
+                    data: '&codigoPedido=' + codigoPedido,
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#divCaixa").html(data);
+                    }
+                });
+
+            }
 
         </script>
 
@@ -239,7 +256,7 @@
                                                 <ul class="nav">
                                                     <li id="pendenteMenu" data-target="#custom_carousel" data-slide-to="0" class="active" onclick="listarItensPendentes();"><a href="#"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><small>Pendentes</small></a></li>
                                                     <li id="prontoMenu"  data-target="#custom_carousel" data-slide-to="1" onclick="listarItensProntos();"><a href="#" ><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><small>Feitos</small></a></li>
-                                                    <li id="canceladoMenu"  data-target="#custom_carousel" data-slide-to="2" onclick="listarPedidosCaixa();"><a href="#"><img src="${contexto}/imgs/caixa.png" alt=""><small>Caixa</small></a></li>
+                                                    <li id="caixaMenu"  data-target="#custom_carousel" data-slide-to="2" onclick="listarPedidosCaixa();"><a href="#"><img src="${contexto}/imgs/imgsSistema/caixa.png" alt=""><small>Caixa</small></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -254,7 +271,7 @@
                                             <jsp:include page="/pages/pedidoFeito.jsp"></jsp:include>
                                             </div>
                                         </div>
-                                        <div id="cancelado" style="display: none;">
+                                        <div id="caixa" style="display: none;">
                                             <div class="panel-group" id="accordionCardapio">
                                                 <div id="custom-search-input">
                                                     <div class="input-group col-md-12">
