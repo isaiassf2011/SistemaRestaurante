@@ -21,13 +21,26 @@
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
 
+        <style>
+            .msgmodal-container {
+                padding: 5px;
+                max-width: 350px;
+                width: 100% !important;
+                background-color: #F7F7F7;
+                margin: 0 auto;
+                border-radius: 2px;
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+                font-family: roboto;
+            }
+        </style>
+
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $("#telefone").mask("(99) 9999-9999");
                 $("#cnpj").mask("99.999.999/9999-99");
                 $("#cep").mask("99.999-999");
             });
-
             function salvar() {
                 var valores = $('#form').serialize();
                 console.log(valores);
@@ -40,12 +53,14 @@
                     //colocamos os valores a serem enviados
                     data: valores + '&lista=json',
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function() {
-
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function(pre) {
-                        alert("Cadastrado");
+                    success: function (pre) {
+                        $("#processing-modal").modal('hide');
+                        $("#msgTexto").html("Cadastro Concluido com Sucesso! Encaminhamos um e-mail com sua senha para: " + $("#email").val());
+                        $("#msg-modal").modal('show');
                     }
                 });
             }
@@ -110,6 +125,37 @@
                         </div>
                         <div class="panel-footer text-center">
                             <a href="${contexto}/pages/login.jsp" > Já está cadastrado? </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="msg-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; top: 50% !important; margin-top: -100px;">
+                <div class="modal-dialog">
+                    <div class="msgmodal-container">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <h5 id="msgTexto"></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
+                 left: 50% !important; margin-top: -100px;  
+                 margin-left: -100px; 
+                 overflow: visible !important;" id="processing-modal" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
+                                <h4>Carregando...</h4>
+                            </div>
                         </div>
                     </div>
                 </div>

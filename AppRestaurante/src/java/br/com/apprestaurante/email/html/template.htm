@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Sistema de Pedidos para Restaurantes - Chegou Pediu!</title>
+
+        <style type="text/css">
+            .email {
+                width: 700px;
+                font-size: 12px;
+                font-family: Arial, Verdana;
+            }
+
+        </style>
+
+    </head>
+    <body class="email">
+        <table style="background-color:#186A9E; color: white; width: 700px;">
+            <tr>
+                <td align="left" style="text-align: left; margin-left: 20px; text-shadow: buttontext;">
+                    <h4 style="color: white;">&nbsp;&nbsp;Sistema de Pedidos para Restaurantes - Chegou Pediu!</h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    #parse($paginaConteudo)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    #parse("br/com/apprestaurante/email/html/rodape.htm")
+                </td>
+            </tr>		
+        </table>
+    </body>
+</html>

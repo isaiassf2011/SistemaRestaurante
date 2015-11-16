@@ -42,15 +42,14 @@ public class Velocity {
 
     }
 
-    public StringWriter formataEmailSenha(String cnpj, String senha, String senhaConfiguracoes) throws Exception {
+    public StringWriter formataEmailSenha(String cnpj, String senha) throws Exception {
 
-        Template t = ve.getTemplate("br" + fs + "com" + fs + "brdti" + fs + "mtr" + fs + "email" + fs + "html" + fs + "template.htm");
+        Template t = ve.getTemplate("br" + fs + "com" + fs + "apprestaurante"  + fs + "email" + fs + "html" + fs + "template.htm");
 
         // Parametros
         context.put("cnpj", cnpj);
         context.put("senha", senha);
-        context.put("senhaConfiguracoes", senhaConfiguracoes);
-        context.put("paginaConteudo", "br/com/brdti/mtr/email/html/senha.htm");
+        context.put("paginaConteudo", "br/com/apprestaurante/email/html/senha.htm");
 
         StringWriter writer = new StringWriter();
 

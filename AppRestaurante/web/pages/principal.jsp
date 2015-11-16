@@ -25,8 +25,35 @@
         <script src="${contexto}/js/upload.js" type="text/javascript"></script>
         <script src="${contexto}/js/jquery.maskMoney.js" type="text/javascript"></script>
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script language="JavaScript" src="${contexto}/js/jquery.validate.js" type="text/javascript"></script>
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+        <style>
+
+            label {
+                display: block;
+                margin-top: 10px;
+            }
+            label.error {
+                float: none;
+                color: red;
+                margin: 0 .5em 0 0;
+                vertical-align: top;
+                font-size: 12px;
+            }
+            p {
+                clear: both;
+            }
+            .submit {
+                margin-top: 1em;
+            }
+            em {
+                font-weight: bold;
+                padding-right: 1em;
+                vertical-align: top;
+            }
+        </style>
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -54,21 +81,58 @@
 
                 $("#preco").maskMoney({
                     symbol: 'R$ ',
-                    showSymbol: true, 
-                    thousands: '.', 
+                    showSymbol: true,
+                    thousands: '.',
                     decimal: ','
                 });
-                
+
+                $("#form").validate({
+                    ignore: ":hidden",
+                    // Define as regras
+                    rules: {
+                        nomeProduto: {
+                            // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+                            required: true
+                        },
+                        preco: {
+                            required: true
+                        },
+                        cmbCategoria: {
+                            required: true
+                        }
+                    },
+                    // Define as mensagens de erro para cada regra
+                    messages: {
+                        nomeProduto: {
+                            required: "Digite o nome do produto"
+                        },
+                        preco: {
+                            required: "Digite o preço do produto"
+                        },
+                        cmbCategoria: {
+                            required: "Selecione uma categoria"
+                        }
+                    }
+                    ,
+                    submitHandler: function (form) {
+                        salvar();
+                        return false;
+
+                    }
+                });
+
             });
 
             function limparMesa() {
                 $("#formMesa")[0].reset();
                 $('#codigoMesa').val("");
+                $('#msgSucessoMesa').html("");
             }
 
             function limparProduto() {
                 $("#form")[0].reset();
                 $('#codigoProduto').val("");
+                $('#msgSucessoProduto').html("");
                 removerImagem();
             }
 
@@ -95,6 +159,7 @@
                     },
                     //colocamos o retorno na tela
                     success: function (data) {
+                        $('#msgSucessoProduto').html("Produto Adicionado com Sucesso!");
                         $("#form")[0].reset();
                         $('#codigoProduto').val("");
                         removerImagem();
@@ -117,6 +182,7 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
+                        $('#msgSucessoMesa').html("Mesa Adicionada com Sucesso!");
                         $("#formMesa")[0].reset();
                         $('#codigoMesa').val("");
                         $("#processing-modal").modal('hide');
@@ -136,6 +202,7 @@
                         //$("#processing-modal").modal('show');
                     },
                     success: function (json) {
+                        $('#msgSucessoMesa').html("");
                         $("#numeroMesa").val(json.numero);
                         $('#codigoMesa').val(codigoMesa);
                         //$("#processing-modal").modal('hide');
@@ -206,6 +273,7 @@
                     },
                     success: function (json) {
                         //$("#processing-modal").modal('hide');
+                        $('#msgSucessoProduto').html("");
                         $("#nomePreduto").val(json.nome);
                         $('#caminho').val(json.imagem);
                         if (json.imagem === "") {
@@ -337,10 +405,10 @@
                                                 <input class="form-control" placeholder="Nome do Produto" name="nomeProduto" id="nomePreduto" type="text" autofocus>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Descrição" name="descricao" id="descricao" type="text" value="">
+                                                <input class="form-control" placeholder="Descrição" name="descricao" id="descricao" type="text" >
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Preço" name="preco" id="preco" type="text" value="" >
+                                                <input class="form-control" placeholder="Preço" name="preco" id="preco" type="text" >
                                             </div>
                                             <div class="form-group">
                                                 <select class="form-control" name="cmbCategoria" id="cmbCategoria">
@@ -352,7 +420,10 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <input type="button" class="btn btn-lg btn-primary btn-block" onclick="salvar();" value="Concluir">
+                                                <h5 id="msgSucessoProduto" style="color: green; font-weight: bold;"></h5>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-lg btn-primary btn-block"  value="Concluir">
                                             </div>
                                         </div>
                                     </div>
@@ -381,6 +452,9 @@
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                             <div class="form-group">
                                                 <input class="form-control" placeholder="Número" name="numeroMesa" id="numeroMesa" type="text" value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <h5 id="msgSucessoMesa" style="color: green; font-weight: bold;"></h5>
                                             </div>
                                             <div class="form-group">
                                                 <input type="button" class="btn btn-lg btn-primary btn-block" onclick="salvarMesa();" value="Adicionar">

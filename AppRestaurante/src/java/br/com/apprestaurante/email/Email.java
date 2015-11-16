@@ -2,6 +2,7 @@ package br.com.apprestaurante.email;
 
 import com.sun.mail.smtp.SMTPAddressFailedException;
 import java.io.File;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
@@ -26,7 +27,7 @@ import javax.mail.internet.MimeMultipart;
 public class Email {
 
     private static final String FROM = "izaiazferreira@gmail.com";
-    private static final String USER = "izaiazferreira";
+    private static final String USER = "izaiazferreira@gmail.com";
     private static final String SENHA = "comidadojaco";
     private static final String MAIL_SMTP_HOST = "smtp.gmail.com";
     private static final String PROTOCOL = "smtp";
@@ -192,14 +193,15 @@ public class Email {
         //File arquivoAnexo = new File("c://449.pdf");
 
         ArrayList<String> a = new ArrayList<String>();
-        a.add("isaiassf2011@hotmail.com");
+        a.add("izaiazferreira@gmail.com");
 
         ArrayList<String> b = new ArrayList<String>();
         b.add("isaiassf2011@hotmail.com");
 
         //new Email().enviaEmail(a, null, "Assunto", "texto do email");
         //new Email().enviaEmail(a, null, "email teste", "teste no corpo do email");  //EmailComAnexo(a, b, "tituloEmail", "textoEmail", arquivoAnexo);
-        new Email().enviaEmail(a, null, "email teste", "teste no corpo do email");  //EmailComAnexo(a, b, "tituloEmail", "textoEmail", arquivoAnexo);
+        StringWriter texto = new Velocity().formataEmailSenha("111111111", "123");
+        new Email().enviaEmail(a, null, "Senha - Sistema Chegou Pediu!", texto.toString());  //EmailComAnexo(a, b, "tituloEmail", "textoEmail", arquivoAnexo);
     }
 
     /**
@@ -256,7 +258,9 @@ public class Email {
         props.setProperty("mail.transport.protocol", PROTOCOL);
         props.setProperty("mail.smtp.port", PORTA);
         props.setProperty("mail.smtp.auth", "true");
-        props.put("mail.smtp.socketFactory.port", "465");
+        //props.setProperty("mail.debug", "true");
+        props.setProperty("mail.smtp.ssl.enable", "true");
+        //props.put("mail.smtp.socketFactory.port", "587");
 
         this.setProps(props);
         // preparar sessao
