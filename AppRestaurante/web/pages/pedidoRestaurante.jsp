@@ -40,6 +40,12 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
+
+                sticky_footer();
+                $(window).scroll(sticky_footer);
+                $(window).resize(sticky_footer);
+                $(window).load(sticky_footer);
+
                 $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
@@ -135,6 +141,15 @@
                 });
 
             });
+
+            function sticky_footer() {
+                var mFoo = $("#divRodape");
+                if ((($(document.body).height() + mFoo.outerHeight()) < $(window).height() && mFoo.css("position") === "fixed") || ($(document.body).height() < $(window).height() && mFoo.css("position") !== "fixed")) {
+                    mFoo.css({position: "fixed", bottom: "0px"});
+                } else {
+                    mFoo.css({position: "static"});
+                }
+            }
 
             function finalizarItem(codigoItem) {
 
@@ -351,7 +366,7 @@
                 </div>
             </div>
 
-            <div id="divRodape">
+            <div id="divRodape" style="width: 100%">
             <jsp:include page="/rodape.jsp"></jsp:include>
         </div>
 
