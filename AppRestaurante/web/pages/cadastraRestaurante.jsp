@@ -21,6 +21,7 @@
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <script language="JavaScript" src="${contexto}/js/jquery.validate.js" type="text/javascript"></script>
+        <script src="${contexto}/js/validaCampos.js" type="text/javascript"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
 
         <style>
@@ -38,10 +39,20 @@
         </style>
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $("#telefone").mask("(99) 9999-9999");
                 $("#cnpj").mask("99.999.999/9999-99");
                 $("#cep").mask("99.999-999");
+
+                $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+                    return arg !== value;
+                }, "Value must not equal arg.");
+
+                $.validator.addMethod("cnpj", function (cnpj, element) {
+                    
+                    return validarCNPJ(cnpj);
+                    
+                }, "Informe um CNPJ válido."); // Mensagem padrão
 
                 $("#formRestaurante").validate({
                     ignore: ":hidden",
@@ -50,13 +61,14 @@
                             required: true
                         },
                         cnpjRestaurante: {
-                            required: true
+                            required: true,
+                            cnpj: true
                         },
                         cep: {
                             required: true
                         },
                         estado: {
-                            required: true
+                            valueNotEquals: "0"
                         },
                         email: {
                             required: true,
@@ -68,20 +80,21 @@
                             required: "Digite o nome do restaurante"
                         },
                         cnpjRestaurante: {
-                            required: "Digite o CNPJ do restaurante"
+                            required: "Digite o CNPJ do restaurante",
+                            cnpj: "CNPJ inválido"
                         },
                         cep: {
                             required: "Digite o CEP"
                         },
                         estado: {
-                            required: "Selecione o Estado"
+                            valueNotEquals: "Selecione o Estado"
                         },
                         email: {
                             required: "Digite o E-mail",
                             email: "Digite um e-mail válido"
                         }
                     },
-                    submitHandler: function(form) {
+                    submitHandler: function (form) {
                         salvar();
                         return false;
                     }
@@ -100,11 +113,11 @@
                     //colocamos os valores a serem enviados
                     data: valores + '&lista=json',
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function(pre) {
+                    success: function (pre) {
                         $("#processing-modal").modal('hide');
                         $("#msgTexto").html("Cadastro Concluido com Sucesso! Encaminhamos um e-mail com sua senha para: " + $("#email").val());
                         $("#msg-modal").modal('show');
