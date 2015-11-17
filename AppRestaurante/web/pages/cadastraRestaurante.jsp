@@ -16,9 +16,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="${contexto}/bootstrap/css/bootstrap.min.css" type="text/css"/>
         <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
+        <link href="${contexto}/css/estiloMsgErro.css" rel="stylesheet">
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script language="JavaScript" src="${contexto}/js/jquery.validate.js" type="text/javascript"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
 
         <style>
@@ -36,10 +38,55 @@
         </style>
 
         <script type="text/javascript">
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $("#telefone").mask("(99) 9999-9999");
                 $("#cnpj").mask("99.999.999/9999-99");
                 $("#cep").mask("99.999-999");
+
+                $("#formRestaurante").validate({
+                    ignore: ":hidden",
+                    rules: {
+                        nomeRestaurante: {
+                            required: true
+                        },
+                        cnpjRestaurante: {
+                            required: true
+                        },
+                        cep: {
+                            required: true
+                        },
+                        estado: {
+                            required: true
+                        },
+                        email: {
+                            required: true,
+                            email: true
+                        }
+                    },
+                    messages: {
+                        nomeRestaurante: {
+                            required: "Digite o nome do restaurante"
+                        },
+                        cnpjRestaurante: {
+                            required: "Digite o CNPJ do restaurante"
+                        },
+                        cep: {
+                            required: "Digite o CEP"
+                        },
+                        estado: {
+                            required: "Selecione o Estado"
+                        },
+                        email: {
+                            required: "Digite o E-mail",
+                            email: "Digite um e-mail válido"
+                        }
+                    },
+                    submitHandler: function(form) {
+                        salvar();
+                        return false;
+                    }
+                });
+
             });
             function salvar() {
                 var valores = $('#form').serialize();
@@ -53,11 +100,11 @@
                     //colocamos os valores a serem enviados
                     data: valores + '&lista=json',
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function (pre) {
+                    success: function(pre) {
                         $("#processing-modal").modal('hide');
                         $("#msgTexto").html("Cadastro Concluido com Sucesso! Encaminhamos um e-mail com sua senha para: " + $("#email").val());
                         $("#msg-modal").modal('show');
@@ -76,7 +123,7 @@
                             <strong> Cadastre-se!</strong>
                         </div>
                         <div class="panel-body">
-                            <form role="form" action="#" method="POST" id="form">
+                            <form role="form" action="" method="POST" id="formRestaurante">
                                 <fieldset>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
@@ -101,22 +148,17 @@
                                             </div>
                                             <div class="form-group">
                                                 <select class="form-control">
-                                                    <option value="none">Cidade</option>
+                                                    <option value="">Cidade</option>
                                                     <option value="1">Florianópoliz</option>
                                                     <option value="2">Santo Amaro da Imperatriz</option>
                                                     <option value="3">Palhoça</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="glyphicon glyphicon-envelope"></i>
-                                                    </span>
-                                                    <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" value="">
-                                                </div>
+                                                <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" value="">
                                             </div>
                                             <div class="form-group">
-                                                <input type="button" class="btn btn-lg btn-primary btn-block" onclick="salvar();" value="Concluir">
+                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Concluir">
                                             </div>
                                         </div>
                                     </div>

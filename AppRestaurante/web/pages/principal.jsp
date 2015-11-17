@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="${contexto}/bootstrap/css/bootstrap.min.css" type="text/css"/>
         <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
         <link href="${contexto}/css/estilo.css" rel="stylesheet">
+        <link href="${contexto}/css/estiloMsgErro.css" rel="stylesheet">
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
@@ -29,43 +30,17 @@
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-        <style>
-
-            label {
-                display: block;
-                margin-top: 10px;
-            }
-            label.error {
-                float: none;
-                color: red;
-                margin: 0 .5em 0 0;
-                vertical-align: top;
-                font-size: 12px;
-            }
-            p {
-                clear: both;
-            }
-            .submit {
-                margin-top: 1em;
-            }
-            em {
-                font-weight: bold;
-                padding-right: 1em;
-                vertical-align: top;
-            }
-        </style>
-
         <script type="text/javascript">
-            $(document).ready(function () {
-                $(".btn-pref .btn").click(function () {
+            $(document).ready(function() {
+                $(".btn-pref .btn").click(function() {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
                 });
 
-                $('#arquivo').change(function () {
+                $('#arquivo').change(function() {
                     var reader = new FileReader();
-                    $(reader).load(function (event) {
+                    $(reader).load(function(event) {
                         $("#imgProduto").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
@@ -84,6 +59,26 @@
                     showSymbol: true,
                     thousands: '.',
                     decimal: ','
+                });
+
+                $("#formMesa").validate({
+                    ignore: ":hidden",
+                    rules: {
+                        numeroMesa: {
+                            required: true,
+                            number: true
+                        }
+                    },
+                    messages: {
+                        numeroMesa: {
+                            required: "Digite o número da mesa",
+                            number: "Digite apenas números"
+                        }
+                    },
+                    submitHandler: function(form) {
+                        salvarMesa();
+                        return false;
+                    }
                 });
 
                 $("#form").validate({
@@ -112,9 +107,8 @@
                         cmbCategoria: {
                             required: "Selecione uma categoria"
                         }
-                    }
-                    ,
-                    submitHandler: function (form) {
+                    },
+                    submitHandler: function(form) {
                         salvar();
                         return false;
 
@@ -124,12 +118,14 @@
             });
 
             function limparMesa() {
+                $("#formMesa").validate().resetForm();
                 $("#formMesa")[0].reset();
                 $('#codigoMesa').val("");
                 $('#msgSucessoMesa').html("");
             }
 
             function limparProduto() {
+                $("#form").validate().resetForm();
                 $("#form")[0].reset();
                 $('#codigoProduto').val("");
                 $('#msgSucessoProduto').html("");
@@ -154,11 +150,11 @@
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function (data) {
+                    success: function(data) {
                         $('#msgSucessoProduto').html("Produto Adicionado com Sucesso!");
                         $("#form")[0].reset();
                         $('#codigoProduto').val("");
@@ -178,10 +174,10 @@
                     url: 'ControllerServlet?acao=salvarMesa',
                     type: 'POST',
                     data: valores,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $('#msgSucessoMesa').html("Mesa Adicionada com Sucesso!");
                         $("#formMesa")[0].reset();
                         $('#codigoMesa').val("");
@@ -193,15 +189,15 @@
             }
 
             function buscarMesa(codigoMesa) {
-
+                $("#formMesa").validate().resetForm();
                 $.ajax({
                     url: 'ControllerServlet?acao=buscarMesa',
                     type: 'POST',
                     data: '&codigoMesa=' + codigoMesa,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         //$("#processing-modal").modal('show');
                     },
-                    success: function (json) {
+                    success: function(json) {
                         $('#msgSucessoMesa').html("");
                         $("#numeroMesa").val(json.numero);
                         $('#codigoMesa').val(codigoMesa);
@@ -234,10 +230,10 @@
                         url: 'ControllerServlet?acao=listarProdutos',
                         type: 'POST',
                         data: '&codigoCategoria=' + codigoCategoria,
-                        beforeSend: function () {
+                        beforeSend: function() {
                             $("#processing-modal").modal('show');
                         },
-                        success: function (data) {
+                        success: function(data) {
                             $("#processing-modal").modal('hide');
                             jQuery("#categoria" + codigoCategoria).html(data);
                         }
@@ -252,9 +248,9 @@
                     url: 'ControllerServlet?acao=listarCategorias',
                     type: 'POST',
                     data: '&codigoRestaurante=' + codigoRestaurante,
-                    beforeSend: function () {
+                    beforeSend: function() {
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#accordionCardapio").html(data);
                     }
@@ -263,15 +259,15 @@
             }
 
             function buscarProduto(codigoProduto) {
-
+                $("#form").validate().resetForm();
                 $.ajax({
                     url: 'ControllerServlet?acao=buscarProduto',
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         //$("#processing-modal").modal('show');
                     },
-                    success: function (json) {
+                    success: function(json) {
                         //$("#processing-modal").modal('hide');
                         $('#msgSucessoProduto').html("");
                         $("#nomePreduto").val(json.nome);
@@ -296,10 +292,10 @@
                     url: 'ControllerServlet?acao=excluirProduto',
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data === "") {
                             buscarCategorias(1);
                         } else {
@@ -312,16 +308,20 @@
 
             }
 
+            function validarFormulario() {
+                $("#barraDeProgresso ").hide();
+            }
+
             function excluirMesa(codigoMesa) {
 
                 $.ajax({
                     url: 'ControllerServlet?acao=excluirMesa',
                     type: 'POST',
                     data: '&codigoMesa=' + codigoMesa,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divMesas").html(data);
                     }
@@ -382,7 +382,8 @@
                                 <h1> Cadastre seus produtos!</h1>
                             </div>
                             <div class="modal-body">
-                                <form role="form" action="MeuServlet" method="POST" id="form">
+                                <form role="form" action="MeuServlet" method="POST" id="form" onsubmit="validarFormulario();
+                                        return false;">>
                                     <input type="hidden" id="caminho" name="imagem" value=""/>
                                     <input type="hidden" id="codigoProduto" name="codigoProduto" value=""/>
                                     <fieldset>
@@ -412,7 +413,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <select class="form-control" name="cmbCategoria" id="cmbCategoria">
-                                                    <option value="none">Selecione a Categoria</option>
+                                                    <option value="">Selecione a Categoria</option>
                                                     <option value="1">Bebida</option>
                                                     <option value="2">Porção</option>
                                                     <option value="3">Massas</option>
@@ -445,7 +446,7 @@
                             <h1> Adicione suas mesas!</h1>
                         </div>
                         <div class="modal-body">
-                            <form role="form" action="#" method="POST" id="formMesa">
+                            <form role="form" action="" method="POST" id="formMesa">
                                 <fieldset>
                                     <input type="hidden" id="codigoMesa" name="codigoMesa" value=""/>
                                     <div class="row">
@@ -457,7 +458,7 @@
                                                 <h5 id="msgSucessoMesa" style="color: green; font-weight: bold;"></h5>
                                             </div>
                                             <div class="form-group">
-                                                <input type="button" class="btn btn-lg btn-primary btn-block" onclick="salvarMesa();" value="Adicionar">
+                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Adicionar">
                                             </div>
                                         </div>
                                     </div>
