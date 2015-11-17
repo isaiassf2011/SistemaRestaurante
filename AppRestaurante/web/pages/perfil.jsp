@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="${contexto}/bootstrap/css/bootstrap.min.css" type="text/css"/>
         <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
         <link href="${contexto}/css/estilo.css" rel="stylesheet">
+        <link href="${contexto}/css/estiloMsgErro.css" rel="stylesheet">
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
@@ -24,6 +25,8 @@
         <script src="${contexto}/js/jquery.form.js" type="text/javascript"></script>
         <script src="${contexto}/js/upload.js" type="text/javascript"></script>
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script language="JavaScript" src="${contexto}/js/jquery.validate.js" type="text/javascript"></script>
+        <script src="${contexto}/js/validaCampos.js" type="text/javascript"></script>
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -37,7 +40,7 @@
                         $("#menuLogo").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
-                    $('#arquivo').closest("form").submit();
+                    $('#arquivo').closest("formPeril").submit();
                 });
 
                 $(":file").filestyle({
@@ -46,10 +49,66 @@
                     badge: false,
                     size: "sm"
                 });
-                
+
                 $("#telefone").mask("(99) 9999-9999");
                 $("#cnpj").mask("99.999.999/9999-99");
                 $("#cep").mask("99.999-999");
+
+                $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+                    return arg !== value;
+                }, "Value must not equal arg.");
+
+                $.validator.addMethod("cnpj", function (cnpj, element) {
+
+                    return validarCNPJ(cnpj);
+
+                }, "Informe um CNPJ válido."); // Mensagem padrão
+
+                $("#formPeril").validate({
+                    ignore: ":hidden",
+                    rules: {
+                        nomeRestaurante: {
+                            required: true
+                        },
+                        cnpjRestaurante: {
+                            required: true,
+                            cnpj: true
+                        },
+                        cep: {
+                            required: true
+                        },
+                        estado: {
+                            valueNotEquals: "0"
+                        },
+                        email: {
+                            required: true,
+                            email: true
+                        }
+                    },
+                    messages: {
+                        nomeRestaurante: {
+                            required: "Digite o nome do restaurante"
+                        },
+                        cnpjRestaurante: {
+                            required: "Digite o CNPJ do restaurante",
+                            cnpj: "CNPJ inválido"
+                        },
+                        cep: {
+                            required: "Digite o CEP"
+                        },
+                        estado: {
+                            valueNotEquals: "Selecione o Estado"
+                        },
+                        email: {
+                            required: "Digite o E-mail",
+                            email: "Digite um e-mail válido"
+                        }
+                    },
+                    submitHandler: function (form) {
+                        salvar();
+                        return false;
+                    }
+                });
 
             });
 
@@ -74,9 +133,13 @@
                 $("#menuLogo").attr("src", "${contexto}/imgs/imgsSistema/sem_imagem.jpg");
                 $('#imgRestaurante').attr('src', "${contexto}/imgs/imgsSistema/sem_imagem.jpg");
             }
+            
+            function validarFormulario() {
+                $("#msgSucessoPerfil").html("");
+            }
 
             function salvar() {
-                var valores = $('#form').serialize();
+                var valores = $('#formPeril').serialize();
                 console.log(valores);
                 //iniciamos o ajax
                 $.ajax({
@@ -93,7 +156,7 @@
                     //colocamos o retorno na tela
                     success: function (pre) {
                         //$('#divCabecalho').load("cabecalho.jsp");
-                        alert("Cadastrado");
+                        $('#msgSucessoPerfil').html("Informações alteradas com Sucesso!");
                     }
                 });
             }
@@ -115,7 +178,7 @@
                                 <strong> Meu Perfil!</strong>
                             </div>
                             <div style="padding: 15px;">
-                                <form role="form" action="MeuServlet" method="POST" id="form">
+                                <form role="form" action="MeuServlet" method="POST" id="formPeril" onsubmit="validarFormulario(); return false;">
                                     <input type="hidden" id="caminho" name="logo" value="${restaurante.logo}"/>
                                 <input type="hidden" id="codigoRestaurante" name="codigoRestaurante" value="1"/>
                                 <fieldset>
@@ -168,15 +231,13 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="glyphicon glyphicon-envelope"></i>
-                                                    </span>
-                                                    <input class="form-control" placeholder="E-mail" name="email" type="email" value="${restaurante.email}">
-                                                </div>
+                                                <input class="form-control" placeholder="E-mail" name="email" type="email" value="${restaurante.email}">
                                             </div>
                                             <div class="form-group">
-                                                <input type="button" class="btn btn-lg btn-primary btn-block" onclick="salvar();" value="Concluir">
+                                                <h5 id="msgSucessoPerfil" style="color: green; font-weight: bold;"></h5>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Concluir">
                                             </div>
                                         </div>
                                     </div>

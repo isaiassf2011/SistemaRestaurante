@@ -102,7 +102,7 @@
 
             });
             function salvar() {
-                var valores = $('#form').serialize();
+                var valores = $('#formRestaurante').serialize();
                 console.log(valores);
                 //iniciamos o ajax
                 $.ajax({

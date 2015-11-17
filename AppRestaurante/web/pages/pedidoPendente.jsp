@@ -8,6 +8,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contexto" value="${pageContext.request.contextPath}" />
 
+<div>
+    <h5 id="msgPedidoPendente" style="color: green; font-weight: bold;"></h5>
+</div>
 <table class="table table-hover" id="dev-table">
     <thead>
         <tr>

@@ -24,6 +24,20 @@
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
+        <style>
+            .msgmodal-container {
+                padding: 5px;
+                max-width: 350px;
+                width: 100% !important;
+                background-color: #F7F7F7;
+                margin: 0 auto;
+                border-radius: 2px;
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+                font-family: roboto;
+            }
+        </style>
+
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".btn-pref .btn").click(function () {
@@ -134,6 +148,10 @@
                     success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divPendentes").html(data);
+                        $("#msgPedidoPendente").html("Produto Fizalizado com Sucesso!");
+                        setTimeout(function () {
+                            $('#msgPedidoPendente').fadeOut('fast');
+                        }, 3000);
                     }
                 });
 
@@ -207,7 +225,7 @@
                 }
 
             }
-            
+
             function finalizarPedido(codigoPedido) {
 
                 $.ajax({
@@ -220,6 +238,11 @@
                     success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divCaixa").html(data);
+                        $("#msgTexto").html("Pedido Finalizado com Sucesso!");
+                        $('#msg-modal').modal('show');
+                        setTimeout(function () {
+                            $('#msg-modal').modal('hide');
+                        }, 3000);
                     }
                 });
 
@@ -295,6 +318,22 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="msg-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; top: 50% !important; margin-top: -100px;">
+                    <div class="modal-dialog">
+                        <div class="msgmodal-container">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <h5 id="msgTexto"></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
                      left: 50% !important; margin-top: -100px;  
                      margin-left: -100px; 

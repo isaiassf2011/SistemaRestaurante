@@ -310,6 +310,11 @@
 
             function validarFormulario() {
                 $("#barraDeProgresso ").hide();
+                $('#msgSucessoProduto').html("");
+            }
+
+            function validarFormMesa() {
+                $('#msgSucessoMesa').html("");
             }
 
             function excluirMesa(codigoMesa) {
@@ -446,7 +451,8 @@
                             <h1> Adicione suas mesas!</h1>
                         </div>
                         <div class="modal-body">
-                            <form role="form" action="" method="POST" id="formMesa">
+                            <form role="form" action="" method="POST" id="formMesa" onsubmit="validarFormMesa();
+                                    return false;">
                                 <fieldset>
                                     <input type="hidden" id="codigoMesa" name="codigoMesa" value=""/>
                                     <div class="row">

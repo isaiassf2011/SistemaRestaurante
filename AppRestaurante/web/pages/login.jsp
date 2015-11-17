@@ -16,18 +16,58 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="${contexto}/bootstrap/css/bootstrap.min.css" type="text/css"/>
         <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
+        <link href="${contexto}/css/estiloMsgErro.css" rel="stylesheet">
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script language="JavaScript" src="${contexto}/js/jquery.validate.js" type="text/javascript"></script>
+        <script src="${contexto}/js/validaCampos.js" type="text/javascript"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $("#cnpj").mask("99.999.999/9999-99");
+
+                $.validator.addMethod("cnpj", function (cnpj, element) {
+
+                    return validarCNPJ(cnpj);
+
+                }, "Informe um CNPJ válido."); // Mensagem padrão
+
+                $("#formLogin").validate({
+                    ignore: ":hidden",
+                    rules: {
+                        cnpj: {
+                            required: true,
+                            cnpj: true
+                        },
+                        senha: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        cnpj: {
+                            required: "Digite o CNPJ do restaurante",
+                            cnpj: "CNPJ inválido"
+                        },
+                        senha: {
+                            required: "Digite sua senha"
+                        }
+                    },
+                    submitHandler: function (form) {
+                        efetuarLogin();
+                        return false;
+                    }
+                });
+
             });
+            
+            function validarFormulario() {
+                $('#erroLogin').html("");
+            }
 
             function efetuarLogin() {
-                var valores = $('#form').serialize();
+                var valores = $('#formLogin').serialize();
                 console.log(valores);
                 //iniciamos o ajax
                 $.ajax({
@@ -38,15 +78,15 @@
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function() {
+                    beforeSend: function () {
 
                     },
                     //colocamos o retorno na tela
-                    success: function(json) {
+                    success: function (json) {
                         if (json.ok === "S") {
                             location.href = "../ControllerServlet?acao=listarCardapio";
                         } else {
-                            alert("Usuario/Senha incorreto!");
+                            $('#erroLogin').html("Usuario/Senha incorretos!");
                         }
                     }
                 });
@@ -64,7 +104,7 @@
                             <strong> Já sou cadastrado!</strong>
                         </div>
                         <div class="panel-body">
-                            <form role="form" action="#" method="POST" id="form">
+                            <form role="form" action="#" method="POST" id="formLogin" onsubmit="validarFormulario(); return false;">
                                 <fieldset>
                                     <div class="row">
                                         <div class="center-block">
@@ -75,24 +115,15 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                             <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="glyphicon glyphicon-user"></i>
-                                                    </span> 
-                                                    <input id="cnpj" class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
-                                                </div>
+                                                <input id="cnpj" class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
                                             </div>
                                             <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="glyphicon glyphicon-lock"></i>
-                                                    </span>
-                                                    <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
-                                                </div>
+                                                <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
                                             </div>
                                             <div class="form-group">
-                                                <input type="button" class="btn btn-lg btn-primary btn-block" value="Entrar" onclick="efetuarLogin();">
+                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar" >
                                                 <button id="login_lost_btn" type="button" class="btn btn-link" style="margin-left: -10px;">Esqueceu sua senha?</button>
+                                                <h5 id="erroLogin" for="cnpj" style="color: red;" class="text-center"></h5>
                                             </div>
                                         </div>
                                     </div>
