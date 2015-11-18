@@ -9,20 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author isaias
- */
-public class ExcluirMesa implements CommandInterface {
+public class ReativarMesa implements CommandInterface {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession(false);
         Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
-        
-        Mesa m = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
-        m.setCancelado(true);
+
+        Mesa m = new Mesa();
+
+        m.setCodigo(Integer.parseInt(request.getParameter("codigoMesa")));
+        m.setCancelado(false);
         new MesaDao().salvar(m);
 
         List<Mesa> mesas = new ArrayList<Mesa>();

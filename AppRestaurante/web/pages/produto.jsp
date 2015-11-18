@@ -20,9 +20,16 @@
                 <button style="padding: 5px 5px" title="Editar produto" class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="buscarProduto(${p.codigo});">
                     <i class="glyphicon glyphicon-pencil"></i>										
                 </button>
-                <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger" onclick="excluirProduto(${p.codigo}, ${p.categoriaProduto.codigo});">
-                    <i class="glyphicon glyphicon-trash"></i>										
-                </a>
+                <c:if test="${p.cancelado == false}">    
+                    <a href="javascript:;" style="padding: 5px 5px" title="Excluir produto" class="btn btn-danger" onclick="excluirProdutoModal(${p.codigo}, ${p.categoriaProduto.codigo});">
+                        <i class="glyphicon glyphicon-trash"></i>										
+                    </a>
+                </c:if>
+                <c:if test="${p.cancelado == true}">    
+                    <a href="javascript:;" style="padding: 5px 5px" title="Reativar produto" class="btn btn-success" onclick="reativarProduto(${p.codigo}, ${p.categoriaProduto.codigo});">
+                        <i class="glyphicon glyphicon-repeat"></i>										
+                    </a>
+                </c:if>  
             </div>
             <div class="col-xs-12">
                 <h5><b>${p.nome}</b></h5>

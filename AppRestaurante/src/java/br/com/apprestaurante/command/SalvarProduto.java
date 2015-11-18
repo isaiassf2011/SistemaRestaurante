@@ -62,6 +62,7 @@ public class SalvarProduto implements CommandInterface {
             CategoriaProduto categoriaProduto = new CategoriaProduto();
             categoriaProduto.setCodigo(Integer.parseInt(request.getParameter("cmbCategoria")));
             produto.setCategoriaProduto(categoriaProduto);
+            produto.setCancelado(false);
 
             dao.salvar(produto);
 

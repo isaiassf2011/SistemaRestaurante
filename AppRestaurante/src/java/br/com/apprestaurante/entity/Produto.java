@@ -45,6 +45,9 @@ public class Produto implements Serializable {
     @JoinColumn(name = "categoria_pro_codigo", referencedColumnName = "categoria_pro_codigo", nullable = false)
     private CategoriaProduto categoriaProduto;
 
+    @Column(name = "produto_cancelado")
+    private Boolean cancelado;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -99,6 +102,14 @@ public class Produto implements Serializable {
 
     public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
         this.categoriaProduto = categoriaProduto;
+    }
+
+    public Boolean getCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(Boolean cancelado) {
+        this.cancelado = cancelado;
     }
 
 }

@@ -31,6 +31,9 @@ public class Mesa implements Serializable {
     @JoinColumn(name = "restaurante_codigo", referencedColumnName = "res_codigo", nullable = false)
     private Restaurante restaurante;
 
+    @Column(name = "mesa_cancelado")
+    private Boolean cancelado;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -53,6 +56,14 @@ public class Mesa implements Serializable {
 
     public void setRestaurante(Restaurante restaurante) {
         this.restaurante = restaurante;
+    }
+
+    public Boolean getCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(Boolean cancelado) {
+        this.cancelado = cancelado;
     }
 
 }

@@ -30,7 +30,26 @@
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
+        <style>
+            .msgmodal-container {
+                padding: 5px;
+                max-width: 350px;
+                width: 100% !important;
+                background-color: #F7F7F7;
+                margin: 0 auto;
+                border-radius: 2px;
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+                font-family: roboto;
+            }
+        </style>
+
         <script type="text/javascript">
+
+            var codigoP;
+            var codigoC;
+            var codMesa;
+
             $(document).ready(function () {
                 $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
@@ -155,7 +174,11 @@
                     },
                     //colocamos o retorno na tela
                     success: function (data) {
-                        $('#msgSucessoProduto').html("Produto Adicionado com Sucesso!");
+                        if ($('#codigoProduto').val() !== "") {
+                            $('#msgSucessoProduto').html("Produto Alterado com Sucesso!");
+                        } else {
+                            $('#msgSucessoProduto').html("Produto Adicionado com Sucesso!");
+                        }
                         $("#form")[0].reset();
                         $('#codigoProduto').val("");
                         removerImagem();
@@ -178,7 +201,11 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $('#msgSucessoMesa').html("Mesa Adicionada com Sucesso!");
+                        if ($('#codigoMesa').val() !== "") {
+                            $('#msgSucessoMesa').html("Mesa Alterada com Sucesso!");
+                        } else {
+                            $('#msgSucessoMesa').html("Mesa Adicionada com Sucesso!");
+                        }
                         $("#formMesa")[0].reset();
                         $('#codigoMesa').val("");
                         $("#processing-modal").modal('hide');
@@ -286,23 +313,52 @@
 
             }
 
-            function excluirProduto(codigoProduto, codigoCategoria) {
+            function excluirProdutoModal(produto, categoria) {
+
+                codigoP = produto;
+                codigoC = categoria;
+                $("#excluir-modal").modal('show');
+
+            }
+
+            function excluirProduto(opcao) {
+
+                if (opcao === 1) {
+                    $.ajax({
+                        url: 'ControllerServlet?acao=excluirProduto',
+                        type: 'POST',
+                        data: '&codigoProduto=' + codigoP,
+                        beforeSend: function () {
+                            $("#processing-modal").modal('show');
+                        },
+                        success: function (data) {
+                            $("#excluir-modal").modal('hide');
+                            if (data === "") {
+                                buscarCategorias(1);
+                            } else {
+                                $("#processing-modal").modal('hide');
+                                jQuery("#categoria" + codigoC).html(data);
+                            }
+                        }
+                    });
+                } else {
+                    $("#excluir-modal").modal('hide');
+                }
+
+            }
+
+            function reativarProduto(produto, categoria) {
 
                 $.ajax({
-                    url: 'ControllerServlet?acao=excluirProduto',
+                    url: 'ControllerServlet?acao=reativarProduto',
                     type: 'POST',
-                    data: '&codigoProduto=' + codigoProduto,
+                    data: '&codigoProduto=' + produto,
                     beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        if (data === "") {
-                            buscarCategorias(1);
-                        } else {
-                            $("#processing-modal").modal('hide');
-                            jQuery("#categoria" + codigoCategoria).html(data);
-                        }
-                        //alert("Produto Excluido com sucesso!");
+                        $("#processing-modal").modal('hide');
+                        jQuery("#categoria" + categoria).html(data);
                     }
                 });
 
@@ -317,10 +373,17 @@
                 $('#msgSucessoMesa').html("");
             }
 
-            function excluirMesa(codigoMesa) {
+            function excluirMesaModal(codigoMesa) {
+
+                codMesa = codigoMesa;
+                $("#excluirMesa-modal").modal('show');
+
+            }
+
+            function reativarMesa(codigoMesa) {
 
                 $.ajax({
-                    url: 'ControllerServlet?acao=excluirMesa',
+                    url: 'ControllerServlet?acao=reativarMesa',
                     type: 'POST',
                     data: '&codigoMesa=' + codigoMesa,
                     beforeSend: function () {
@@ -331,6 +394,28 @@
                         jQuery("#divMesas").html(data);
                     }
                 });
+
+            }
+
+            function excluirMesa(opcao) {
+
+                if (opcao === 1) {
+                    $.ajax({
+                        url: 'ControllerServlet?acao=excluirMesa',
+                        type: 'POST',
+                        data: '&codigoMesa=' + codMesa,
+                        beforeSend: function () {
+                            $("#processing-modal").modal('show');
+                        },
+                        success: function (data) {
+                            $("#processing-modal").modal('hide');
+                            $("#excluirMesa-modal").modal('hide');
+                            jQuery("#divMesas").html(data);
+                        }
+                    });
+                } else {
+                    $("#excluirMesa-modal").modal('hide');
+                }
 
             }
 
@@ -470,6 +555,44 @@
                                     </div>
                                 </fieldset>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="excluir-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; top: 50% !important; margin-top: -100px;">
+                <div class="modal-dialog">
+                    <div class="msgmodal-container">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <h5 id="msgTexto" >Deseja Realmente excluir esse produto?</h5>
+                                <input type="button" class="btn btn-lg btn-primary btn-block" value="Sim" onclick="excluirProduto(1);">
+                                <input type="button" class="btn btn-lg btn-danger btn-block" value="Não" onclick="excluirProduto(0);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="excluirMesa-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; top: 50% !important; margin-top: -100px;">
+                <div class="modal-dialog">
+                    <div class="msgmodal-container">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <h5 id="msgTexto" >Deseja Realmente excluir essa mesa?</h5>
+                                <input type="button" class="btn btn-lg btn-primary btn-block" value="Sim" onclick="excluirMesa(1);">
+                                <input type="button" class="btn btn-lg btn-danger btn-block" value="Não" onclick="excluirMesa(0);">
+                            </div>
                         </div>
                     </div>
                 </div>

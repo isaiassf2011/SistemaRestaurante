@@ -38,7 +38,8 @@ public class SalvarMesa implements CommandInterface {
             mesa.setNumero(Integer.parseInt(request.getParameter("numeroMesa")));
             Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
             mesa.setRestaurante(restaurante);
-
+            mesa.setCancelado(false);
+            
             dao.salvar(mesa);
 
             List<Mesa> mesas = new ArrayList<Mesa>();
