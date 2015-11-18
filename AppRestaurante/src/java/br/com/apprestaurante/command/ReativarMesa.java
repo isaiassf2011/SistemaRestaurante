@@ -17,9 +17,7 @@ public class ReativarMesa implements CommandInterface {
         HttpSession session = request.getSession(false);
         Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        Mesa m = new Mesa();
-
-        m.setCodigo(Integer.parseInt(request.getParameter("codigoMesa")));
+        Mesa m = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
         m.setCancelado(false);
         new MesaDao().salvar(m);
 
