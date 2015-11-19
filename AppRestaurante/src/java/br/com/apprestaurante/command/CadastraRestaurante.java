@@ -14,7 +14,7 @@ public class CadastraRestaurante implements CommandInterface {
         List<Estado> estados = new EstadoDao().getAll();
         request.setAttribute("estados", estados);
         
-        return "pages/cadastraRestaurante.jsp";
+        return "cadastraRestaurante.jsp";
         
     }
     

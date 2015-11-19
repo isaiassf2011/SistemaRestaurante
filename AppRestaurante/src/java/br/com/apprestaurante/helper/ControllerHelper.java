@@ -27,6 +27,7 @@ import br.com.apprestaurante.command.ListarProdutosNomeUsuario;
 import br.com.apprestaurante.command.RealizarPedido;
 import br.com.apprestaurante.command.ReativarMesa;
 import br.com.apprestaurante.command.ReativarProduto;
+import br.com.apprestaurante.command.RecuperarSenha;
 import br.com.apprestaurante.command.RemoveItemCarrinho;
 import br.com.apprestaurante.command.RemoverImagem;
 import br.com.apprestaurante.command.SalvarMesa;
@@ -78,6 +79,7 @@ public class ControllerHelper {
         comandos.put(AcaoConstante.BUSCAR_PEDIDO, new BuscarPedido());
         comandos.put(AcaoConstante.REATIVAR_PRODUTO, new ReativarProduto());
         comandos.put(AcaoConstante.REATIVAR_MESA, new ReativarMesa());
+        comandos.put(AcaoConstante.RECUPERAR_SENHA, new RecuperarSenha());
 
     }
 

@@ -17,12 +17,15 @@
         <link rel="stylesheet" href="${contexto}/bootstrap/css/bootstrap.min.css" type="text/css"/>
         <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
         <link href="${contexto}/css/estiloMsgErro.css" rel="stylesheet">
+        <link href="${contexto}/css/estiloInicial.css" rel="stylesheet">
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <script language="JavaScript" src="${contexto}/js/jquery.validate.js" type="text/javascript"></script>
         <script src="${contexto}/js/validaCampos.js" type="text/javascript"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
+        <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <style>
             .msgmodal-container {
@@ -128,7 +131,12 @@
 
     </head>
     <body>
-        <div class="container" style="margin-top:40px">
+        
+        <div id="divCabecalhoInicial">
+            <jsp:include page="/cabecalhoInicial.jsp" flush="true"></jsp:include>
+        </div>
+        
+        <div class="container" style="margin-top:60px">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-md-offset-4">
                     <div class="panel panel-default">
@@ -179,7 +187,7 @@
                             </form>
                         </div>
                         <div class="panel-footer text-center">
-                            <a href="${contexto}/pages/login.jsp" > Já está cadastrado? </a>
+                            <a href="${contexto}" > Já está cadastrado? </a>
                         </div>
                     </div>
                 </div>
@@ -215,6 +223,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+                        
+        <div id="divRodape">
+            <jsp:include page="/rodape.jsp"></jsp:include>
         </div>
     </body>
 </html>

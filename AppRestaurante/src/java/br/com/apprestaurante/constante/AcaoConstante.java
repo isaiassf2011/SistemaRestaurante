@@ -34,7 +34,8 @@ public final class AcaoConstante {
     public static final String BUSCAR_PEDIDO = "buscarPedido";
     public static final String REATIVAR_PRODUTO = "reativarProduto";
     public static final String REATIVAR_MESA = "reativarMesa";
-
+    public static final String RECUPERAR_SENHA = "recuperarSenha";
+    
     private AcaoConstante() {
     }
 

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : recuperarSenha
-    Created on : 19/11/2015, 00:37:49
+    Document   : login
+    Created on : 05/11/2015, 10:48:59
     Author     : isaias
 --%>
 
@@ -17,12 +17,15 @@
         <link rel="stylesheet" href="${contexto}/bootstrap/css/bootstrap.min.css" type="text/css"/>
         <link href="${contexto}/css/estiloLogin.css" rel="stylesheet">
         <link href="${contexto}/css/estiloMsgErro.css" rel="stylesheet">
+        <link href="${contexto}/css/estiloInicial.css" rel="stylesheet">
 
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <script language="JavaScript" src="${contexto}/js/jquery.validate.js" type="text/javascript"></script>
         <script src="${contexto}/js/validaCampos.js" type="text/javascript"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
+        <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -32,18 +35,17 @@
 
                     return validarCNPJ(cnpj);
 
-                }, "Informe um CNPJ válido.");
+                }, "Informe um CNPJ válido."); // Mensagem padrão
 
-                $("#formRecuperarSenha").validate({
+                $("#formLogin").validate({
                     ignore: ":hidden",
                     rules: {
                         cnpj: {
                             required: true,
                             cnpj: true
                         },
-                        email: {
-                            required: true,
-                            email: true
+                        senha: {
+                            required: true
                         }
                     },
                     messages: {
@@ -51,24 +53,23 @@
                             required: "Digite o CNPJ do restaurante",
                             cnpj: "CNPJ inválido"
                         },
-                        email: {
-                            required: "Digite o E-mail",
-                            email: "Digite um e-mail válido"
+                        senha: {
+                            required: "Digite sua senha"
                         }
                     },
                     submitHandler: function (form) {
-                        recuperarSenha();
+                        efetuarLogin();
                         return false;
                     }
                 });
 
             });
 
-            function recuperarSenha() {
-                
-                //fazer
-                
-                /*
+            function validarFormulario() {
+                $('#erroLogin').html("");
+            }
+
+            function efetuarLogin() {
                 var valores = $('#formLogin').serialize();
                 console.log(valores);
                 //iniciamos o ajax
@@ -91,33 +92,46 @@
                             $('#erroLogin').html("Usuario/Senha incorretos!");
                         }
                     }
-                });*/
+                });
             }
 
         </script>
 
     </head>
     <body>
-        <div class="container" style="margin-top:40px">
+
+        <div id="divCabecalhoInicial">
+            <jsp:include page="/cabecalhoInicial.jsp" flush="true"></jsp:include>
+        </div>
+
+        <div class="container" style="margin-top:60px">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-md-offset-4">
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-login">
-                            <strong> Recuperar senha!</strong>
+                            <strong> Já sou cadastrado!</strong>
                         </div>
                         <div class="panel-body">
-                            <form role="form" action="#" method="POST" id="formRecuperarSenha" >
+                            <form role="form" action="#" method="POST" id="formLogin" onsubmit="validarFormulario();
+                                    return false;">
                                 <fieldset>
+                                    <div class="row">
+                                        <div class="center-block">
+                                            <img class="profile-img"
+                                                 src="https://amanditaamorim.files.wordpress.com/2012/03/logo-rgb-300-dpis.jpg" alt="">
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                             <div class="form-group">
                                                 <input id="cnpj" class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
                                             </div>
                                             <div class="form-group">
-                                                <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" value="">
+                                                <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Recuperar" >
+                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar" >
+                                                <a id="login_lost_btn" type="button" class="btn btn-link" style="margin-left: -10px;" href="${contexto}/recuperarSenha.jsp" >Esqueceu sua senha?</a>
                                                 <h5 id="erroLogin" for="cnpj" style="color: red;" class="text-center"></h5>
                                             </div>
                                         </div>
@@ -126,11 +140,15 @@
                             </form>
                         </div>
                         <div class="panel-footer ">
-                            Lembrou sua senha? <a href="ControllerServlet?acao=cadastrarRestaurante" > Entrar </a>
+                            Ainda não está cadastrado? <a href="ControllerServlet?acao=cadastrarRestaurante" > Cadastre-se </a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div id="divRodape">
+            <jsp:include page="/rodape.jsp"></jsp:include>
         </div>
     </body>
 </html>

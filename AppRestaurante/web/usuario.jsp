@@ -14,8 +14,8 @@
         <title>Bootstrap Case</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="${contexto}/css/estilo.css" rel="stylesheet">
         <link rel="stylesheet" href="${contexto}/bootstrap/css/bootstrap.min.css" type="text/css"/>
+        <link href="${contexto}/css/estilo.css" rel="stylesheet">
         <script src="${contexto}/js/jquery-1.11.3.min.js"></script>
         <script src="${contexto}/bootstrap/js/bootstrap.min.js"></script>
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">

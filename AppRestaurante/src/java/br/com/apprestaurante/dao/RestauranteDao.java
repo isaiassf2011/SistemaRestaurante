@@ -60,6 +60,30 @@ public class RestauranteDao {
 
     }
 
+    public Restaurante buscaPorCnpj(String cnpj) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
+        Restaurante r = null;
+
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("from Restaurante as r where r.cnpj = :cnpj ");
+            query.setParameter("cnpj", cnpj);
+            r = (Restaurante) query.uniqueResult();
+            transacao.commit();
+            return r;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
+
+    }
+    
     public Restaurante buscaPorCnpjSenha(String cnpj, String senha) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
