@@ -42,16 +42,16 @@
         </style>
 
         <script type="text/javascript">
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $("#telefone").mask("(99) 9999-9999");
                 $("#cnpj").mask("99.999.999/9999-99");
                 $("#cep").mask("99.999-999");
 
-                $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+                $.validator.addMethod("valueNotEquals", function(value, element, arg) {
                     return arg !== value;
                 }, "Value must not equal arg.");
 
-                $.validator.addMethod("cnpj", function (cnpj, element) {
+                $.validator.addMethod("cnpj", function(cnpj, element) {
 
                     return validarCNPJ(cnpj);
 
@@ -103,7 +103,7 @@
                             email: "Digite um e-mail válido"
                         }
                     },
-                    submitHandler: function (form) {
+                    submitHandler: function(form) {
                         salvar();
                         return false;
                     }
@@ -111,16 +111,36 @@
 
             });
 
+            function buscarRestaurantePorCnpj() {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=buscarRestaurantePorCnpj',
+                    type: 'post',
+                    data: '&cnpj=' + $("#cnpj").val(),
+                    beforeSend: function() {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function(json) {
+                        $("#processing-modal").modal('hide');
+                        if (json.ok === "S") {
+                            $("#cnpj").val("");
+                            $("#erroCnpj").html("Já existe um usuario cadastrado com este CNPJ!");
+                            $("#erroCnpj").css('display', '');
+                        }
+                    }
+                });
+            }
+
             function montaComboMunicipio(codigoEstado) {
 
                 $.ajax({
                     url: 'ControllerServlet?acao=montaComboMucicipio',
                     type: 'post',
                     data: '&codigoEstado=' + codigoEstado,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divMunicipio").html(data);
                     }
@@ -139,11 +159,11 @@
                     //colocamos os valores a serem enviados
                     data: valores + '&lista=json',
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function (pre) {
+                    success: function(json) {
                         $("#processing-modal").modal('hide');
                         $("#msgTexto").html("Cadastro Concluido com Sucesso! Encaminhamos um e-mail com sua senha para: " + $("#email").val());
                         $("#msg-modal").modal('show');
@@ -175,7 +195,8 @@
                                                     <input id="nome" class="form-control" placeholder="Nome do Restaurante" name="nomeRestaurante" type="text" autofocus>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input id="cnpj" class="form-control" placeholder="CNPJ do Restaurante" name="cnpjRestaurante" type="text" autofocus>
+                                                    <input id="cnpj" class="form-control" onchange="buscarRestaurantePorCnpj();" placeholder="CNPJ do Restaurante" name="cnpjRestaurante" type="text" autofocus>
+                                                    <label id="erroCnpj" for="cnpj" generated="true" class="error"></label>
                                                 </div>
                                                 <div class="form-group">
                                                     <input id="telefone" class="form-control" placeholder="Telefone" name="telefone" type="tel" value="">

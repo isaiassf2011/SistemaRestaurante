@@ -26,16 +26,15 @@
         <script src="${contexto}/js/upload.js" type="text/javascript"></script>
         <script src="${contexto}/js/jquery.maskedinput.js" type="text/javascript"></script>
         <script language="JavaScript" src="${contexto}/js/jquery.validate.js" type="text/javascript"></script>
-        <script src="${contexto}/js/validaCampos.js" type="text/javascript"></script>
         <link href="${contexto}/bootstrap/css/full-width-pics.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <script type="text/javascript">
-            $(document).ready(function () {
+            $(document).ready(function() {
 
-                $('#arquivo').change(function () {
+                $('#arquivo').change(function() {
                     var reader = new FileReader();
-                    $(reader).load(function (event) {
+                    $(reader).load(function(event) {
                         $("#imgRestaurante").attr("src", event.target.result);
                         $("#menuLogo").attr("src", event.target.result);
                     });
@@ -51,28 +50,17 @@
                 });
 
                 $("#telefone").mask("(99) 9999-9999");
-                $("#cnpj").mask("99.999.999/9999-99");
                 $("#cep").mask("99.999-999");
 
-                $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+                $.validator.addMethod("valueNotEquals", function(value, element, arg) {
                     return arg !== value;
                 }, "Value must not equal arg.");
-
-                $.validator.addMethod("cnpj", function (cnpj, element) {
-
-                    return validarCNPJ(cnpj);
-
-                }, "Informe um CNPJ válido."); // Mensagem padrão
 
                 $("#formPeril").validate({
                     ignore: ":hidden",
                     rules: {
                         nomeRestaurante: {
                             required: true
-                        },
-                        cnpjRestaurante: {
-                            required: true,
-                            cnpj: true
                         },
                         cep: {
                             required: true
@@ -92,10 +80,6 @@
                         nomeRestaurante: {
                             required: "Digite o nome do restaurante"
                         },
-                        cnpjRestaurante: {
-                            required: "Digite o CNPJ do restaurante",
-                            cnpj: "CNPJ inválido"
-                        },
                         cep: {
                             required: "Digite o CEP"
                         },
@@ -110,7 +94,7 @@
                             email: "Digite um e-mail válido"
                         }
                     },
-                    submitHandler: function (form) {
+                    submitHandler: function(form) {
                         salvar();
                         return false;
                     }
@@ -150,10 +134,10 @@
                     url: 'ControllerServlet?acao=montaComboMucicipio',
                     type: 'post',
                     data: '&codigoEstado=' + codigoEstado,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divMunicipio").html(data);
                     }
@@ -170,13 +154,13 @@
                     //definimos o tipo de requisição
                     type: 'post',
                     //colocamos os valores a serem enviados
-                    data: valores,
+                    data: valores+'&cnpjRestaurante='+$("#cnpj").html(),
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function (pre) {
+                    success: function(pre) {
                         $("#processing-modal").modal('hide');
                         $('#msgSucessoPerfil').html("Informações alteradas com Sucesso!");
                     }
@@ -230,7 +214,7 @@
                                                 <input class="form-control" placeholder="Nome do Restaurante" name="nomeRestaurante" type="text" value="${restaurante.nome}" autofocus>
                                             </div>
                                             <div class="form-group">
-                                                <input id="cnpj" class="form-control" placeholder="CNPJ do Restaurante" name="cnpjRestaurante" type="text" value="${restaurante.cnpj}" autofocus>
+                                                <p class="form-control" id="cnpj" name="cnpjRestaurante" type="text" >${restaurante.cnpj}</p>
                                             </div>
                                             <div class="form-group">
                                                 <input id="telefone" class="form-control" placeholder="Telefone" name="telefone" type="tel" value="${restaurante.telefone}">

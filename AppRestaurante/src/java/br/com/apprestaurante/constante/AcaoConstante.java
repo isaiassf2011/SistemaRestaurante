@@ -25,6 +25,7 @@ public final class AcaoConstante {
     public static final String BUSCAR_PRODUTO = "buscarProduto";
     public static final String BUSCAR_RESTAURANTE = "buscarRestaurante";
     public static final String BUSCAR_MESA = "buscarMesa";
+    public static final String BUSCAR_MESA_NUMERO = "buscarMesaNumero";
     public static final String EXCLUIR_PRODUTO = "excluirProduto";
     public static final String EXCLUIR_MESA = "excluirMesa";
     public static final String REMOVER_IMAGEM = "removerImagem";
@@ -32,6 +33,7 @@ public final class AcaoConstante {
     public static final String CADASTRAR_RESTAURANTE = "cadastrarRestaurante";
     public static final String REALIZAR_PEDIDO = "realizarPedido";
     public static final String BUSCAR_PEDIDO = "buscarPedido";
+    public static final String BUSCAR_RESTAURANTE_POR_CNPJ = "buscarRestaurantePorCnpj";
     public static final String REATIVAR_PRODUTO = "reativarProduto";
     public static final String REATIVAR_MESA = "reativarMesa";
     public static final String RECUPERAR_SENHA = "recuperarSenha";

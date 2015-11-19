@@ -1,6 +1,7 @@
 package br.com.apprestaurante.dao;
 
 import br.com.apprestaurante.entity.Mesa;
+import br.com.apprestaurante.entity.Pedido;
 import br.com.apprestaurante.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -35,8 +36,8 @@ public class MesaDao {
             session.close();
         }
     }
-    
-     public List<Mesa> listarPorRestaurante(Integer codigoRestaurante) {
+
+    public List<Mesa> listarPorRestaurante(Integer codigoRestaurante) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
         List<Mesa> lista = null;
@@ -58,19 +59,42 @@ public class MesaDao {
             session.close();
         }
     }
-     
-     /*public List<Mesa> listarPorPedido(Integer codigoRestaurante) {
+
+    /*public List<Mesa> listarPorPedido(Integer codigoRestaurante) {
+     Session session = HibernateUtil.getSessionFactory().openSession();
+     Transaction transacao = null;
+     List<Mesa> lista = null;
+
+     try {
+     transacao = session.beginTransaction();
+     Query query = session.createQuery("Select p.mesa from Pedido as p where p.mesa.restaurante.codigo = :codigoRestaurante and p.finalizado = 0 ");
+     query.setParameter("codigoRestaurante", codigoRestaurante);
+     lista = query.list();
+     transacao.commit();
+     return lista;
+     } catch (HibernateException e) {
+     if (transacao != null) {
+     transacao.rollback();
+     }
+     e.printStackTrace();
+     throw new HibernateException(e.getMessage());
+     } finally {
+     session.close();
+     }
+     }*/
+    public Mesa buscarMesaPorNumero(Integer numeroMesa, Integer codigoRestaurante) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;
-        List<Mesa> lista = null;
+        Mesa m = null;
 
         try {
             transacao = session.beginTransaction();
-            Query query = session.createQuery("Select p.mesa from Pedido as p where p.mesa.restaurante.codigo = :codigoRestaurante and p.finalizado = 0 ");
+            Query query = session.createQuery("from Mesa as m where m.numero = :numeroMesa and m.restaurante.codigo = :codigoRestaurante ");
+            query.setParameter("numeroMesa", numeroMesa);
             query.setParameter("codigoRestaurante", codigoRestaurante);
-            lista = query.list();
+            m = (Mesa) query.uniqueResult();
             transacao.commit();
-            return lista;
+            return m;
         } catch (HibernateException e) {
             if (transacao != null) {
                 transacao.rollback();
@@ -80,7 +104,7 @@ public class MesaDao {
         } finally {
             session.close();
         }
-    }*/
+    }
 
     public void excluir(Mesa mesa) {
         Session session = HibernateUtil.getSessionFactory().openSession();
