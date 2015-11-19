@@ -31,9 +31,6 @@
                                 Feito</button>
                             <input type="checkbox" class="hidden" />
                         </span>
-                        <a href="javascript:;" style="padding: 4px 6px" title="Excluir" class="btn btn-danger">
-                            <i class="glyphicon glyphicon-trash"></i>										
-                        </a>
                     </td>
                     <td>
                         <span style="margin-right: 15px; margin-left: 15px;">${p.pedido.mesa.numero}</span>

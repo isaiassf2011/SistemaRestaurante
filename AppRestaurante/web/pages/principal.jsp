@@ -184,7 +184,6 @@
                         removerImagem();
                         $("#processing-modal").modal('hide');
                         jQuery("#accordionCardapio").html(data);
-                        //alert("Cadastrado");
                     }
                 });
             }
@@ -210,7 +209,6 @@
                         $('#codigoMesa').val("");
                         $("#processing-modal").modal('hide');
                         jQuery("#divMesas").html(data);
-                        //alert("Cadastrado");
                     }
                 });
             }
@@ -504,10 +502,9 @@
                                             <div class="form-group">
                                                 <select class="form-control" name="cmbCategoria" id="cmbCategoria">
                                                     <option value="">Selecione a Categoria</option>
-                                                    <option value="1">Bebida</option>
-                                                    <option value="2">Porção</option>
-                                                    <option value="3">Massas</option>
-                                                    <option value="4">Lanche</option>
+                                                    <c:forEach var="lc" items="${listaCategorias}" varStatus="i">
+                                                        <option value="${lc.codigo}">${lc.descricao}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                             <div class="form-group">

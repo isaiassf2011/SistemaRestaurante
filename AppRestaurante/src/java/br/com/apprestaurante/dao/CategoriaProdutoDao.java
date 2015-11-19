@@ -65,6 +65,29 @@ public class CategoriaProdutoDao {
         }
     }
     
+    public List<CategoriaProduto> buscarPorRestauranteUsuario(Integer codigoRestaurante) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
+        List<CategoriaProduto> lista = null;
+
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("Select distinct p.categoriaProduto from Produto as p where p.restaurante.codigo = :codigoRestaurante and p.cancelado = 0 ");
+            query.setParameter("codigoRestaurante", codigoRestaurante);
+            lista = query.list();
+            transacao.commit();
+            return lista;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
+    }
+    
     public List<CategoriaProduto> buscarPorProdutoNome(String nome, Integer codigoRestaurante) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;

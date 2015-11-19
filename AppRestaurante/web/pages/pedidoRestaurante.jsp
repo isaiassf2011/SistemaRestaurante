@@ -41,6 +41,8 @@
         <script type="text/javascript">
             $(document).ready(function () {
 
+                $("#txtNumeroMesa").keypress(verificaNumero);
+
                 $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
@@ -128,7 +130,7 @@
                         updateDisplay();
 
                         // Inject the icon if applicable
-                        if ($button.find('.state-icon').length == 0) {
+                        if ($button.find('.state-icon').length === 0) {
                             $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
                         }
                     }
@@ -136,6 +138,12 @@
                 });
 
             });
+
+            function verificaNumero(e) {
+                if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+            }
 
             function finalizarItem(codigoItem) {
 
@@ -207,6 +215,23 @@
 
             }
 
+            function buscarMesaPorNumero() {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=buscarMesaPorNumero',
+                    type: 'POST',
+                    data: '&numero=' + $("#txtNumeroMesa").val(),
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#divCaixa").html(data);
+                    }
+                });
+
+            }
+
             function buscarPedido(codigo) {
                 var classe = $("#pedido" + codigo).attr("class");
 
@@ -227,25 +252,31 @@
 
             }
 
-            function finalizarPedido(codigoPedido) {
+            function finalizarPedido(codigoPedido, bloqueia) {
 
-                $.ajax({
-                    url: 'ControllerServlet?acao=finalizarPedido',
-                    type: 'POST',
-                    data: '&codigoPedido=' + codigoPedido,
-                    beforeSend: function () {
-                        $("#processing-modal").modal('show');
-                    },
-                    success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divCaixa").html(data);
-                        $("#msgTexto").html("Pedido Finalizado com Sucesso!");
-                        $('#msg-modal').modal('show');
-                        setTimeout(function () {
-                            $('#msg-modal').modal('hide');
-                        }, 3000);
-                    }
-                });
+                if (bloqueia !== 1) {
+                    $.ajax({
+                        url: 'ControllerServlet?acao=finalizarPedido',
+                        type: 'POST',
+                        data: '&codigoPedido=' + codigoPedido,
+                        beforeSend: function () {
+                            $("#processing-modal").modal('show');
+                        },
+                        success: function (data) {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divCaixa").html(data);
+                            $("#msgTexto").html("Pedido Finalizado com Sucesso!");
+                            $('#msg-modal').modal('show');
+                            setTimeout(function () {
+                                $('#msg-modal').modal('hide');
+                            }, 3000);
+                        }
+                    });
+                } else {
+                    $("#msgErroTexto").html("Esse Pedido não pode ser Finalizado. Pois possui itens pendentes!");
+                    $('#msgErro-modal').modal('show');
+                }
+
 
             }
 
@@ -299,9 +330,9 @@
                                             <div class="panel-group" id="accordionCardapio">
                                                 <div id="custom-search-input">
                                                     <div class="input-group col-md-12">
-                                                        <input type="text" class="form-control" placeholder="Buscar mesa" />
+                                                        <input type="text" class="form-control" placeholder="Buscar mesa" id="txtNumeroMesa" />
                                                         <span class="input-group-btn">
-                                                            <button class="btn btn-info" type="button">
+                                                            <button class="btn btn-info" type="button" onclick="buscarMesaPorNumero();">
                                                                 <i class="glyphicon glyphicon-search"></i>
                                                             </button>
                                                         </span>
@@ -335,6 +366,24 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" id="msgErro-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; top: 50% !important; margin-top: -100px;">
+                    <div class="modal-dialog">
+                        <div class="msgmodal-container">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <h5 id="msgErroTexto" style="color: red; font-weight: bold;"></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
                      left: 50% !important; margin-top: -100px;  
                      margin-left: -100px; 

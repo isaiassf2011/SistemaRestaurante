@@ -5,6 +5,7 @@ public final class AcaoConstante {
     public static final String ADD_ITEM_CARRINHO = "addItemCarrinho";
     public static final String AUTENTICA_RESTAURANTE = "autenticaRestaurante";
     public static final String ALTERAR_RESTAURANTE = "alterarRestaurante";
+    public static final String BUSCAR_MESA_POR_NUMERO = "buscarMesaPorNumero";
     public static final String BUSCAR_PEDIDO_CAIXA = "buscarPedidoCaixa";
     public static final String FINALIZAR_PEDIDO = "finalizarPedido";
     public static final String FINALIZAR_ITEM_PEDIDO = "finalizarItemPedido";

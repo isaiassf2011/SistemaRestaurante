@@ -25,7 +25,7 @@
 </c:if>
 <c:if test="${empty pedidos}">
     <div class="text-center">
-        <h4>Todos os pedidos estão finalizados</h4>
+        <h4>Nenhum pedido encontrado</h4>
     </div>
 </c:if>
 

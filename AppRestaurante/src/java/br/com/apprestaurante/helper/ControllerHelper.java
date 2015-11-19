@@ -4,6 +4,7 @@ import br.com.apprestaurante.command.AddItemCarrinho;
 import br.com.apprestaurante.command.AlterarRestaurante;
 import br.com.apprestaurante.command.AutenticaRestaurante;
 import br.com.apprestaurante.command.BuscarMesa;
+import br.com.apprestaurante.command.BuscarMesaPorNumero;
 import br.com.apprestaurante.command.BuscarPedido;
 import br.com.apprestaurante.command.BuscarPedidoCaixa;
 import br.com.apprestaurante.command.BuscarProduto;
@@ -49,6 +50,7 @@ public class ControllerHelper {
         comandos.put(AcaoConstante.ALTERAR_RESTAURANTE, new AlterarRestaurante());
         comandos.put(AcaoConstante.AUTENTICA_RESTAURANTE, new AutenticaRestaurante());
         comandos.put(AcaoConstante.BUSCAR_PEDIDO_CAIXA, new BuscarPedidoCaixa());
+        comandos.put(AcaoConstante.BUSCAR_MESA_POR_NUMERO, new BuscarMesaPorNumero());
         comandos.put(AcaoConstante.FINALIZAR_ITEM_PEDIDO, new FinalizarItemPedido());
         comandos.put(AcaoConstante.FINALIZAR_PEDIDO, new FinalizarPedido());
         comandos.put(AcaoConstante.SALVAR_RESTAURANTE, new SalvarRestaurante());

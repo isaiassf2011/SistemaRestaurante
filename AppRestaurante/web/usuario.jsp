@@ -31,7 +31,7 @@
                 });
             });
 
-            function buscarProdutos(codigoCategoria) {
+            /*function buscarProdutos(codigoCategoria) {
                 var classe = $("#categoria" + codigoCategoria).attr("class");
 
                 if (classe === "panel-collapse collapse") {
@@ -49,7 +49,7 @@
                     });
                 }
 
-            }
+            }*/
 
             function addItemCarrinho(codigoProduto) {
 

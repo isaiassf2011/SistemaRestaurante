@@ -95,6 +95,30 @@ public class PedidoDao {
         }
     }
 
+    public Pedido buscarPedidoPorNMesa(Integer numeroMesa, Integer codigoRestaurante) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transacao = null;
+        Pedido p = null;
+
+        try {
+            transacao = session.beginTransaction();
+            Query query = session.createQuery("from Pedido as p join fetch p.itens where p.mesa.numero = :numeroMesa and p.mesa.restaurante.codigo = :codigoRestaurante and p.finalizado = 0 ");
+            query.setParameter("numeroMesa", numeroMesa);
+            query.setParameter("codigoRestaurante", codigoRestaurante);
+            p = (Pedido) query.uniqueResult();
+            transacao.commit();
+            return p;
+        } catch (HibernateException e) {
+            if (transacao != null) {
+                transacao.rollback();
+            }
+            e.printStackTrace();
+            throw new HibernateException(e.getMessage());
+        } finally {
+            session.close();
+        }
+    }
+    
     public Pedido buscarPedidoPorMesa(Integer codigoMesa) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transacao = null;

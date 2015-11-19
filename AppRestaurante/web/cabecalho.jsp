@@ -37,10 +37,10 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Logado como: ${sessionScope.restaurante.nome}">
                         <c:if test="${sessionScope.restaurante.logo != ''}">
-                            <img alt="" src="${contexto}/imgs/imgsRestaurante/${sessionScope.restaurante.logo}" id="menuLogo" style="width: 18px;"> Perfil
+                            <img alt="" src="${contexto}/imgs/imgsRestaurante/${sessionScope.restaurante.logo}" id="menuLogo" style="width: 24px; height: 24px; border-radius: 50%;"> Perfil
                         </c:if>
                         <c:if test="${sessionScope.restaurante.logo == ''}">
-                            <img alt="" src="${contexto}/imgs/imgsSistema/sem_imagem.jpg" id="menuLogo" style="width: 18px;"> Perfil
+                            <img alt="" src="${contexto}/imgs/imgsSistema/sem_imagem.jpg" id="menuLogo" style="width: 24px; height: 24px; border-radius: 50%;"> Perfil
                         </c:if>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
