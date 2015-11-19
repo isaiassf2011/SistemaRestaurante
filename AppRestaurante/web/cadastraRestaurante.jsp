@@ -52,9 +52,9 @@
                 }, "Value must not equal arg.");
 
                 $.validator.addMethod("cnpj", function (cnpj, element) {
-                    
+
                     return validarCNPJ(cnpj);
-                    
+
                 }, "Informe um CNPJ válido."); // Mensagem padrão
 
                 $("#formRestaurante").validate({
@@ -71,6 +71,9 @@
                             required: true
                         },
                         estado: {
+                            valueNotEquals: "0"
+                        },
+                        municipio: {
                             valueNotEquals: "0"
                         },
                         email: {
@@ -92,6 +95,9 @@
                         estado: {
                             valueNotEquals: "Selecione o Estado"
                         },
+                        municipio: {
+                            valueNotEquals: "Selecione o Municipio"
+                        },
                         email: {
                             required: "Digite o E-mail",
                             email: "Digite um e-mail válido"
@@ -104,6 +110,23 @@
                 });
 
             });
+
+            function montaComboMunicipio(codigoEstado) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=montaComboMucicipio',
+                    type: 'post',
+                    data: '&codigoEstado=' + codigoEstado,
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#divMunicipio").html(data);
+                    }
+                });
+            }
+
             function salvar() {
                 var valores = $('#formRestaurante').serialize();
                 console.log(valores);
@@ -131,63 +154,60 @@
 
     </head>
     <body>
-        
+
         <div id="divCabecalhoInicial">
             <jsp:include page="/cabecalhoInicial.jsp" flush="true"></jsp:include>
-        </div>
-        
-        <div class="container" style="margin-top:60px">
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-md-offset-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading panel-heading-login">
-                            <strong> Cadastre-se!</strong>
-                        </div>
-                        <div class="panel-body">
-                            <form role="form" action="" method="POST" id="formRestaurante">
-                                <fieldset>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-10  col-md-offset-1 ">
-                                            <div class="form-group">
-                                                <input id="nome" class="form-control" placeholder="Nome do Restaurante" name="nomeRestaurante" type="text" autofocus>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="cnpj" class="form-control" placeholder="CNPJ do Restaurante" name="cnpjRestaurante" type="text" autofocus>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="telefone" class="form-control" placeholder="Telefone" name="telefone" type="tel" value="">
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="cep" class="form-control" placeholder="CEP" name="cep" type="text" value="">
-                                            </div>
-                                            <div class="form-group">
-                                                <select class="form-control" id="estado" name="estado">
+            </div>
+
+            <div class="container" style="margin-top:60px">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-md-offset-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading panel-heading-login">
+                                <strong> Cadastre-se!</strong>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form" action="" method="POST" id="formRestaurante">
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                                <div class="form-group">
+                                                    <input id="nome" class="form-control" placeholder="Nome do Restaurante" name="nomeRestaurante" type="text" autofocus>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input id="cnpj" class="form-control" placeholder="CNPJ do Restaurante" name="cnpjRestaurante" type="text" autofocus>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input id="telefone" class="form-control" placeholder="Telefone" name="telefone" type="tel" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input id="cep" class="form-control" placeholder="CEP" name="cep" type="text" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control" id="estado" name="estado" onchange="montaComboMunicipio(this.value)">
                                                     <c:forEach var="e" varStatus="j" items="${estados}" >
                                                         <option value="${e.codigo}">${e.descricao}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control">
-                                                    <option value="">Cidade</option>
-                                                    <option value="1">Florianópoliz</option>
-                                                    <option value="2">Santo Amaro da Imperatriz</option>
-                                                    <option value="3">Palhoça</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" value="">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Concluir">
+                                                <div id="divMunicipio">
+                                                    <jsp:include page="/pages/municipio.jsp" flush="true"></jsp:include>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Concluir">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                        <div class="panel-footer text-center">
-                            <a href="${contexto}" > Já está cadastrado? </a>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="panel-footer text-center">
+                                <a href="${contexto}" > Já está cadastrado? </a>
                         </div>
                     </div>
                 </div>
@@ -224,7 +244,7 @@
                 </div>
             </div>
         </div>
-                        
+
         <div id="divRodape">
             <jsp:include page="/rodape.jsp"></jsp:include>
         </div>

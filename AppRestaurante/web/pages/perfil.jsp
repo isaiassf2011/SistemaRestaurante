@@ -80,6 +80,9 @@
                         estado: {
                             valueNotEquals: "0"
                         },
+                        municipio: {
+                            valueNotEquals: "0"
+                        },
                         email: {
                             required: true,
                             email: true
@@ -98,6 +101,9 @@
                         },
                         estado: {
                             valueNotEquals: "Selecione o Estado"
+                        },
+                        municipio: {
+                            valueNotEquals: "Selecione o Municipio"
                         },
                         email: {
                             required: "Digite o E-mail",
@@ -133,9 +139,25 @@
                 $("#menuLogo").attr("src", "${contexto}/imgs/imgsSistema/sem_imagem.jpg");
                 $('#imgRestaurante').attr('src', "${contexto}/imgs/imgsSistema/sem_imagem.jpg");
             }
-            
+
             function validarFormulario() {
                 $("#msgSucessoPerfil").html("");
+            }
+
+            function montaComboMunicipio(codigoEstado) {
+
+                $.ajax({
+                    url: 'ControllerServlet?acao=montaComboMucicipio',
+                    type: 'post',
+                    data: '&codigoEstado=' + codigoEstado,
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
+                    },
+                    success: function (data) {
+                        $("#processing-modal").modal('hide');
+                        jQuery("#divMunicipio").html(data);
+                    }
+                });
             }
 
             function salvar() {
@@ -151,11 +173,11 @@
                     data: valores,
                     //antes de enviar ele alerta para esperar
                     beforeSend: function () {
-
+                        $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
                     success: function (pre) {
-                        //$('#divCabecalho').load("cabecalho.jsp");
+                        $("#processing-modal").modal('hide');
                         $('#msgSucessoPerfil').html("Informações alteradas com Sucesso!");
                     }
                 });
@@ -178,7 +200,8 @@
                                 <strong> Meu Perfil!</strong>
                             </div>
                             <div style="padding: 15px;">
-                                <form role="form" action="MeuServlet" method="POST" id="formPeril" onsubmit="validarFormulario(); return false;">
+                                <form role="form" action="MeuServlet" method="POST" id="formPeril" onsubmit="validarFormulario();
+                                        return false;">
                                     <input type="hidden" id="caminho" name="logo" value="${restaurante.logo}"/>
                                 <input type="hidden" id="codigoRestaurante" name="codigoRestaurante" value="1"/>
                                 <fieldset>
@@ -223,12 +246,14 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control">
-                                                    <option value="none">Cidade</option>
-                                                    <option value="1">Florianópoliz</option>
-                                                    <option value="2">Santo Amaro da Imperatriz</option>
-                                                    <option value="3">Palhoça</option>
-                                                </select>
+                                                <div id="divMunicipio">
+                                                    <select class="form-control" id="municipio" name="municipio">
+                                                        <option value="0">Selecione o Municipio</option>
+                                                        <c:forEach var="m" items="${municipios}" varStatus="i">
+                                                            <option value="${m.codigo}" <c:if test="${m.codigo == restaurante.municipio.codigo}">selected="selected"</c:if>>${m.descricao}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <input class="form-control" placeholder="E-mail" name="email" type="email" value="${restaurante.email}">
@@ -247,6 +272,21 @@
                     </div>
                 </div>
             </div>
+            <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
+                 left: 50% !important; margin-top: -100px;  
+                 margin-left: -100px; 
+                 overflow: visible !important;" id="processing-modal" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
+                                <h4>Carregando...</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                              
         </div>
 
         <div id="divRodape">

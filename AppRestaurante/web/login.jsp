@@ -72,20 +72,16 @@
             function efetuarLogin() {
                 var valores = $('#formLogin').serialize();
                 console.log(valores);
-                //iniciamos o ajax
-                $.ajax({
-                    //definimos a url
-                    url: 'ControllerServlet?acao=autenticaRestaurante',
-                    //definimos o tipo de requisição
-                    type: 'post',
-                    //colocamos os valores a serem enviados
-                    data: valores,
-                    //antes de enviar ele alerta para esperar
-                    beforeSend: function () {
 
+                $.ajax({
+                    url: 'ControllerServlet?acao=autenticaRestaurante',
+                    type: 'post',
+                    data: valores,
+                    beforeSend: function () {
+                        $("#processing-modal").modal('show');
                     },
-                    //colocamos o retorno na tela
                     success: function (json) {
+                        $("#processing-modal").modal('hide');
                         if (json.ok === "S") {
                             location.href = "ControllerServlet?acao=listarCardapio";
                         } else {
@@ -102,36 +98,36 @@
 
         <div id="divCabecalhoInicial">
             <jsp:include page="/cabecalhoInicial.jsp" flush="true"></jsp:include>
-        </div>
+            </div>
 
-        <div class="container" style="margin-top:60px">
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-md-offset-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading panel-heading-login">
-                            <strong> Já sou cadastrado!</strong>
-                        </div>
-                        <div class="panel-body">
-                            <form role="form" action="#" method="POST" id="formLogin" onsubmit="validarFormulario();
-                                    return false;">
-                                <fieldset>
-                                    <div class="row">
-                                        <div class="center-block">
-                                            <img class="profile-img"
-                                                 src="https://amanditaamorim.files.wordpress.com/2012/03/logo-rgb-300-dpis.jpg" alt="">
+            <div class="container" style="margin-top:60px">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-md-offset-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading panel-heading-login">
+                                <strong> Já sou cadastrado!</strong>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form" action="#" method="POST" id="formLogin" onsubmit="validarFormulario();
+                                        return false;">
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="center-block">
+                                                <img class="profile-img"
+                                                     src="https://amanditaamorim.files.wordpress.com/2012/03/logo-rgb-300-dpis.jpg" alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-10  col-md-offset-1 ">
-                                            <div class="form-group">
-                                                <input id="cnpj" class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
-                                            </div>
-                                            <div class="form-group">
-                                                <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar" >
-                                                <a id="login_lost_btn" type="button" class="btn btn-link" style="margin-left: -10px;" href="${contexto}/recuperarSenha.jsp" >Esqueceu sua senha?</a>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                                <div class="form-group">
+                                                    <input id="cnpj" class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar" >
+                                                    <a id="login_lost_btn" type="button" class="btn btn-link" style="margin-left: -10px;" href="${contexto}/recuperarSenha.jsp" >Esqueceu sua senha?</a>
                                                 <h5 id="erroLogin" for="cnpj" style="color: red;" class="text-center"></h5>
                                             </div>
                                         </div>
@@ -141,6 +137,21 @@
                         </div>
                         <div class="panel-footer ">
                             Ainda não está cadastrado? <a href="ControllerServlet?acao=cadastrarRestaurante" > Cadastre-se </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
+                 left: 50% !important; margin-top: -100px;  
+                 margin-left: -100px; 
+                 overflow: visible !important;" id="processing-modal" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <img src="${contexto}/imgs/imgsSistema/loading.gif" class="icon" />
+                                <h4>Carregando...</h4>
+                            </div>
                         </div>
                     </div>
                 </div>

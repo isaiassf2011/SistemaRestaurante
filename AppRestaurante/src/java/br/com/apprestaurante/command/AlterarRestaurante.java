@@ -2,6 +2,7 @@ package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.RestauranteDao;
 import br.com.apprestaurante.entity.Estado;
+import br.com.apprestaurante.entity.Municipio;
 import br.com.apprestaurante.entity.Restaurante;
 import java.io.File;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,6 @@ public class AlterarRestaurante implements CommandInterface {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        //String codigoPergunta = request.getParameter("perguntaCodigo");
 
         try {
 
@@ -36,6 +36,9 @@ public class AlterarRestaurante implements CommandInterface {
             Estado estado = new Estado();
             estado.setCodigo(Integer.parseInt(request.getParameter("estado")));
             restaurante.setEstado(estado);
+            Municipio municipio = new Municipio();
+            municipio.setCodigo(Integer.parseInt(request.getParameter("municipio")));
+            restaurante.setMunicipio(municipio);
 
             if (!restaurante.getLogo().equals(request.getParameter("logo"))) {
                 File arquivo = new File(System.getProperty("java.io.tmpdir") + File.separator + request.getParameter("logo"));

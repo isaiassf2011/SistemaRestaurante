@@ -48,7 +48,11 @@ public class Restaurante implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "estado_codigo", referencedColumnName = "estado_codigo", nullable = false)
     private Estado estado;
-    
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "municipio_codigo", referencedColumnName = "municipio_codigo", nullable = false)
+    private Municipio municipio;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -119,6 +123,14 @@ public class Restaurante implements Serializable {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
     }
 
 }

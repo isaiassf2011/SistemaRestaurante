@@ -59,5 +59,23 @@ public class Velocity {
         return writer;
 
     }
+    
+    public StringWriter formataEmailSenhaRecuperada(String cnpj, String senha) throws Exception {
+
+        Template t = ve.getTemplate("br" + fs + "com" + fs + "apprestaurante"  + fs + "email" + fs + "html" + fs + "template.htm");
+
+        // Parametros
+        context.put("cnpj", cnpj);
+        context.put("senha", senha);
+        context.put("paginaConteudo", "br/com/apprestaurante/email/html/senhaRecuperada.htm");
+
+        StringWriter writer = new StringWriter();
+
+        // mistura o contexto com o template. Renderiza o template.
+        t.merge(context, writer);
+
+        return writer;
+
+    }
 
 }

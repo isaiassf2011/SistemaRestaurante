@@ -6,10 +6,11 @@
 package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.EstadoDao;
+import br.com.apprestaurante.dao.MunicipioDao;
 import br.com.apprestaurante.dao.RestauranteDao;
 import br.com.apprestaurante.entity.Estado;
+import br.com.apprestaurante.entity.Municipio;
 import br.com.apprestaurante.entity.Restaurante;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +30,9 @@ public class BuscarRestaurante implements CommandInterface {
         restaurante = new RestauranteDao().getById(restaurante.getCodigo());
 
         List<Estado> estados = new EstadoDao().getAll();
+        List<Municipio> municipios = new MunicipioDao().listarPorEstado(restaurante.getEstado().getCodigo());
         request.setAttribute("restaurante", restaurante);
+        request.setAttribute("municipios", municipios);
         request.setAttribute("estados", estados);
 
         return "pages/perfil.jsp";

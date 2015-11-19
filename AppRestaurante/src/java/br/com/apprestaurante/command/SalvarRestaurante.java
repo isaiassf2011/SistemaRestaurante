@@ -4,6 +4,7 @@ import br.com.apprestaurante.dao.RestauranteDao;
 import br.com.apprestaurante.email.Email;
 import br.com.apprestaurante.email.Velocity;
 import br.com.apprestaurante.entity.Estado;
+import br.com.apprestaurante.entity.Municipio;
 import br.com.apprestaurante.entity.Restaurante;
 import br.com.apprestaurante.util.Util;
 import java.io.StringWriter;
@@ -29,6 +30,9 @@ public class SalvarRestaurante implements CommandInterface {
             Estado estado = new Estado();
             estado.setCodigo(Integer.parseInt(request.getParameter("estado")));
             restaurante.setEstado(estado);
+            Municipio municipio = new Municipio();
+            municipio.setCodigo(Integer.parseInt(request.getParameter("municipio")));
+            restaurante.setMunicipio(municipio);
             restaurante.setSenha(Util.geraSenha(6));
 
             /*

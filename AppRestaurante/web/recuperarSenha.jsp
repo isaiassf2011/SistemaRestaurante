@@ -69,6 +69,10 @@
 
             });
 
+            function validarFormulario() {
+                $('#erroLogin').html("");
+            }
+
             function recuperarSenha() {
 
                 var valores = $('#formRecuperarSenha').serialize();
@@ -78,13 +82,16 @@
                     type: 'post',
                     data: valores,
                     beforeSend: function () {
-
+                        $("#processing-modal").modal('show');
                     },
                     success: function (json) {
+                        $("#processing-modal").modal('hide');
                         if (json.ok === "S") {
-                            location.href = "ControllerServlet?acao=listarCardapio";
+                            $("#erroLogin").css('color', 'green');
+                            $("#erroLogin").html(json.msg);
                         } else {
-                            $('#erroLogin').html("Usuario/Senha incorretos!");
+                            $("#erroLogin").css('color', 'red');
+                            $('#erroLogin').html(json.msg);
                         }
                     }
                 });
@@ -107,7 +114,8 @@
                                 <strong> Recuperar senha!</strong>
                             </div>
                             <div class="panel-body">
-                                <form role="form" action="#" method="POST" id="formRecuperarSenha" >
+                                <form role="form" action="#" method="POST" id="formRecuperarSenha" onsubmit="validarFormulario();
+                                        return false;">
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-sm-12 col-md-10  col-md-offset-1 ">
@@ -128,6 +136,22 @@
                             </div>
                             <div class="panel-footer ">
                                 Lembrou sua senha? <a href="${contexto}" > Entrar </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal modal-static fade" style="position: fixed; top: 50% !important; 
+                 left: 50% !important; margin-top: -100px;  
+                 margin-left: -100px; 
+                 overflow: visible !important;" id="processing-modal" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <img src="${contexto}/imgs/imgsSistema/loading.gif" class="icon" />
+                                <h4>Carregando...</h4>
+                            </div>
                         </div>
                     </div>
                 </div>
