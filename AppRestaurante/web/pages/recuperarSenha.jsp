@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : 05/11/2015, 10:48:59
+    Document   : recuperarSenha
+    Created on : 19/11/2015, 00:37:49
     Author     : isaias
 --%>
 
@@ -32,17 +32,18 @@
 
                     return validarCNPJ(cnpj);
 
-                }, "Informe um CNPJ válido."); // Mensagem padrão
+                }, "Informe um CNPJ válido.");
 
-                $("#formLogin").validate({
+                $("#formRecuperarSenha").validate({
                     ignore: ":hidden",
                     rules: {
                         cnpj: {
                             required: true,
                             cnpj: true
                         },
-                        senha: {
-                            required: true
+                        email: {
+                            required: true,
+                            email: true
                         }
                     },
                     messages: {
@@ -50,23 +51,24 @@
                             required: "Digite o CNPJ do restaurante",
                             cnpj: "CNPJ inválido"
                         },
-                        senha: {
-                            required: "Digite sua senha"
+                        email: {
+                            required: "Digite o E-mail",
+                            email: "Digite um e-mail válido"
                         }
                     },
                     submitHandler: function (form) {
-                        efetuarLogin();
+                        recuperarSenha();
                         return false;
                     }
                 });
 
             });
-            
-            function validarFormulario() {
-                $('#erroLogin').html("");
-            }
 
-            function efetuarLogin() {
+            function recuperarSenha() {
+                
+                //fazer
+                
+                /*
                 var valores = $('#formLogin').serialize();
                 console.log(valores);
                 //iniciamos o ajax
@@ -89,7 +91,7 @@
                             $('#erroLogin').html("Usuario/Senha incorretos!");
                         }
                     }
-                });
+                });*/
             }
 
         </script>
@@ -101,28 +103,21 @@
                 <div class="col-sm-6 col-md-4 col-md-offset-4">
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-login">
-                            <strong> Já sou cadastrado!</strong>
+                            <strong> Recuperar senha!</strong>
                         </div>
                         <div class="panel-body">
-                            <form role="form" action="#" method="POST" id="formLogin" onsubmit="validarFormulario(); return false;">
+                            <form role="form" action="#" method="POST" id="formRecuperarSenha" >
                                 <fieldset>
-                                    <div class="row">
-                                        <div class="center-block">
-                                            <img class="profile-img"
-                                                 src="https://amanditaamorim.files.wordpress.com/2012/03/logo-rgb-300-dpis.jpg" alt="">
-                                        </div>
-                                    </div>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                             <div class="form-group">
                                                 <input id="cnpj" class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
+                                                <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" value="">
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar" >
-                                                <button id="login_lost_btn" type="button" class="btn btn-link" style="margin-left: -10px;">Esqueceu sua senha?</button>
+                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Recuperar" >
                                                 <h5 id="erroLogin" for="cnpj" style="color: red;" class="text-center"></h5>
                                             </div>
                                         </div>
@@ -131,7 +126,7 @@
                             </form>
                         </div>
                         <div class="panel-footer ">
-                            Ainda não está cadastrado? <a href="ControllerServlet?acao=cadastrarRestaurante" > Cadastre-se </a>
+                            Lembrou sua senha? <a href="ControllerServlet?acao=cadastrarRestaurante" > Entrar </a>
                         </div>
                     </div>
                 </div>
