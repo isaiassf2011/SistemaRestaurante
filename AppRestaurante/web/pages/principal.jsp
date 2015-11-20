@@ -235,6 +235,12 @@
                 });
 
             }
+            
+            function gerarRelatorio(codigoMesa) {
+                
+                location.href = "ControllerServlet?acao=relatorio&codigoMesa="+codigoMesa;
+
+            }
 
             function buscarMesa(codigoMesa) {
                 $("#formMesa").validate().resetForm();

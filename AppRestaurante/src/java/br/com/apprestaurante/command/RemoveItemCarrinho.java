@@ -14,7 +14,7 @@ public class RemoveItemCarrinho implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
 
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
         carrinho.remove(Integer.parseInt(request.getParameter("indice")));

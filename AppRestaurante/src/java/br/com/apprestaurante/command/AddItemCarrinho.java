@@ -19,7 +19,7 @@ public class AddItemCarrinho implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
 
         Produto produto = new ProdutoDao().getById(Integer.parseInt(request.getParameter("codigoProduto")));
 

@@ -35,7 +35,7 @@
                             </a>
                         </c:if>
 
-                        <a href="javascript:;" style="padding: 5px 5px" title="Imprimir QR Code" class="btn btn-default">
+                            <a href="javascript:;" style="padding: 5px 5px" title="Imprimir QR Code" class="btn btn-default" onclick="gerarRelatorio(${m.codigo});">
                             <i class="glyphicon glyphicon-qrcode"></i>										
                         </a>
                     </td>
