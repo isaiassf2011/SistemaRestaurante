@@ -252,7 +252,7 @@
 
             }
 
-            function finalizarPedido(codigoPedido, bloqueia) {
+            function finalizarPedido(codigoPedido, bloqueia, mesa) {
 
                 if (bloqueia !== 1) {
                     $.ajax({
@@ -265,11 +265,11 @@
                         success: function (data) {
                             $("#processing-modal").modal('hide');
                             jQuery("#divCaixa").html(data);
-                            $("#msgTexto").html("Pedido Finalizado com Sucesso!");
-                            $('#msg-modal').modal('show');
+                            $("#msgPedidoMesa").html("Pedido da mesa Nº "+mesa+" finalizado com Sucesso!");
                             setTimeout(function () {
-                                $('#msg-modal').modal('hide');
-                            }, 3000);
+                                $('#msgPedidoMesa').fadeOut('fast');
+                            }, 4000);
+
                         }
                     });
                 } else {
@@ -344,23 +344,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="msg-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; top: 50% !important; margin-top: -100px;">
-                    <div class="modal-dialog">
-                        <div class="msgmodal-container">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="text-center">
-                                    <h5 id="msgTexto" style="color: green; font-weight: bold;"></h5>
                                 </div>
                             </div>
                         </div>

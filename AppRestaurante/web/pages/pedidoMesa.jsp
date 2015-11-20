@@ -38,5 +38,5 @@
     <strong class="subTotal"><fmt:formatNumber type="currency" value="${pedido.total}"/></strong>
 </div>
 <div class="panel-car-footer">
-    <button class="btn btn-lg btn-primary btn-block"  type="button" onclick="finalizarPedido(${pedido.codigo}, ${bloqueiaFinalizar});">Finalizar Pedido</button> 
+    <button class="btn btn-lg btn-primary btn-block"  type="button" onclick="finalizarPedido(${pedido.codigo}, ${bloqueiaFinalizar}, ${pedido.mesa.codigo});">Finalizar Pedido</button> 
 </div>

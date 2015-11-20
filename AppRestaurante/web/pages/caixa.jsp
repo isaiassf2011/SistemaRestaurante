@@ -8,6 +8,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contexto" value="${pageContext.request.contextPath}" />
 
+<div>
+    <h5 id="msgPedidoMesa" style="color: green; font-weight: bold;"></h5>
+</div>
 <c:if test="${!empty pedidos}">
     <c:forEach var="p" items="${pedidos}" varStatus="i">
         <div class="panel panel-default">
