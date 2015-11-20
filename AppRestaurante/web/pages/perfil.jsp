@@ -30,16 +30,16 @@
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
 
-                $('#arquivo').change(function() {
+                $('#arquivo').change(function () {
                     var reader = new FileReader();
-                    $(reader).load(function(event) {
+                    $(reader).load(function (event) {
                         $("#imgRestaurante").attr("src", event.target.result);
                         $("#menuLogo").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
-                    $('#arquivo').closest("formPeril").submit();
+                    $('#arquivo').closest("form").submit();
                 });
 
                 $(":file").filestyle({
@@ -51,54 +51,6 @@
 
                 $("#telefone").mask("(99) 9999-9999");
                 $("#cep").mask("99.999-999");
-
-                $.validator.addMethod("valueNotEquals", function(value, element, arg) {
-                    return arg !== value;
-                }, "Value must not equal arg.");
-
-                $("#formPeril").validate({
-                    ignore: ":hidden",
-                    rules: {
-                        nomeRestaurante: {
-                            required: true
-                        },
-                        cep: {
-                            required: true
-                        },
-                        estado: {
-                            valueNotEquals: "0"
-                        },
-                        municipio: {
-                            valueNotEquals: "0"
-                        },
-                        email: {
-                            required: true,
-                            email: true
-                        }
-                    },
-                    messages: {
-                        nomeRestaurante: {
-                            required: "Digite o nome do restaurante"
-                        },
-                        cep: {
-                            required: "Digite o CEP"
-                        },
-                        estado: {
-                            valueNotEquals: "Selecione o Estado"
-                        },
-                        municipio: {
-                            valueNotEquals: "Selecione o Municipio"
-                        },
-                        email: {
-                            required: "Digite o E-mail",
-                            email: "Digite um e-mail válido"
-                        }
-                    },
-                    submitHandler: function(form) {
-                        salvar();
-                        return false;
-                    }
-                });
 
             });
 
@@ -117,6 +69,54 @@
              
              }*/
 
+            function verificaCampos() {
+
+                validarFormulario();
+                var erro = false;
+
+                if ($("#nomeRestaurante").val() === "") {
+                    $("#erroNomeRestaurante").html("Digite o nome do restaurante");
+                    $("#erroNomeRestaurante").css('display', '');
+                    erro = true;
+                } else {
+                    $("#erroNomeRestaurante").css('display', 'none');
+                }
+                if ($("#cep").val() === "") {
+                    $("#erroCep").html("Digite o CEP");
+                    $("#erroCep").css('display', '');
+                    erro = true;
+                } else {
+                    $("#erroCep").css('display', 'none');
+                }
+                if ($("#estado").val() === "0") {
+                    $("#erroEstado").html("Selecione o Estado");
+                    $("#erroEstado").css('display', '');
+                    erro = true;
+                } else {
+                    $("#erroEstado").css('display', 'none');
+                }
+                if ($("#municipio").val() === "0") {
+                    $("#erroMunicipio").html("Selecione o Municipio");
+                    $("#erroMunicipio").css('display', '');
+                    erro = true;
+                } else {
+                    $("#erroMunicipio").css('display', 'none');
+                }
+                if ($("#email").val() === "") {
+                    $("#erroEmail").html("Digite o E-mail");
+                    $("#erroEmail").css('display', '');
+                    erro = true;
+                } else {
+                    $("#erroEmail").css('display', 'none');
+                }
+
+                if (!erro) {
+                    salvar();
+                }
+
+
+            }
+
             function removerImagem() {
                 $(":file").filestyle('clear');
                 $('#caminho').val("");
@@ -134,10 +134,10 @@
                     url: 'ControllerServlet?acao=montaComboMucicipio',
                     type: 'post',
                     data: '&codigoEstado=' + codigoEstado,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divMunicipio").html(data);
                     }
@@ -145,7 +145,7 @@
             }
 
             function salvar() {
-                var valores = $('#formPeril').serialize();
+                var valores = $('#form').serialize();
                 console.log(valores);
                 //iniciamos o ajax
                 $.ajax({
@@ -154,13 +154,13 @@
                     //definimos o tipo de requisição
                     type: 'post',
                     //colocamos os valores a serem enviados
-                    data: valores+'&cnpjRestaurante='+$("#cnpj").html(),
+                    data: valores + '&cnpjRestaurante=' + $("#cnpj").html(),
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function(pre) {
+                    success: function (pre) {
                         $("#processing-modal").modal('hide');
                         $('#msgSucessoPerfil').html("Informações alteradas com Sucesso!");
                     }
@@ -184,8 +184,7 @@
                                 <strong> Meu Perfil!</strong>
                             </div>
                             <div style="padding: 15px;">
-                                <form role="form" action="MeuServlet" method="POST" id="formPeril" onsubmit="validarFormulario();
-                                        return false;">
+                                <form role="form" action="MeuServlet" method="POST" id="form">
                                     <input type="hidden" id="caminho" name="logo" value="${restaurante.logo}"/>
                                 <input type="hidden" id="codigoRestaurante" name="codigoRestaurante" value="1"/>
                                 <fieldset>
@@ -211,23 +210,26 @@
                                                 <progress value="0" max="100" style="width: 110px;"></progress><span id="porcentagem">0%</span>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="Nome do Restaurante" name="nomeRestaurante" type="text" value="${restaurante.nome}" autofocus>
+                                                <input class="form-control" placeholder="Nome do Restaurante" name="nomeRestaurante" id="nomeRestaurante" type="text" value="${restaurante.nome}" autofocus>
+                                                <label id="erroNomeRestaurante" for="nomeRestaurante" class="error"></label>
                                             </div>
                                             <div class="form-group">
                                                 <p class="form-control" id="cnpj" name="cnpjRestaurante" type="text" >${restaurante.cnpj}</p>
                                             </div>
                                             <div class="form-group">
-                                                <input id="telefone" class="form-control" placeholder="Telefone" name="telefone" type="tel" value="${restaurante.telefone}">
+                                                <input id="telefone" class="form-control" placeholder="Telefone" name="telefone" id="telefone" type="tel" value="${restaurante.telefone}">
                                             </div>
                                             <div class="form-group">
-                                                <input id="cep" class="form-control" placeholder="CEP" name="cep" type="text" value="${restaurante.cep}">
+                                                <input id="cep" class="form-control" placeholder="CEP" name="cep" id="cep" type="text" value="${restaurante.cep}">
+                                                <label id="erroCep" for="cep" class="error"></label>
                                             </div>
                                             <div class="form-group">
-                                                <select class="form-control" id="estado" name="estado">
+                                                <select class="form-control" id="estado" name="estado" onchange="montaComboMunicipio(this.value)">
                                                     <c:forEach var="e" varStatus="j" items="${estados}" >
                                                         <option value="${e.codigo}" <c:if test="${e.codigo == restaurante.estado.codigo}">selected="selected"</c:if>>${e.descricao}</option>
                                                     </c:forEach>
                                                 </select>
+                                                <label id="erroEstado" for="estado" class="error"></label>
                                             </div>
                                             <div class="form-group">
                                                 <div id="divMunicipio">
@@ -238,15 +240,17 @@
                                                         </c:forEach>
                                                     </select>
                                                 </div>
+                                                <label id="erroMunicipio" for="municipio" class="error"></label>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control" placeholder="E-mail" name="email" type="email" value="${restaurante.email}">
+                                                <input class="form-control" placeholder="E-mail" name="email" id="email" type="email" value="${restaurante.email}">
+                                                <label id="erroEmail" for="email" class="error"></label>
                                             </div>
                                             <div class="form-group">
                                                 <h5 id="msgSucessoPerfil" style="color: green; font-weight: bold;"></h5>
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Concluir">
+                                                <input type="button" class="btn btn-lg btn-primary btn-block" onclick="verificaCampos();" value="Concluir">
                                             </div>
                                         </div>
                                     </div>

@@ -42,16 +42,16 @@
         </style>
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $("#telefone").mask("(99) 9999-9999");
                 $("#cnpj").mask("99.999.999/9999-99");
                 $("#cep").mask("99.999-999");
 
-                $.validator.addMethod("valueNotEquals", function(value, element, arg) {
+                $.validator.addMethod("valueNotEquals", function (value, element, arg) {
                     return arg !== value;
                 }, "Value must not equal arg.");
 
-                $.validator.addMethod("cnpj", function(cnpj, element) {
+                $.validator.addMethod("cnpj", function (cnpj, element) {
 
                     return validarCNPJ(cnpj);
 
@@ -103,7 +103,7 @@
                             email: "Digite um e-mail válido"
                         }
                     },
-                    submitHandler: function(form) {
+                    submitHandler: function (form) {
                         salvar();
                         return false;
                     }
@@ -117,10 +117,10 @@
                     url: 'ControllerServlet?acao=buscarRestaurantePorCnpj',
                     type: 'post',
                     data: '&cnpj=' + $("#cnpj").val(),
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(json) {
+                    success: function (json) {
                         $("#processing-modal").modal('hide');
                         if (json.ok === "S") {
                             $("#cnpj").val("");
@@ -131,16 +131,20 @@
                 });
             }
 
+            function validarFormulario() {
+                $('#msgTexto').html("");
+            }
+
             function montaComboMunicipio(codigoEstado) {
 
                 $.ajax({
                     url: 'ControllerServlet?acao=montaComboMucicipio',
                     type: 'post',
                     data: '&codigoEstado=' + codigoEstado,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divMunicipio").html(data);
                     }
@@ -159,14 +163,14 @@
                     //colocamos os valores a serem enviados
                     data: valores + '&lista=json',
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function(json) {
-                        $("#processing-modal").modal('hide');
+                    success: function (json) {
                         $("#msgTexto").html("Cadastro Concluido com Sucesso! Encaminhamos um e-mail com sua senha para: " + $("#email").val());
-                        $("#msg-modal").modal('show');
+                        $("#formRestaurante")[0].reset();
+                        $("#processing-modal").modal('hide');
                     }
                 });
             }
@@ -187,7 +191,8 @@
                                 <strong> Cadastre-se!</strong>
                             </div>
                             <div class="panel-body">
-                                <form role="form" action="" method="POST" id="formRestaurante">
+                                <form role="form" action="" method="POST" id="formRestaurante" onsubmit="validarFormulario();
+                                        return false;">
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-sm-12 col-md-10  col-md-offset-1 ">
@@ -221,6 +226,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="submit" class="btn btn-lg btn-primary btn-block" value="Concluir">
+                                                    <h5 id="msgTexto" style="color: green;" class="text-center"></h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -229,22 +235,6 @@
                             </div>
                             <div class="panel-footer text-center">
                                 <a href="${contexto}" > Já está cadastrado? </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="msg-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; top: 50% !important; margin-top: -100px;">
-                <div class="modal-dialog">
-                    <div class="msgmodal-container">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="text-center">
-                                <h5 id="msgTexto"></h5>
-                            </div>
                         </div>
                     </div>
                 </div>

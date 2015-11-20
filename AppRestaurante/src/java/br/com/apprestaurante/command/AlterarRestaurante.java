@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author brd03-pc
- */
 public class AlterarRestaurante implements CommandInterface {
 
     @Override
@@ -21,7 +17,7 @@ public class AlterarRestaurante implements CommandInterface {
         try {
 
             HttpSession session = request.getSession(false);
-            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");;
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
             RestauranteDao dao = new RestauranteDao();
             restaurante = dao.getById(restaurante.getCodigo());
             if (!restaurante.getLogo().equals("") && !restaurante.getLogo().equals(request.getParameter("logo"))) {

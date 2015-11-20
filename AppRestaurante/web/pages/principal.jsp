@@ -50,16 +50,16 @@
             var codigoC;
             var codMesa;
 
-            $(document).ready(function() {
-                $(".btn-pref .btn").click(function() {
+            $(document).ready(function () {
+                $(".btn-pref .btn").click(function () {
                     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
                     // $(".tab").addClass("active"); // instead of this do the below 
                     $(this).removeClass("btn-default").addClass("btn-primary");
                 });
 
-                $('#arquivo').change(function() {
+                $('#arquivo').change(function () {
                     var reader = new FileReader();
-                    $(reader).load(function(event) {
+                    $(reader).load(function (event) {
                         $("#imgProduto").attr("src", event.target.result);
                     });
                     reader.readAsDataURL(event.target.files[0]);
@@ -94,47 +94,47 @@
                             number: "Digite apenas números"
                         }
                     },
-                    submitHandler: function(form) {
+                    submitHandler: function (form) {
                         buscarMesaPorNumero($('#codigoMesa').val());
                         return false;
                     }
                 });
 
-                $("#form").validate({
-                    ignore: ":hidden",
-                    // Define as regras
-                    rules: {
-                        nomeProduto: {
-                            // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
-                            required: true
-                        },
-                        preco: {
-                            required: true
-                        },
-                        cmbCategoria: {
-                            required: true
-                        }
-                    },
-                    // Define as mensagens de erro para cada regra
-                    messages: {
-                        nomeProduto: {
-                            required: "Digite o nome do produto"
-                        },
-                        preco: {
-                            required: "Digite o preço do produto"
-                        },
-                        cmbCategoria: {
-                            required: "Selecione uma categoria"
-                        }
-                    },
-                    submitHandler: function(form) {
-                        salvar();
-                        return false;
-
-                    }
-                });
-
             });
+
+            function verificaCampos() {
+
+                validarFormulario();
+                var erro = false;
+
+                if ($("#nomePreduto").val() === "") {
+                    $("#erroNomeProduto").html("Digite o nome do produto");
+                    $("#erroNomeProduto").css('display', '');
+                    erro = true;
+                }else{
+                    $("#erroNomeProduto").css('display', 'none');
+                }
+                if ($("#preco").val() === "") {
+                    $("#erroPreco").html("Digite o preço do produto");
+                    $("#erroPreco").css('display', '');
+                    erro = true;
+                }else{
+                    $("#erroPreco").css('display', 'none');
+                }
+                if ($("#cmbCategoria").val() === "") {
+                    $("#erroCmbCategoria").html("Selecione uma categoria");
+                    $("#erroCmbCategoria").css('display', '');
+                    erro = true;
+                }else{
+                    $("#erroCmbCategoria").css('display', 'none');
+                }
+                
+                if(!erro){
+                    salvar();
+                }
+
+                
+            }
 
             function limparMesa() {
                 $("#formMesa").validate().resetForm();
@@ -169,11 +169,11 @@
                     //colocamos os valores a serem enviados
                     data: valores,
                     //antes de enviar ele alerta para esperar
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function(data) {
+                    success: function (data) {
                         if ($('#codigoProduto').val() !== "") {
                             $('#msgSucessoProduto').html("Produto Alterado com Sucesso!");
                         } else {
@@ -196,10 +196,10 @@
                     url: 'ControllerServlet?acao=salvarMesa',
                     type: 'POST',
                     data: valores,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#msgSucessoMesa").css('color', 'green');
                         if ($('#codigoMesa').val() !== "") {
                             $('#msgSucessoMesa').html("Mesa Alterada com Sucesso!");
@@ -220,10 +220,10 @@
                     type: 'POST',
                     data: '&codigoMesa=' + codigoMesa +
                             '&numeroMesa=' + $("#numeroMesa").val(),
-                    beforeSend: function() {
+                    beforeSend: function () {
                         //$("#processing-modal").modal('show');
                     },
-                    success: function(json) {
+                    success: function (json) {
                         if (json.ok === "S") {
                             salvarMesa();
                         } else {
@@ -242,10 +242,10 @@
                     url: 'ControllerServlet?acao=buscarMesa',
                     type: 'POST',
                     data: '&codigoMesa=' + codigoMesa,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         //$("#processing-modal").modal('show');
                     },
-                    success: function(json) {
+                    success: function (json) {
                         $('#msgSucessoMesa').html("");
                         $("#numeroMesa").val(json.numero);
                         $('#codigoMesa').val(codigoMesa);
@@ -278,10 +278,10 @@
                         url: 'ControllerServlet?acao=listarProdutos',
                         type: 'POST',
                         data: '&codigoCategoria=' + codigoCategoria,
-                        beforeSend: function() {
+                        beforeSend: function () {
                             $("#processing-modal").modal('show');
                         },
-                        success: function(data) {
+                        success: function (data) {
                             $("#processing-modal").modal('hide');
                             jQuery("#categoria" + codigoCategoria).html(data);
                         }
@@ -296,9 +296,9 @@
                     url: 'ControllerServlet?acao=listarCategorias',
                     type: 'POST',
                     data: '&codigoRestaurante=' + codigoRestaurante,
-                    beforeSend: function() {
+                    beforeSend: function () {
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#accordionCardapio").html(data);
                     }
@@ -312,10 +312,10 @@
                     url: 'ControllerServlet?acao=buscarProduto',
                     type: 'POST',
                     data: '&codigoProduto=' + codigoProduto,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         //$("#processing-modal").modal('show');
                     },
-                    success: function(json) {
+                    success: function (json) {
                         //$("#processing-modal").modal('hide');
                         $('#msgSucessoProduto').html("");
                         $("#nomePreduto").val(json.nome);
@@ -349,10 +349,10 @@
                         url: 'ControllerServlet?acao=excluirProduto',
                         type: 'POST',
                         data: '&codigoProduto=' + codigoP,
-                        beforeSend: function() {
+                        beforeSend: function () {
                             $("#processing-modal").modal('show');
                         },
-                        success: function(data) {
+                        success: function (data) {
                             $("#excluir-modal").modal('hide');
                             if (data === "") {
                                 buscarCategorias(1);
@@ -374,10 +374,10 @@
                     url: 'ControllerServlet?acao=reativarProduto',
                     type: 'POST',
                     data: '&codigoProduto=' + produto,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#categoria" + categoria).html(data);
                     }
@@ -407,10 +407,10 @@
                     url: 'ControllerServlet?acao=reativarMesa',
                     type: 'POST',
                     data: '&codigoMesa=' + codigoMesa,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#processing-modal").modal('show');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#processing-modal").modal('hide');
                         jQuery("#divMesas").html(data);
                     }
@@ -425,10 +425,10 @@
                         url: 'ControllerServlet?acao=excluirMesa',
                         type: 'POST',
                         data: '&codigoMesa=' + codMesa,
-                        beforeSend: function() {
+                        beforeSend: function () {
                             $("#processing-modal").modal('show');
                         },
-                        success: function(data) {
+                        success: function (data) {
                             $("#processing-modal").modal('hide');
                             $("#excluirMesa-modal").modal('hide');
                             jQuery("#divMesas").html(data);
@@ -493,8 +493,7 @@
                                 <h1> Cadastre seus produtos!</h1>
                             </div>
                             <div class="modal-body">
-                                <form role="form" action="MeuServlet" method="POST" id="form" onsubmit="validarFormulario();
-                                        return false;">
+                                <form role="form" action="MeuServlet" method="POST" id="form">
                                     <input type="hidden" id="caminho" name="imagem" value=""/>
                                     <input type="hidden" id="codigoProduto" name="codigoProduto" value=""/>
                                     <fieldset>
@@ -515,12 +514,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <input class="form-control" placeholder="Nome do Produto" name="nomeProduto" id="nomePreduto" type="text" autofocus>
+                                                <label id="erroNomeProduto" for="nomeProduto" class="error"></label>
                                             </div>
                                             <div class="form-group">
                                                 <input class="form-control" placeholder="Descrição" name="descricao" id="descricao" type="text" >
                                             </div>
                                             <div class="form-group">
                                                 <input class="form-control" placeholder="Preço" name="preco" id="preco" type="text" >
+                                                <label id="erroPreco" for="preco" class="error"></label>
                                             </div>
                                             <div class="form-group">
                                                 <select class="form-control" name="cmbCategoria" id="cmbCategoria">
@@ -529,12 +530,13 @@
                                                         <option value="${lc.codigo}">${lc.descricao}</option>
                                                     </c:forEach>
                                                 </select>
+                                                <label id="erroCmbCategoria" for="cmbCategoria" class="error"></label>
                                             </div>
                                             <div class="form-group">
                                                 <h5 id="msgSucessoProduto" style="color: green; font-weight: bold;"></h5>
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-lg btn-primary btn-block"  value="Concluir">
+                                                <input type="button" class="btn btn-lg btn-primary btn-block" onclick="verificaCampos();" value="Concluir">
                                             </div>
                                         </div>
                                     </div>
