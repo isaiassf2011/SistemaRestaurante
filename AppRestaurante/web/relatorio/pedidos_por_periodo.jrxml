@@ -19,22 +19,24 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select SUM(pedido_preco_total) AS total,
+		<![CDATA[select
 m.mesa_numero,
 p.pedido_codigo,
 p.pedido_data,
 p.pedido_preco_total,
-m.restaurante_codigo
+m.restaurante_codigo,
+pr.produto_nome,
+pr.produto_preco,
+pi.pedido_item_codigo
 
-from tb_pedido p
+from tb_pedido_item pi
+inner join tb_pedido p on p.pedido_codigo = pi.pedido_codigo
 inner join tb_mesa m on m.mesa_codigo = p.mesa_codigo
+inner join tb_produto pr on pr.produto_codigo = pi.produto_codigo
 
 where m.restaurante_codigo = $P{restaurante_codigo}
-and p.pedido_data BETWEEN TIMESTAMP($P{dt_inicial},'%d/%m/%Y') AND TIMESTAMP($P{dt_final},'%d/%m/%Y')
-
-GROUP BY p.pedido_codigo]]>
+and p.pedido_data BETWEEN TIMESTAMP($P{dt_inicial},'%d/%m/%Y') AND TIMESTAMP($P{dt_final},'%d/%m/%Y')]]>
 	</queryString>
-	<field name="total" class="java.math.BigDecimal"/>
 	<field name="mesa_numero" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -50,15 +52,21 @@ GROUP BY p.pedido_codigo]]>
 	<field name="restaurante_codigo" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<variable name="total" class="java.math.BigDecimal" resetType="Group" resetGroup="pedido" calculation="Sum">
-		<variableExpression><![CDATA[$F{total}]]></variableExpression>
-	</variable>
+	<field name="produto_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="produto_preco" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pedido_item_codigo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<group name="pedido">
-		<groupExpression><![CDATA[$F{restaurante_codigo}]]></groupExpression>
+		<groupExpression><![CDATA[$F{pedido_codigo}]]></groupExpression>
 		<groupHeader>
-			<band height="40">
+			<band height="50">
 				<staticText>
-					<reportElement mode="Opaque" x="0" y="20" width="131" height="20" backcolor="#C7C8CA" uuid="68addebd-488e-4b55-bdd5-aee98e140921"/>
+					<reportElement mode="Opaque" x="0" y="30" width="417" height="20" backcolor="#C7C8CA" uuid="68addebd-488e-4b55-bdd5-aee98e140921"/>
 					<box leftPadding="2">
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
@@ -69,10 +77,10 @@ GROUP BY p.pedido_codigo]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Mesa]]></text>
+					<text><![CDATA[Produto]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="131" y="20" width="130" height="20" backcolor="#C7C8CA" uuid="8b050886-7efc-43f7-8678-b6a94b6b50bb"/>
+					<reportElement mode="Opaque" x="417" y="30" width="137" height="20" backcolor="#C7C8CA" uuid="1c49114e-0eee-42dd-8c7a-17aa9ff8b0f5"/>
 					<box leftPadding="2">
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
@@ -83,36 +91,50 @@ GROUP BY p.pedido_codigo]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Pedido]]></text>
+					<text><![CDATA[Preço]]></text>
 				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="261" y="20" width="156" height="20" backcolor="#C7C8CA" uuid="a3417d44-317f-4233-a7d0-3ce815912efd"/>
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="10" width="366" height="20" uuid="bf3269c8-742a-424b-b16d-93ef4ee1be30"/>
 					<box leftPadding="2">
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
 						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="10" isBold="true"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="10" isBold="true" isItalic="false"/>
 					</textElement>
-					<text><![CDATA[Data]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Opaque" x="417" y="20" width="137" height="20" backcolor="#C7C8CA" uuid="1c49114e-0eee-42dd-8c7a-17aa9ff8b0f5"/>
-					<box leftPadding="2">
+					<textFieldExpression><![CDATA["Mesa: "+ $F{mesa_numero} +" - Pedido: #"+$F{pedido_codigo}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy HH:mm:ss" isBlankWhenNull="true">
+					<reportElement x="417" y="10" width="137" height="20" uuid="0de7c102-747e-415d-8105-d224ae6a07cb"/>
+					<box leftPadding="2" rightPadding="2">
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
 						<bottomPen lineWidth="1.0"/>
 						<rightPen lineWidth="1.0"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Total pago]]></text>
-				</staticText>
+					<textFieldExpression><![CDATA[$F{pedido_data}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="366" y="10" width="51" height="20" uuid="265b8625-e607-4fd5-a86c-daa4c21b399b"/>
+					<box rightPadding="2">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Data: "]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -127,9 +149,9 @@ GROUP BY p.pedido_codigo]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{pedido_preco_total}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="317" y="0" width="100" height="20" uuid="2b5020d4-8bf0-4d9f-93b1-e6fab0eb46f2"/>
@@ -202,31 +224,6 @@ GROUP BY p.pedido_codigo]]>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="131" height="20" uuid="bf3269c8-742a-424b-b16d-93ef4ee1be30"/>
-				<box leftPadding="2">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{mesa_numero}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="131" y="0" width="130" height="20" uuid="f684b87d-0a05-4d4c-8e64-e74bc925c4cb"/>
-				<box leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{pedido_codigo}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="417" y="0" width="137" height="20" uuid="bbccf341-90f8-498d-83db-ad68cf5a3238"/>
 				<box rightPadding="2">
@@ -237,13 +234,13 @@ GROUP BY p.pedido_codigo]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pedido_preco_total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{produto_preco}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="true">
-				<reportElement x="261" y="0" width="156" height="20" uuid="2a58d4d9-21af-456a-aef7-8bd613c428a8"/>
-				<box rightPadding="2">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="417" height="20" uuid="7ef23723-d6af-43dd-add8-8253916113a7"/>
+				<box leftPadding="2">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -251,9 +248,9 @@ GROUP BY p.pedido_codigo]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pedido_data}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{produto_nome}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

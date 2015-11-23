@@ -92,7 +92,7 @@ public class RelatorioPedidoPeriodo implements CommandInterface {
                 ServletOutputStream outputStream;
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
-                response.setHeader("Content-disposition", "attachment; filename=pedidos_por_periodo" + request.getParameter("codigoMesa") + ".pdf");
+                response.setHeader("Content-disposition", "attachment; filename=pedidos_por_periodo.pdf");
 
                 outputStream = response.getOutputStream();
                 outputStream.write(bytes, 0, bytes.length);
