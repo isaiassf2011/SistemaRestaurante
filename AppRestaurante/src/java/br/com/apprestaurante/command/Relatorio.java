@@ -62,7 +62,7 @@ public class Relatorio implements CommandInterface {
                 ServletOutputStream outputStream;
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
-                response.setHeader("Content-disposition", "attachment; filename=qrcode_mesa_"+request.getParameter("codigoMesa")+".pdf");
+                response.setHeader("Content-disposition", "attachment; filename=qrcode_mesa_"+request.getParameter("numeroMesa")+".pdf");
 
                 outputStream = response.getOutputStream();
                 outputStream.write(bytes, 0, bytes.length);

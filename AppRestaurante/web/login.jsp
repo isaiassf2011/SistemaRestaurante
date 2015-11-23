@@ -112,12 +112,6 @@
                                         return false;">
                                     <fieldset>
                                         <div class="row">
-                                            <div class="center-block">
-                                                <img class="profile-img"
-                                                     src="https://amanditaamorim.files.wordpress.com/2012/03/logo-rgb-300-dpis.jpg" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                                 <div class="form-group">
                                                     <input id="cnpj" class="form-control" placeholder="CNPJ" name="cnpj" type="text" autofocus>

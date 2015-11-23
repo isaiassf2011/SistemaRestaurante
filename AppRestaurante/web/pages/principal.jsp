@@ -111,29 +111,29 @@
                     $("#erroNomeProduto").html("Digite o nome do produto");
                     $("#erroNomeProduto").css('display', '');
                     erro = true;
-                }else{
+                } else {
                     $("#erroNomeProduto").css('display', 'none');
                 }
                 if ($("#preco").val() === "") {
                     $("#erroPreco").html("Digite o preço do produto");
                     $("#erroPreco").css('display', '');
                     erro = true;
-                }else{
+                } else {
                     $("#erroPreco").css('display', 'none');
                 }
                 if ($("#cmbCategoria").val() === "") {
                     $("#erroCmbCategoria").html("Selecione uma categoria");
                     $("#erroCmbCategoria").css('display', '');
                     erro = true;
-                }else{
+                } else {
                     $("#erroCmbCategoria").css('display', 'none');
                 }
-                
-                if(!erro){
+
+                if (!erro) {
                     salvar();
                 }
 
-                
+
             }
 
             function limparMesa() {
@@ -182,8 +182,10 @@
                             $('#codigoProduto').val("");
                             removerImagem();
                         }
-                        $("#processing-modal").modal('hide');
-                        jQuery("#accordionCardapio").html(data);
+                        setTimeout(function () {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#accordionCardapio").html(data);
+                        }, 2000);
                     }
                 });
             }
@@ -235,10 +237,10 @@
                 });
 
             }
-            
-            function gerarRelatorio(codigoMesa) {
-                
-                location.href = "ControllerServlet?acao=relatorio&codigoMesa="+codigoMesa;
+
+            function gerarRelatorio(codigoMesa, numero) {
+
+                location.href = "ControllerServlet?acao=relatorio&codigoMesa=" + codigoMesa + "&numeroMesa=" + numero;
 
             }
 
@@ -457,6 +459,7 @@
 
             <div class="container"  style="margin-top:65px">
                 <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+                <c:if test="${divTab == 'Cardapio'}">
                     <div class="btn-group" role="group">
                         <a id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
                             <div class="hidden-xs">Cardapio</div>
@@ -467,11 +470,24 @@
                             <div class="hidden-xs">Mesas</div>
                         </a>
                     </div>
-                </div>
+                </c:if>
+                <c:if test="${divTab == 'Mesa'}">
+                    <div class="btn-group" role="group">
+                        <a id="stars" class="btn btn-default" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+                            <div class="hidden-xs">Cardapio</div>
+                        </a>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <a id="favorites" class="btn btn-primary" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                            <div class="hidden-xs">Mesas</div>
+                        </a>
+                    </div>
+                </c:if>
+            </div>
 
-                <div class="well" style="padding: 5px;">
-                    <div class="tab-content">
-                        <div class="tab-pane fade in active" id="tab1">
+            <div class="well" style="padding: 5px;">
+                <div class="tab-content">
+                    <div class="tab-pane fade in <c:if test="${divTab == 'Cardapio'}">active</c:if>" id="tab1">
                             <div style="padding: 5px 0px;">
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#login-modal" onclick="limparProduto();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Produto</button> 
                             </div>
@@ -479,7 +495,7 @@
                             <jsp:include page="/pages/categoria.jsp"></jsp:include>
                             </div>
                         </div>
-                        <div class="tab-pane fade in" id="tab2">
+                        <div class="tab-pane fade in <c:if test="${divTab == 'Mesa'}">active</c:if>" id="tab2">
                             <div style="padding: 5px 0px;">
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#mesa-modal" onclick="limparMesa();"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Mesa</button> 
                             </div>

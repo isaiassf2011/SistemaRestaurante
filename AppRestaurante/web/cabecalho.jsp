@@ -38,8 +38,8 @@
                         Configurações
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="ControllerServlet?acao=listarCardapio">Cardapio</a></li>
-                        <li><a href="ControllerServlet?acao=listarCardapio">Mesas</a></li>
+                        <li><a href="ControllerServlet?acao=listarCardapio&divTab=Cardapio">Cardapio</a></li>
+                        <li><a href="ControllerServlet?acao=listarCardapio&divTab=Mesa">Mesas</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

@@ -85,9 +85,11 @@
                                         <div class="row">
                                             <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                                 <div class="form-group">
+                                                    <label for="dataInicial">Data Inicial:</label>
                                                     <input class="form-control" placeholder="Data Inicial" name="dataInicial" id="dataInicial" type="date" autofocus>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="dataFinal">Data Final:</label>
                                                     <input class="form-control" placeholder="Data Final" name="dataFinal" id="dataFinal" type="date" autofocus>
                                                 </div>
                                                 <div class="form-group">

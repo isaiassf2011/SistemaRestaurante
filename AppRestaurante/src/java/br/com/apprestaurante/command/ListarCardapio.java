@@ -37,6 +37,8 @@ public class ListarCardapio implements CommandInterface {
         mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
         produtos = new ProdutoDao().buscarPorRestaurante(restaurante.getCodigo());
 
+        System.out.println(request.getParameter("divTab"));
+        request.setAttribute("divTab", request.getParameter("divTab"));
         request.setAttribute("listaCategorias", listaCategorias);
         request.setAttribute("mesas", mesas);
         request.setAttribute("categorias", categorias);
