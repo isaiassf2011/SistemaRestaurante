@@ -17,13 +17,18 @@ public class BuscarPedido implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession(false);
-        
-        Mesa mesa = (Mesa) session.getAttribute("mesa");
-        Pedido pedido = new PedidoDao().buscarPedidoPorMesa(mesa.getCodigo());
-        
-        request.setAttribute("pedido", pedido);
-        
-        return "pages/pedido.jsp";
+
+        if (session != null) {
+            Mesa mesa = (Mesa) session.getAttribute("mesa");
+            Pedido pedido = new PedidoDao().buscarPedidoPorMesa(mesa.getCodigo());
+
+            request.setAttribute("pedido", pedido);
+
+            return "pages/pedido.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

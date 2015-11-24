@@ -18,15 +18,21 @@ public class listarProdutos implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        List<Produto> produtos = new ArrayList<Produto>();
         HttpSession session = request.getSession(false);
-        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
-        
-        produtos = new ProdutoDao().buscarPorCategoria(Integer.parseInt(request.getParameter("codigoCategoria")), restaurante.getCodigo());
 
-        request.setAttribute("produtos", produtos);
+        if (session != null) {
+            List<Produto> produtos = new ArrayList<Produto>();
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        return "pages/produto.jsp";
+            produtos = new ProdutoDao().buscarPorCategoria(Integer.parseInt(request.getParameter("codigoCategoria")), restaurante.getCodigo());
+
+            request.setAttribute("produtos", produtos);
+
+            return "pages/produto.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

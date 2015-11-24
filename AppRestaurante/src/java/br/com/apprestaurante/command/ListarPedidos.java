@@ -14,9 +14,10 @@ public class ListarPedidos implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
+        HttpSession session = request.getSession(false);
+
         List<PedidoItem> itens = new ArrayList<PedidoItem>();
 
-        HttpSession session = request.getSession(false);
         Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
         itens = new PedidoItemDao().listarPedidosPendentes(restaurante);

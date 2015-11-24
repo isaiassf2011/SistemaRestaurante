@@ -15,17 +15,23 @@ public class ReativarMesa implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession(false);
-        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        Mesa m = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
-        m.setCancelado(false);
-        new MesaDao().salvar(m);
+        if (session != null) {
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        List<Mesa> mesas = new ArrayList<Mesa>();
-        mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
-        request.setAttribute("mesas", mesas);
+            Mesa m = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
+            m.setCancelado(false);
+            new MesaDao().salvar(m);
 
-        return "pages/mesa.jsp";
+            List<Mesa> mesas = new ArrayList<Mesa>();
+            mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
+            request.setAttribute("mesas", mesas);
+
+            return "pages/mesa.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

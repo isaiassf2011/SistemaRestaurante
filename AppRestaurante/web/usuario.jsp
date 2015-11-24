@@ -32,24 +32,24 @@
             });
 
             /*function buscarProdutos(codigoCategoria) {
-                var classe = $("#categoria" + codigoCategoria).attr("class");
-
-                if (classe === "panel-collapse collapse") {
-                    $.ajax({
-                        url: 'ControllerServlet?acao=listarProdutosUsuario',
-                        type: 'POST',
-                        data: '&codigoCategoria=' + codigoCategoria,
-                        beforeSend: function () {
-                            $("#processing-modal").modal('show');
-                        },
-                        success: function (data) {
-                            $("#processing-modal").modal('hide');
-                            jQuery("#categoria" + codigoCategoria).html(data);
-                        }
-                    });
-                }
-
-            }*/
+             var classe = $("#categoria" + codigoCategoria).attr("class");
+             
+             if (classe === "panel-collapse collapse") {
+             $.ajax({
+             url: 'ControllerServlet?acao=listarProdutosUsuario',
+             type: 'POST',
+             data: '&codigoCategoria=' + codigoCategoria,
+             beforeSend: function () {
+             $("#processing-modal").modal('show');
+             },
+             success: function (data) {
+             $("#processing-modal").modal('hide');
+             jQuery("#categoria" + codigoCategoria).html(data);
+             }
+             });
+             }
+             
+             }*/
 
             function addItemCarrinho(codigoProduto) {
 
@@ -61,9 +61,13 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divCarrinho").html(data);
-                        $(".badge").html($("#totalDeItens").val());
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divCarrinho").html(data);
+                            $(".badge").html($("#totalDeItens").val());
+                        }
                     }
                 });
 
@@ -79,9 +83,13 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divCarrinho").html(data);
-                        $(".badge").html($("#totalDeItens").val());
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divCarrinho").html(data);
+                            $(".badge").html($("#totalDeItens").val());
+                        }
                     }
                 });
 
@@ -96,9 +104,13 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divCarrinho").html(data);
-                        $(".badge").html(0);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divCarrinho").html(data);
+                            $(".badge").html(0);
+                        }
                     }
                 });
 
@@ -113,8 +125,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divPedido").html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divPedido").html(data);
+                        }
                     }
                 });
 
@@ -130,8 +146,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#accordionCardapio").html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#accordionCardapio").html(data);
+                        }
                     }
                 });
 

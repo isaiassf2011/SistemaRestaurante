@@ -27,7 +27,6 @@ public class AcaoFilterHelper {
         acoes.add(AcaoConstante.EXCLUIR_MESA);
         acoes.add(AcaoConstante.EXCLUIR_PRODUTO);
         acoes.add(AcaoConstante.LISTAR_CARDAPIO);
-        acoes.add(AcaoConstante.LISTAR_CARDAPIO_USUARIO);
         acoes.add(AcaoConstante.LISTAR_CATEGORIAS);
         acoes.add(AcaoConstante.LISTAR_PRODUTOS);
         acoes.add(AcaoConstante.LISTAR_PRODUTOS_USUARIO);

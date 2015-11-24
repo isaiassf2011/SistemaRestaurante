@@ -16,17 +16,23 @@ public class FinalizarItemPedido implements CommandInterface {
 
         HttpSession session = request.getSession(false);
 
-        PedidoItemDao dao = new PedidoItemDao();
-        PedidoItem pedidoItem = dao.getById(Integer.parseInt(request.getParameter("codigoItem")));
-        pedidoItem.setFeito(true);
-        dao.salvar(pedidoItem);
+        if (session != null) {
 
-        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
-        List<PedidoItem> itens = new ArrayList<PedidoItem>();
-        itens = dao.listarPedidosPendentes(restaurante);
-        request.setAttribute("pedidos", itens);
+            PedidoItemDao dao = new PedidoItemDao();
+            PedidoItem pedidoItem = dao.getById(Integer.parseInt(request.getParameter("codigoItem")));
+            pedidoItem.setFeito(true);
+            dao.salvar(pedidoItem);
 
-        return "pages/pedidoPendente.jsp";
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
+            List<PedidoItem> itens = new ArrayList<PedidoItem>();
+            itens = dao.listarPedidosPendentes(restaurante);
+            request.setAttribute("pedidos", itens);
+
+            return "pages/pedidoPendente.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

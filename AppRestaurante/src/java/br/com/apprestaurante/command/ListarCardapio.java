@@ -22,16 +22,17 @@ public class ListarCardapio implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
+        HttpSession session = request.getSession(false);
+
         List<CategoriaProduto> listaCategorias = new ArrayList<CategoriaProduto>();
         List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
         List<Mesa> mesas = new ArrayList<Mesa>();
         List<Produto> produtos = new ArrayList<Produto>();
 
-        HttpSession session = request.getSession(false);
         Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
         CategoriaProdutoDao categoriaProdutoDao = new CategoriaProdutoDao();
-        
+
         listaCategorias = categoriaProdutoDao.getAll();
         categorias = categoriaProdutoDao.buscarPorRestaurante(restaurante.getCodigo());
         mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
@@ -48,14 +49,4 @@ public class ListarCardapio implements CommandInterface {
 
     }
 
-    public static void main(String[] args) {
-
-        List<CategoriaProduto> categoriaProdutos = new ArrayList<CategoriaProduto>();
-        categoriaProdutos = new CategoriaProdutoDao().buscarPorRestaurante(1);
-
-        for (CategoriaProduto categoriaProduto : categoriaProdutos) {
-            System.out.println(categoriaProduto);
-        }
-
-    }
 }

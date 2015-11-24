@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,6 +25,7 @@ public class BuscarMesa implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
+        HttpSession session = request.getSession(false);
         JsonObject json = new JsonObject();
         PrintWriter out = null;
         try {
@@ -31,9 +33,15 @@ public class BuscarMesa implements CommandInterface {
             response.setContentType("application/json");
             out = response.getWriter();
 
-            Mesa mesa = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
+            if (session == null) {
+                json.addProperty("ok", "400");
+            } else {
 
-            json.addProperty("numero", mesa.getNumero());
+                Mesa mesa = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
+
+                json.addProperty("numero", mesa.getNumero());
+
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(BuscarProduto.class.getName()).log(Level.SEVERE, null, ex);

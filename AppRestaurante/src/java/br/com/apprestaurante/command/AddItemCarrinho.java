@@ -21,35 +21,39 @@ public class AddItemCarrinho implements CommandInterface {
 
         HttpSession session = request.getSession(false);
 
-        Produto produto = new ProdutoDao().getById(Integer.parseInt(request.getParameter("codigoProduto")));
+        if (session != null) {
+            Produto produto = new ProdutoDao().getById(Integer.parseInt(request.getParameter("codigoProduto")));
 
-        CarrinhoItem carrinhoItem = new CarrinhoItem();
-        carrinhoItem.setProduto(produto);
-        carrinhoItem.setQuantidade(1);
-        List<CarrinhoItem> itemsCarrinho;
-        Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-        if (carrinho == null) {
-            carrinho = new Carrinho();
-            itemsCarrinho = new ArrayList<CarrinhoItem>();
-        }else{
-            itemsCarrinho = carrinho.getItens();
+            CarrinhoItem carrinhoItem = new CarrinhoItem();
+            carrinhoItem.setProduto(produto);
+            carrinhoItem.setQuantidade(1);
+            List<CarrinhoItem> itemsCarrinho;
+            Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+            if (carrinho == null) {
+                carrinho = new Carrinho();
+                itemsCarrinho = new ArrayList<CarrinhoItem>();
+            } else {
+                itemsCarrinho = carrinho.getItens();
+            }
+            itemsCarrinho.add(carrinhoItem);
+            carrinho.adiciona(carrinhoItem);
+
+            carrinho.setItens(itemsCarrinho);
+
+            session.setAttribute("carrinho", carrinho);
+
+            for (CarrinhoItem i : itemsCarrinho) {
+                System.out.println("Item: " + i.getProduto().getNome());
+                System.out.println("Item: " + i.getProduto().getDescricao());
+                System.out.println("Item: " + i.getProduto().getCodigo());
+                System.out.println("Item: " + i.getProduto().getPreco());
+            }
+
+            return "pages/carrinho.jsp";
+
+        } else {
+            return null;
         }
-        itemsCarrinho.add(carrinhoItem);
-        carrinho.adiciona(carrinhoItem);
-
-        carrinho.setItens(itemsCarrinho);
-
-        session.setAttribute("carrinho", carrinho);
-
-        for (CarrinhoItem i : itemsCarrinho) {
-            System.out.println("Item: " + i.getProduto().getNome());
-            System.out.println("Item: " + i.getProduto().getDescricao());
-            System.out.println("Item: " + i.getProduto().getCodigo());
-            System.out.println("Item: " + i.getProduto().getPreco());
-        }
-
-        return "pages/carrinho.jsp";
-
     }
 
 }

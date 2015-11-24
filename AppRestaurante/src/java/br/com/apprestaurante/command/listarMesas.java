@@ -14,19 +14,25 @@ import javax.servlet.http.HttpSession;
  * @author isaias
  */
 public class listarMesas implements CommandInterface {
-    
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        List<Mesa> mesas = new ArrayList<Mesa>();
         HttpSession session = request.getSession(false);
-        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
-        
-        mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
 
-        request.setAttribute("mesas", mesas);
+        if (session != null) {
+            List<Mesa> mesas = new ArrayList<Mesa>();
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        return "pages/mesa.jsp";
+            mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
+
+            request.setAttribute("mesas", mesas);
+
+            return "pages/mesa.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

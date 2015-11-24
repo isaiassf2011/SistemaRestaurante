@@ -155,12 +155,16 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divPendentes").html(data);
-                        $("#msgPedidoPendente").html("Produto Fizalizado com Sucesso!");
-                        setTimeout(function () {
-                            $('#msgPedidoPendente').fadeOut('fast');
-                        }, 3000);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divPendentes").html(data);
+                            $("#msgPedidoPendente").html("Produto Fizalizado com Sucesso!");
+                            setTimeout(function () {
+                                $('#msgPedidoPendente').fadeOut('fast');
+                            }, 3000);
+                        }
                     }
                 });
 
@@ -175,8 +179,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divProntos").html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divProntos").html(data);
+                        }
                     }
                 });
 
@@ -191,8 +199,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divPendentes").html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divPendentes").html(data);
+                        }
                     }
                 });
 
@@ -208,8 +220,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divCaixa").html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divCaixa").html(data);
+                        }
                     }
                 });
 
@@ -225,8 +241,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divCaixa").html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divCaixa").html(data);
+                        }
                     }
                 });
 
@@ -244,8 +264,12 @@
                             $("#processing-modal").modal('show');
                         },
                         success: function (data) {
-                            $("#processing-modal").modal('hide');
-                            jQuery("#pedido" + codigo).html(data);
+                            if (data === "") {
+                                window.location.reload();
+                            } else {
+                                $("#processing-modal").modal('hide');
+                                jQuery("#pedido" + codigo).html(data);
+                            }
                         }
                     });
                 }
@@ -263,13 +287,16 @@
                             $("#processing-modal").modal('show');
                         },
                         success: function (data) {
-                            $("#processing-modal").modal('hide');
-                            jQuery("#divCaixa").html(data);
-                            $("#msgPedidoMesa").html("Pedido da mesa Nº "+mesa+" finalizado com Sucesso!");
-                            setTimeout(function () {
-                                $('#msgPedidoMesa').fadeOut('fast');
-                            }, 4000);
-
+                            if (data === "") {
+                                window.location.reload();
+                            } else {
+                                $("#processing-modal").modal('hide');
+                                jQuery("#divCaixa").html(data);
+                                $("#msgPedidoMesa").html("Pedido da mesa Nº " + mesa + " finalizado com Sucesso!");
+                                setTimeout(function () {
+                                    $('#msgPedidoMesa').fadeOut('fast');
+                                }, 4000);
+                            }
                         }
                     });
                 } else {

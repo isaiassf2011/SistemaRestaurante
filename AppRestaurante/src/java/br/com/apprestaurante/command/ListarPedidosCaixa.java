@@ -10,21 +10,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ListarPedidosCaixa implements CommandInterface {
-    
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        List<Pedido> pedidos = new ArrayList<Pedido>();
-
         HttpSession session = request.getSession(false);
-        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        pedidos = new PedidoDao().listarPorPedido(restaurante.getCodigo());
+        if (session != null) {
+            List<Pedido> pedidos = new ArrayList<Pedido>();
 
-        request.setAttribute("pedidos", pedidos);
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        return "pages/caixa.jsp";
+            pedidos = new PedidoDao().listarPorPedido(restaurante.getCodigo());
+
+            request.setAttribute("pedidos", pedidos);
+
+            return "pages/caixa.jsp";
+
+        } else {
+            return null;
+        }
 
     }
-    
+
 }

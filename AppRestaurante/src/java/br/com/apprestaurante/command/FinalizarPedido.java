@@ -1,7 +1,6 @@
 package br.com.apprestaurante.command;
 
 import br.com.apprestaurante.dao.PedidoDao;
-import br.com.apprestaurante.entity.Mesa;
 import br.com.apprestaurante.entity.Pedido;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +17,27 @@ public class FinalizarPedido implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        List<Pedido> pedidos = new ArrayList<Pedido>();
-        
-        PedidoDao dao = new PedidoDao();
-        
-        Pedido pedido = dao.getByIdItens(Integer.parseInt(request.getParameter("codigoPedido")));
-        pedido.setFinalizado(true);
-        dao.salvar(pedido);
+        HttpSession session = request.getSession(false);
 
-        pedidos = new PedidoDao().listarPorPedido(pedido.getMesa().getRestaurante().getCodigo());
+        if (session != null) {
 
-        request.setAttribute("pedidos", pedidos);
+            List<Pedido> pedidos = new ArrayList<Pedido>();
 
-        return "pages/caixa.jsp";
+            PedidoDao dao = new PedidoDao();
+
+            Pedido pedido = dao.getByIdItens(Integer.parseInt(request.getParameter("codigoPedido")));
+            pedido.setFinalizado(true);
+            dao.salvar(pedido);
+
+            pedidos = new PedidoDao().listarPorPedido(pedido.getMesa().getRestaurante().getCodigo());
+
+            request.setAttribute("pedidos", pedidos);
+
+            return "pages/caixa.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

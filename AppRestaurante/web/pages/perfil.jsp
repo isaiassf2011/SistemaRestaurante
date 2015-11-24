@@ -160,9 +160,13 @@
                         $("#processing-modal").modal('show');
                     },
                     //colocamos o retorno na tela
-                    success: function (pre) {
+                    success: function (json) {
                         $("#processing-modal").modal('hide');
-                        $('#msgSucessoPerfil').html("Informações alteradas com Sucesso!");
+                        if (json.ok === '400') {
+                            window.location.reload();
+                        } else {
+                            $('#msgSucessoPerfil').html("Informações alteradas com Sucesso!");
+                        }
                     }
                 });
             }

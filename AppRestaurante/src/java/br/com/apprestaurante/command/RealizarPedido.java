@@ -20,39 +20,45 @@ public class RealizarPedido implements CommandInterface {
 
         HttpSession session = request.getSession(false);
 
-        Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-        Mesa mesa = (Mesa) session.getAttribute("mesa");
-        PedidoDao pedidoDao = new PedidoDao();
-        Pedido pedido = pedidoDao.buscarPedidoPorMesa(mesa.getCodigo());
-        if(pedido == null){
-            pedido = new Pedido();
-            pedido.setTotal(carrinho.getTotal());
-            pedido.setData(new Date());
-        }else{
-            pedido.setTotal(pedido.getTotal().add(carrinho.getTotal()));
-        }
-        pedido.setFinalizado(false);
-        pedido.setMesa(mesa);
+        if (session != null) {
 
-        List<PedidoItem> items = new ArrayList<PedidoItem>();
-        
-        for (CarrinhoItem carrinhoItem : carrinho.getItens()) {
-            PedidoItem pedidoItem = new PedidoItem();
-            pedidoItem.setProduto(carrinhoItem.getProduto());
-            pedidoItem.setQuantidade(carrinhoItem.getQuantidade());
-            pedidoItem.setPedido(pedido);
-            pedidoItem.setFeito(false);
-            items.add(pedidoItem);
+            Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+            Mesa mesa = (Mesa) session.getAttribute("mesa");
+            PedidoDao pedidoDao = new PedidoDao();
+            Pedido pedido = pedidoDao.buscarPedidoPorMesa(mesa.getCodigo());
+            if (pedido == null) {
+                pedido = new Pedido();
+                pedido.setTotal(carrinho.getTotal());
+                pedido.setData(new Date());
+            } else {
+                pedido.setTotal(pedido.getTotal().add(carrinho.getTotal()));
+            }
+            pedido.setFinalizado(false);
+            pedido.setMesa(mesa);
+
+            List<PedidoItem> items = new ArrayList<PedidoItem>();
+
+            for (CarrinhoItem carrinhoItem : carrinho.getItens()) {
+                PedidoItem pedidoItem = new PedidoItem();
+                pedidoItem.setProduto(carrinhoItem.getProduto());
+                pedidoItem.setQuantidade(carrinhoItem.getQuantidade());
+                pedidoItem.setPedido(pedido);
+                pedidoItem.setFeito(false);
+                items.add(pedidoItem);
+            }
+            pedido.setItens(items);
+
+            pedidoDao.salvar(pedido);
+
+            carrinho = new Carrinho();
+            session.setAttribute("carrinho", carrinho);
+            request.setAttribute("pedido", pedido);
+
+            return "pages/carrinho.jsp";
+
+        } else {
+            return null;
         }
-        pedido.setItens(items);
-        
-        pedidoDao.salvar(pedido);
-        
-        carrinho = new Carrinho();
-        session.setAttribute("carrinho", carrinho);
-        request.setAttribute("pedido", pedido);
-        
-        return "pages/carrinho.jsp";
 
     }
 

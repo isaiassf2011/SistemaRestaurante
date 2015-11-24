@@ -25,32 +25,37 @@ public class SalvarMesa implements CommandInterface {
         //String codigoPergunta = request.getParameter("perguntaCodigo");
 
         HttpSession session = request.getSession(false);
-        
-        try {
 
-            Mesa mesa;
-            MesaDao dao = new MesaDao();
-            if (!request.getParameter("codigoMesa").equals("") && request.getParameter("codigoMesa") != null) {
-                mesa = dao.getById(Integer.parseInt(request.getParameter("codigoMesa")));
-            } else {
-                mesa = new Mesa();
+        if (session != null) {
+            try {
+
+                Mesa mesa;
+                MesaDao dao = new MesaDao();
+                if (!request.getParameter("codigoMesa").equals("") && request.getParameter("codigoMesa") != null) {
+                    mesa = dao.getById(Integer.parseInt(request.getParameter("codigoMesa")));
+                } else {
+                    mesa = new Mesa();
+                }
+                mesa.setNumero(Integer.parseInt(request.getParameter("numeroMesa")));
+                Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
+                mesa.setRestaurante(restaurante);
+                mesa.setCancelado(false);
+
+                dao.salvar(mesa);
+
+                List<Mesa> mesas = new ArrayList<Mesa>();
+                mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
+                request.setAttribute("mesas", mesas);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            mesa.setNumero(Integer.parseInt(request.getParameter("numeroMesa")));
-            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
-            mesa.setRestaurante(restaurante);
-            mesa.setCancelado(false);
-            
-            dao.salvar(mesa);
 
-            List<Mesa> mesas = new ArrayList<Mesa>();
-            mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
-            request.setAttribute("mesas", mesas);
+            return "pages/mesa.jsp";
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            return null;
         }
-
-        return "pages/mesa.jsp";
 
     }
 

@@ -19,17 +19,23 @@ public class ExcluirMesa implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession(false);
-        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
-        
-        Mesa m = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
-        m.setCancelado(true);
-        new MesaDao().salvar(m);
 
-        List<Mesa> mesas = new ArrayList<Mesa>();
-        mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
-        request.setAttribute("mesas", mesas);
+        if (session != null) {
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        return "pages/mesa.jsp";
+            Mesa m = new MesaDao().getById(Integer.parseInt(request.getParameter("codigoMesa")));
+            m.setCancelado(true);
+            new MesaDao().salvar(m);
+
+            List<Mesa> mesas = new ArrayList<Mesa>();
+            mesas = new MesaDao().listarPorRestaurante(restaurante.getCodigo());
+            request.setAttribute("mesas", mesas);
+
+            return "pages/mesa.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

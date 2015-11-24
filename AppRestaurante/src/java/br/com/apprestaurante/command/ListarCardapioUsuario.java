@@ -22,7 +22,7 @@ public class ListarCardapioUsuario implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
-        
+
         List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
         List<Produto> produtos = new ArrayList<Produto>();
 

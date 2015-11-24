@@ -174,18 +174,22 @@
                     },
                     //colocamos o retorno na tela
                     success: function (data) {
-                        if ($('#codigoProduto').val() !== "") {
-                            $('#msgSucessoProduto').html("Produto Alterado com Sucesso!");
+                        if (data === "") {
+                            window.location.reload();
                         } else {
-                            $('#msgSucessoProduto').html("Produto Adicionado com Sucesso!");
-                            $("#form")[0].reset();
-                            $('#codigoProduto').val("");
-                            removerImagem();
+                            if ($('#codigoProduto').val() !== "") {
+                                $('#msgSucessoProduto').html("Produto Alterado com Sucesso!");
+                            } else {
+                                $('#msgSucessoProduto').html("Produto Adicionado com Sucesso!");
+                                $("#form")[0].reset();
+                                $('#codigoProduto').val("");
+                                removerImagem();
+                            }
+                            setTimeout(function () {
+                                $("#processing-modal").modal('hide');
+                                jQuery("#accordionCardapio").html(data);
+                            }, 2000);
                         }
-                        setTimeout(function () {
-                            $("#processing-modal").modal('hide');
-                            jQuery("#accordionCardapio").html(data);
-                        }, 2000);
                     }
                 });
             }
@@ -202,16 +206,20 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#msgSucessoMesa").css('color', 'green');
-                        if ($('#codigoMesa').val() !== "") {
-                            $('#msgSucessoMesa').html("Mesa Alterada com Sucesso!");
+                        if (data === "") {
+                            window.location.reload();
                         } else {
-                            $('#msgSucessoMesa').html("Mesa Adicionada com Sucesso!");
-                            $("#formMesa")[0].reset();
-                            $('#codigoMesa').val("");
+                            $("#msgSucessoMesa").css('color', 'green');
+                            if ($('#codigoMesa').val() !== "") {
+                                $('#msgSucessoMesa').html("Mesa Alterada com Sucesso!");
+                            } else {
+                                $('#msgSucessoMesa').html("Mesa Adicionada com Sucesso!");
+                                $("#formMesa")[0].reset();
+                                $('#codigoMesa').val("");
+                            }
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divMesas").html(data);
                         }
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divMesas").html(data);
                     }
                 });
             }
@@ -226,7 +234,9 @@
                         //$("#processing-modal").modal('show');
                     },
                     success: function (json) {
-                        if (json.ok === "S") {
+                        if (json.ok === '400') {
+                            window.location.reload();
+                        } else if (json.ok === "S") {
                             salvarMesa();
                         } else {
                             $("#msgSucessoMesa").css('color', 'red');
@@ -254,10 +264,14 @@
                         //$("#processing-modal").modal('show');
                     },
                     success: function (json) {
-                        $('#msgSucessoMesa').html("");
-                        $("#numeroMesa").val(json.numero);
-                        $('#codigoMesa').val(codigoMesa);
-                        //$("#processing-modal").modal('hide');
+                        if (json.ok === '400') {
+                            window.location.reload();
+                        } else {
+                            $('#msgSucessoMesa').html("");
+                            $("#numeroMesa").val(json.numero);
+                            $('#codigoMesa').val(codigoMesa);
+                            //$("#processing-modal").modal('hide');
+                        }
                     }
                 });
 
@@ -290,8 +304,12 @@
                             $("#processing-modal").modal('show');
                         },
                         success: function (data) {
-                            $("#processing-modal").modal('hide');
-                            jQuery("#categoria" + codigoCategoria).html(data);
+                            if (data === "") {
+                                window.location.reload();
+                            } else {
+                                $("#processing-modal").modal('hide');
+                                jQuery("#categoria" + codigoCategoria).html(data);
+                            }
                         }
                     });
                 }
@@ -307,8 +325,12 @@
                     beforeSend: function () {
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#accordionCardapio").html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#accordionCardapio").html(data);
+                        }
                     }
                 });
 
@@ -324,19 +346,23 @@
                         //$("#processing-modal").modal('show');
                     },
                     success: function (json) {
-                        //$("#processing-modal").modal('hide');
-                        $('#msgSucessoProduto').html("");
-                        $("#nomePreduto").val(json.nome);
-                        $('#caminho').val(json.imagem);
-                        if (json.imagem === "") {
-                            $("#imgProduto").attr("src", "${contexto}/imgs/imgsSistema/produto-sem-imagem.gif");
+                        if (json.ok === '400') {
+                            window.location.reload();
                         } else {
-                            $("#imgProduto").attr("src", "${contexto}/imgs/imgsRestaurante/" + json.imagem);
+                            //$("#processing-modal").modal('hide');
+                            $('#msgSucessoProduto').html("");
+                            $("#nomePreduto").val(json.nome);
+                            $('#caminho').val(json.imagem);
+                            if (json.imagem === "") {
+                                $("#imgProduto").attr("src", "${contexto}/imgs/imgsSistema/produto-sem-imagem.gif");
+                            } else {
+                                $("#imgProduto").attr("src", "${contexto}/imgs/imgsRestaurante/" + json.imagem);
+                            }
+                            $("#descricao").val(json.descricao);
+                            $("#preco").val(json.preco);
+                            $("#cmbCategoria").val(json.categoria);
+                            $('#codigoProduto').val(codigoProduto);
                         }
-                        $("#descricao").val(json.descricao);
-                        $("#preco").val(json.preco);
-                        $("#cmbCategoria").val(json.categoria);
-                        $('#codigoProduto').val(codigoProduto);
                     }
                 });
 
@@ -386,8 +412,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#categoria" + categoria).html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#categoria" + categoria).html(data);
+                        }
                     }
                 });
 
@@ -419,8 +449,12 @@
                         $("#processing-modal").modal('show');
                     },
                     success: function (data) {
-                        $("#processing-modal").modal('hide');
-                        jQuery("#divMesas").html(data);
+                        if (data === "") {
+                            window.location.reload();
+                        } else {
+                            $("#processing-modal").modal('hide');
+                            jQuery("#divMesas").html(data);
+                        }
                     }
                 });
 
@@ -437,9 +471,13 @@
                             $("#processing-modal").modal('show');
                         },
                         success: function (data) {
-                            $("#processing-modal").modal('hide');
-                            $("#excluirMesa-modal").modal('hide');
-                            jQuery("#divMesas").html(data);
+                            if (data === "") {
+                                window.location.reload();
+                            } else {
+                                $("#processing-modal").modal('hide');
+                                $("#excluirMesa-modal").modal('hide');
+                                jQuery("#divMesas").html(data);
+                            }
                         }
                     });
                 } else {

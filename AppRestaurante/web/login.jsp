@@ -83,7 +83,7 @@
                     success: function (json) {
                         $("#processing-modal").modal('hide');
                         if (json.ok === "S") {
-                            location.href = "ControllerServlet?acao=listarCardapio";
+                            location.href = "ControllerServlet?acao=listarCardapio&divTab=Cardapio";
                         } else {
                             $('#erroLogin').html("Usuario/Senha incorretos!");
                         }

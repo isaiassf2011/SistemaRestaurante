@@ -1,8 +1,6 @@
 package br.com.apprestaurante.command;
 
-import br.com.apprestaurante.dao.CategoriaProdutoDao;
 import br.com.apprestaurante.dao.ProdutoDao;
-import br.com.apprestaurante.entity.CategoriaProduto;
 import br.com.apprestaurante.entity.Mesa;
 import br.com.apprestaurante.entity.Produto;
 import java.util.ArrayList;
@@ -22,14 +20,19 @@ public class listarProdutosUsuario implements CommandInterface {
 
         HttpSession session = request.getSession(false);
 
-        List<Produto> produtos = new ArrayList<Produto>();
+        if (session != null) {
+            List<Produto> produtos = new ArrayList<Produto>();
 
-        Mesa mesa = (Mesa) session.getAttribute("mesa");
-        produtos = new ProdutoDao().buscarPorCategoria(Integer.parseInt(request.getParameter("codigoCategoria")), mesa.getRestaurante().getCodigo());
+            Mesa mesa = (Mesa) session.getAttribute("mesa");
+            produtos = new ProdutoDao().buscarPorCategoria(Integer.parseInt(request.getParameter("codigoCategoria")), mesa.getRestaurante().getCodigo());
 
-        request.setAttribute("produtos", produtos);
+            request.setAttribute("produtos", produtos);
 
-        return "pages/produtoUsuario.jsp";
+            return "pages/produtoUsuario.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

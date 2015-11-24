@@ -19,19 +19,25 @@ public class BuscarMesaPorNumero implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         List<Pedido> pedidos = new ArrayList<Pedido>();
-
         HttpSession session = request.getSession(false);
-        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
-        if (!request.getParameter("numero").equals("")) {
-            Pedido pedido = new PedidoDao().buscarPedidoPorNMesa(Integer.parseInt(request.getParameter("numero")), restaurante.getCodigo());
-            if (pedido != null) {
-                pedidos.add(pedido);
+
+        if (session != null) {
+
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
+            if (!request.getParameter("numero").equals("")) {
+                Pedido pedido = new PedidoDao().buscarPedidoPorNMesa(Integer.parseInt(request.getParameter("numero")), restaurante.getCodigo());
+                if (pedido != null) {
+                    pedidos.add(pedido);
+                }
             }
+
+            request.setAttribute("pedidos", pedidos);
+
+            return "pages/caixa.jsp";
+
+        } else {
+            return null;
         }
-
-        request.setAttribute("pedidos", pedidos);
-
-        return "pages/caixa.jsp";
 
     }
 

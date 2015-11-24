@@ -16,9 +16,6 @@ import javax.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {
     "/pages/*",
-    "/index.html",
-    "/teste.html",
-    "/usuario.html",
     "/usuario.jsp"},
         servletNames = {"LogoffUsuarioServlet", "ControllerServlet"},
         filterName = "validarUsuarioSessaoFilter")
@@ -37,7 +34,7 @@ public class ValidarUsuarioSessaoFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        if (session == null && filtrarAcao(req)) {
+        if (session == null && filtrarAcao(req) && !"XMLHttpRequest".equalsIgnoreCase(req.getHeader("x-requested-with"))) {
             resp.sendRedirect(req.getContextPath());
         } else {
             chain.doFilter(request, response);

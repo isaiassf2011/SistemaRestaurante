@@ -10,18 +10,24 @@ import javax.servlet.http.HttpSession;
  * @author brd03-pc
  */
 public class RemoveItemCarrinho implements CommandInterface {
-    
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession(false);
 
-        Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
-        carrinho.remove(Integer.parseInt(request.getParameter("indice")));
+        if (session != null) {
 
-        session.setAttribute("carrinho", carrinho);
+            Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+            carrinho.remove(Integer.parseInt(request.getParameter("indice")));
 
-        return "pages/carrinho.jsp";
+            session.setAttribute("carrinho", carrinho);
+
+            return "pages/carrinho.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

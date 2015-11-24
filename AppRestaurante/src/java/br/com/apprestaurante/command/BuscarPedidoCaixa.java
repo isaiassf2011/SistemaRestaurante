@@ -11,16 +11,23 @@ import javax.servlet.http.HttpSession;
  * @author isaias
  */
 public class BuscarPedidoCaixa implements CommandInterface {
-    
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        Pedido pedido = new PedidoDao().getByIdItens(Integer.parseInt(request.getParameter("codigoPedido")));
-        
-        request.setAttribute("pedido", pedido);
-        
-        return "pages/pedidoMesa.jsp";
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            Pedido pedido = new PedidoDao().getByIdItens(Integer.parseInt(request.getParameter("codigoPedido")));
+
+            request.setAttribute("pedido", pedido);
+
+            return "pages/pedidoMesa.jsp";
+
+        } else {
+            return null;
+        }
 
     }
-    
+
 }

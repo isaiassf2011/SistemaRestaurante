@@ -21,6 +21,7 @@ public class BuscarMesaNumero implements CommandInterface {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
+        HttpSession session = request.getSession(false);
         JsonObject json = new JsonObject();
         PrintWriter out = null;
         try {
@@ -28,20 +29,23 @@ public class BuscarMesaNumero implements CommandInterface {
             response.setContentType("application/json");
             out = response.getWriter();
 
-            HttpSession session = request.getSession(false);
-            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
+            if (session == null) {
+                json.addProperty("ok", "400");
+            } else {
+                Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-            Mesa mesa = new MesaDao().buscarMesaPorNumero(Integer.parseInt(request.getParameter("numeroMesa")),restaurante.getCodigo());
+                Mesa mesa = new MesaDao().buscarMesaPorNumero(Integer.parseInt(request.getParameter("numeroMesa")), restaurante.getCodigo());
 
-            String codigoMesa = request.getParameter("codigoMesa");
-            
-            if(mesa == null){
-                json.addProperty("ok", "S");
-            }else{
-                if(!mesa.getCodigo().toString().equals(codigoMesa)){
-                    json.addProperty("ok", "N");
-                }else{
+                String codigoMesa = request.getParameter("codigoMesa");
+
+                if (mesa == null) {
                     json.addProperty("ok", "S");
+                } else {
+                    if (!mesa.getCodigo().toString().equals(codigoMesa)) {
+                        json.addProperty("ok", "N");
+                    } else {
+                        json.addProperty("ok", "S");
+                    }
                 }
             }
 

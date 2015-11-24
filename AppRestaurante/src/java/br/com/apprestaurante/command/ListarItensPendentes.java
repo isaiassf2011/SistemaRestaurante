@@ -10,21 +10,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ListarItensPendentes implements CommandInterface {
-    
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        List<PedidoItem> itens = new ArrayList<PedidoItem>();
-
         HttpSession session = request.getSession(false);
-        Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        itens = new PedidoItemDao().listarPedidosPendentes(restaurante);
+        if (session != null) {
+            List<PedidoItem> itens = new ArrayList<PedidoItem>();
 
-        request.setAttribute("pedidos", itens);
+            Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
 
-        return "pages/pedidoPendente.jsp";
+            itens = new PedidoItemDao().listarPedidosPendentes(restaurante);
+
+            request.setAttribute("pedidos", itens);
+
+            return "pages/pedidoPendente.jsp";
+
+        } else {
+            return null;
+        }
 
     }
-    
+
 }

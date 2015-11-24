@@ -22,17 +22,22 @@ public class ListarProdutosNomeUsuario implements CommandInterface {
 
         HttpSession session = request.getSession(false);
 
-        List<Produto> produtos = new ArrayList<Produto>();
-        List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
+        if (session != null) {
+            List<Produto> produtos = new ArrayList<Produto>();
+            List<CategoriaProduto> categorias = new ArrayList<CategoriaProduto>();
 
-        Mesa mesa = (Mesa) session.getAttribute("mesa");
-        categorias = new CategoriaProdutoDao().buscarPorProdutoNome(request.getParameter("nome"), mesa.getRestaurante().getCodigo());
-        produtos = new ProdutoDao().buscarPorNome(request.getParameter("nome"), mesa.getRestaurante().getCodigo());
+            Mesa mesa = (Mesa) session.getAttribute("mesa");
+            categorias = new CategoriaProdutoDao().buscarPorProdutoNome(request.getParameter("nome"), mesa.getRestaurante().getCodigo());
+            produtos = new ProdutoDao().buscarPorNome(request.getParameter("nome"), mesa.getRestaurante().getCodigo());
 
-        request.setAttribute("categorias", categorias);
-        request.setAttribute("produtos", produtos);
+            request.setAttribute("categorias", categorias);
+            request.setAttribute("produtos", produtos);
 
-        return "pages/categoriaUsuario.jsp";
+            return "pages/categoriaUsuario.jsp";
+
+        } else {
+            return null;
+        }
 
     }
 

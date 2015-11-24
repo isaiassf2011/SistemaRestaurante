@@ -26,6 +26,7 @@ public class BuscarRestaurante implements CommandInterface {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession(false);
+
         Restaurante restaurante = (Restaurante) session.getAttribute("restaurante");
         restaurante = new RestauranteDao().getById(restaurante.getCodigo());
 
