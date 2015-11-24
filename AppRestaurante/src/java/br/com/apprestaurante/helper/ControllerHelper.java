@@ -2,6 +2,7 @@ package br.com.apprestaurante.helper;
 
 import br.com.apprestaurante.command.AddItemCarrinho;
 import br.com.apprestaurante.command.AlterarRestaurante;
+import br.com.apprestaurante.command.AlterarSenha;
 import br.com.apprestaurante.command.AutenticaRestaurante;
 import br.com.apprestaurante.command.BuscarMesa;
 import br.com.apprestaurante.command.BuscarMesaNumero;
@@ -52,6 +53,7 @@ public class ControllerHelper {
     public ControllerHelper() {
 
         comandos = new HashMap<String, CommandInterface>();
+        comandos.put(AcaoConstante.ALTERAR_SENHA, new AlterarSenha());
         comandos.put(AcaoConstante.RELATORIO_PEDIDO_PERIODO, new RelatorioPedidoPeriodo());
         comandos.put(AcaoConstante.RELATORIO, new Relatorio());
         comandos.put(AcaoConstante.ADD_ITEM_CARRINHO, new AddItemCarrinho());

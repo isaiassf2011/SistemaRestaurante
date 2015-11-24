@@ -9,6 +9,9 @@
 <c:set var="contexto" value="${pageContext.request.contextPath}" />
 <input type="hidden" id="totalDeItens" value="${carrinho.totalDeItens}"/>
 
+<div>
+    <h5 id="msgCarrinho" style="color: green; font-weight: bold;"></h5>
+</div>
 <c:if test="${carrinho.totalDeItens != 0 && !empty carrinho}">
     <c:forEach var="c" items="${carrinho.itens}" varStatus="i">
         <div class="panel-car">

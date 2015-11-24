@@ -87,6 +87,7 @@
                     success: function (json) {
                         $("#processing-modal").modal('hide');
                         if (json.ok === "S") {
+                            $("#formRecuperarSenha")[0].reset();
                             $("#erroLogin").css('color', 'green');
                             $("#erroLogin").html(json.msg);
                         } else {

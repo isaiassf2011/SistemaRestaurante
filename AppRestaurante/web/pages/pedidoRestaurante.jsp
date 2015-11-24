@@ -233,22 +233,24 @@
 
             function buscarMesaPorNumero() {
 
-                $.ajax({
-                    url: 'ControllerServlet?acao=buscarMesaPorNumero',
-                    type: 'POST',
-                    data: '&numero=' + $("#txtNumeroMesa").val(),
-                    beforeSend: function () {
-                        $("#processing-modal").modal('show');
-                    },
-                    success: function (data) {
-                        if (data === "") {
-                            window.location.reload();
-                        } else {
-                            $("#processing-modal").modal('hide');
-                            jQuery("#divCaixa").html(data);
+                if ($("#txtNumeroMesa").val() !== "") {
+                    $.ajax({
+                        url: 'ControllerServlet?acao=buscarMesaPorNumero',
+                        type: 'POST',
+                        data: '&numero=' + $("#txtNumeroMesa").val(),
+                        beforeSend: function () {
+                            $("#processing-modal").modal('show');
+                        },
+                        success: function (data) {
+                            if (data === "") {
+                                window.location.reload();
+                            } else {
+                                $("#processing-modal").modal('hide');
+                                jQuery("#divCaixa").html(data);
+                            }
                         }
-                    }
-                });
+                    });
+                }
 
             }
 

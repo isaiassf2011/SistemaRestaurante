@@ -11,6 +11,7 @@ public class AcaoFilterHelper {
     public AcaoFilterHelper() {
         acoes = new HashSet<String>();
         
+        acoes.add(AcaoConstante.ALTERAR_SENHA);
         acoes.add(AcaoConstante.RELATORIO);
         acoes.add(AcaoConstante.ADD_ITEM_CARRINHO);
         acoes.add(AcaoConstante.ALTERAR_RESTAURANTE);

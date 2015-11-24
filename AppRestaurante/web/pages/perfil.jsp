@@ -221,10 +221,10 @@
                                                 <p class="form-control" id="cnpj" name="cnpjRestaurante" type="text" >${restaurante.cnpj}</p>
                                             </div>
                                             <div class="form-group">
-                                                <input id="telefone" class="form-control" placeholder="Telefone" name="telefone" id="telefone" type="tel" value="${restaurante.telefone}">
+                                                <input class="form-control" placeholder="Telefone" name="telefone" id="telefone" type="tel" value="${restaurante.telefone}">
                                             </div>
                                             <div class="form-group">
-                                                <input id="cep" class="form-control" placeholder="CEP" name="cep" id="cep" type="text" value="${restaurante.cep}">
+                                                <input class="form-control" placeholder="CEP" name="cep" id="cep" type="text" value="${restaurante.cep}">
                                                 <label id="erroCep" for="cep" class="error"></label>
                                             </div>
                                             <div class="form-group">

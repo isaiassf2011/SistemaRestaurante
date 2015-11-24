@@ -2,7 +2,12 @@
 insert into tb_categoria_produto (categoria_pro_descricao) value ("Bebidas");
 insert into tb_categoria_produto (categoria_pro_descricao) value  ("Porções");
 insert into tb_categoria_produto (categoria_pro_descricao) value  ("Massas");
-insert into tb_categoria_produto (categoria_pro_descricao) value  ("Lanche");
+insert into tb_categoria_produto (categoria_pro_descricao) value  ("Lanches");
+insert into tb_categoria_produto (categoria_pro_descricao) value  ("Entradas");
+insert into tb_categoria_produto (categoria_pro_descricao) value  ("Sanduíches");
+insert into tb_categoria_produto (categoria_pro_descricao) value  ("Carnes");
+insert into tb_categoria_produto (categoria_pro_descricao) value  ("Frangos");
+insert into tb_categoria_produto (categoria_pro_descricao) value  ("Sobremesas");
 
 /*estado*/
 insert into tb_estado (estado_codigo, estado_descricao, estado_uf) values (0, 'Selecione', 'SL');

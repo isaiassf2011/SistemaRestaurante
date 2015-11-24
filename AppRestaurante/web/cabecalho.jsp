@@ -19,9 +19,6 @@
             <a class="navbar-brand" href="#">ChegouPediu</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
@@ -53,6 +50,7 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="ControllerServlet?acao=buscarRestaurante">Ver Perfil</a></li>
+                        <li><a href="alterarSenha.jsp">Alterar Senha</a></li>
                     </ul>
                 </li>
                 <li>

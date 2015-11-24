@@ -9,7 +9,7 @@
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.hbm2ddl.auto">validate</property>
         <property name="hibernate.format_sql">true</property>
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <mapping class="br.com.apprestaurante.entity.Restaurante"></mapping>
         <mapping class="br.com.apprestaurante.entity.Mesa"></mapping>
         <mapping class="br.com.apprestaurante.entity.Produto"></mapping>

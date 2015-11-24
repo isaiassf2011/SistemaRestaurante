@@ -178,17 +178,21 @@
                             window.location.reload();
                         } else {
                             if ($('#codigoProduto').val() !== "") {
-                                $('#msgSucessoProduto').html("Produto Alterado com Sucesso!");
+                                setTimeout(function () {
+                                    jQuery("#accordionCardapio").html(data);
+                                    $('#msgSucessoProduto').html("Produto Alterado com Sucesso!");
+                                    $("#processing-modal").modal('hide');
+                                }, 2000);
                             } else {
-                                $('#msgSucessoProduto').html("Produto Adicionado com Sucesso!");
                                 $("#form")[0].reset();
                                 $('#codigoProduto').val("");
                                 removerImagem();
+                                setTimeout(function () {
+                                    jQuery("#accordionCardapio").html(data);
+                                    $('#msgSucessoProduto').html("Produto Adicionado com Sucesso!");
+                                    $("#processing-modal").modal('hide');
+                                }, 2000);
                             }
-                            setTimeout(function () {
-                                $("#processing-modal").modal('hide');
-                                jQuery("#accordionCardapio").html(data);
-                            }, 2000);
                         }
                     }
                 });

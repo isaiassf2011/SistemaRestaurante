@@ -110,6 +110,10 @@
                             $("#processing-modal").modal('hide');
                             jQuery("#divCarrinho").html(data);
                             $(".badge").html(0);
+                            $("#msgCarrinho").html("Pedido Realizado com Sucesso!");
+                            setTimeout(function () {
+                                $('#msgCarrinho').fadeOut('fast');
+                            }, 3000);
                         }
                     }
                 });
